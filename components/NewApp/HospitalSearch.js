@@ -91,7 +91,7 @@ export default class HospitalSearch extends React.Component {
             cityName: selectedItem
         }
         console.log('data --- ', data);
-        axios.post('http://cluznplus.com/api/hospital/', data, {
+        axios.post('http://cluznplus.com/cluzn_backend/api/hospital/', data, {
             headers: {
                 token: authtokenfromEnterNameDetails
             }
@@ -155,7 +155,7 @@ export default class HospitalSearch extends React.Component {
 
         const { authtokenfromEnterNameDetails } = this.props.route.params;
 
-        axios.get('http://cluznplus.com/api/getCity', {
+        axios.get('http://cluznplus.com/cluzn_backend/api/getCity', {
 
             headers: {
                 token: authtokenfromEnterNameDetails

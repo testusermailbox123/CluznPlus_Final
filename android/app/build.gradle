@@ -134,8 +134,8 @@ android {
         applicationId "com.cluznplus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2009
-        versionName "1.4"
+        versionCode  2010      //  2009
+        versionName "1.5"
     }
     splits {
         abi {

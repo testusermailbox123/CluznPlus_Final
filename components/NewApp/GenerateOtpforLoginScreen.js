@@ -78,7 +78,7 @@ export default class GenerateOtpforLoginScreen extends React.Component {
                     phone_number: this.state.phonenumber
                 };
 
-                axios.post('http://cluznplus.com/api/sendOtp', data).then(response => {
+                axios.post('http://cluznplus.com/cluzn_backend/api/sendOtp', data).then(response => {
                     //console.log('All data', response.data);
                     this.setState({
                         users: response.data.data

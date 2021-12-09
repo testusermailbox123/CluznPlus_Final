@@ -39,7 +39,7 @@ export default class EnterNameDetails extends React.Component {
                 email: this.state.E_Mail
             };
 
-            axios.post('http://cluznplus.com/api/firstNameAndEmailSave', data, {
+            axios.post('http://cluznplus.com/cluzn_backend/api/firstNameAndEmailSave', data, {
                 headers: {
                     token: authtokenfromEnterGeneratedOTP
                 }
