@@ -14,6 +14,7 @@ import EnterGeneratedOTP from './EnterGeneratedOTP'
 import SplashScreen from './SplashScreen'
 GLOBAL = require('./globals');
 import HomePage from './Cluzn-Eva/HomePage'
+import Categories from './Cluzn-Eva/Categories'
 
 const HomeStack = createStackNavigator();
 
@@ -36,6 +37,7 @@ export default function HomeStackScreen({ navigation }) {
         <HomeStack.Screen name="DoctorFaclitiesList" component={DoctorFaclitiesList}></HomeStack.Screen>
         <HomeStack.Screen name="HospitalDetails" component={HospitalDetails}></HomeStack.Screen>
         <HomeStack.Screen name="HomePage" component={HomePage}></HomeStack.Screen>
+        <HomeStack.Screen name="Categories" component={Categories}></HomeStack.Screen>
       </HomeStack.Navigator>
     </NavigationContainer>
   )

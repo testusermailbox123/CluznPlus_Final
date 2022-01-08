@@ -4,6 +4,8 @@ import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
 
+
+
 const DATA = [];
 
 const getItem = (data, index) => ({
@@ -44,17 +46,16 @@ const Item = ({ title }) => (
 
 
 export default class HomePage extends Component {
-    render() {
-        const getHeader = () => {
-            return <Text></Text>;
-        };
 
-        const getFooter = () => {
-            // if (this.state.loading) {
-            //     return null;
-            // }
-            return <Text></Text>;
-        };
+    _onPress(item) 
+    {
+        this.props.navigation.navigate('Categories', {
+            
+        });
+    }
+
+    render() {
+        
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar barStyle="light-content" hidden={false}
@@ -139,7 +140,7 @@ export default class HomePage extends Component {
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
                             fontWeight: 'bold', marginLeft: widthtoDP(number = "6%")
-                        }}>Exclusive Packages</Text>
+                        }}>Categories</Text>
                         <View style={{
                             // backgroundColor: 'red',
                             height: heighttoDP(number = '40%'), width: widthtoDP(number = '100%')
@@ -165,7 +166,9 @@ export default class HomePage extends Component {
 
                                         marginVertical: heighttoDP(number = '3%'),
                                         alignSelf: 'center', justifyContent: 'center'
-                                    }}>
+                                    }}
+                                    onPress={() => this._onPress(item)}
+                                    >
                                         <View style={{ flex: 1, flexDirection: 'row' }}>
                                             <View style={{
                                                 width: widthtoDP(number = '30%'),
