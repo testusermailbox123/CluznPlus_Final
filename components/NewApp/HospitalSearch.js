@@ -3,7 +3,7 @@ import React from 'react';
 import {
     Switch, Text, View, Image, Alert, FlatList, VirtualizedList, TouchableWithoutFeedback, ActivityIndicator, ImageBackground,
     Keyboard, KeyboardAvoidingView, Dimensions, BackHandler, TouchableOpacity, StatusBar, ScrollView,
-    TextInput, SafeAreaView, StyleSheet
+    TextInput, SafeAreaView, StyleSheet,Button
 } from 'react-native';
 import { widthtoDP, heighttoDP } from './Responsive'
 import { COLORS } from './theme'
@@ -120,14 +120,24 @@ export default class HospitalSearch extends React.Component {
 
     switchValueChnage() {
         if (!this.state.isEnabled) {
-            GLOBAL.primaryBackGroundColor = 'white';
-            GLOBAL.primaryTOuchablecolor = '#DFEEFF';
-            GLOBAL.primaryBackGroundColorforBlue = '#3CB3C3';
-            GLOBAL.primarylighttext1 = 'white';
-            GLOBAL.primarylighttext2 = 'black';
+            //Code commented from line 124 to 132 as app will be in dark theme
+            // GLOBAL.primaryBackGroundColor = 'white';
+            // GLOBAL.primaryTOuchablecolor = '#DFEEFF';
+            // GLOBAL.primaryBackGroundColorforBlue = '#3CB3C3';
+            // GLOBAL.primarylighttext1 = 'white';
+            // GLOBAL.primarylighttext2 = 'black';
+            // GLOBAL.primarylighttext3 = '#18D5F2';
+            // // GLOBAL.primarybuttonselect = GLOBAL.primaryBackGroundColor == 'white' ? [] : item.multi_images,
+            // GLOBAL.primarybuttonselect = '#E0FFFF';
+            // GLOBAL.primarybuttonunselect = 'white';
+            GLOBAL.primaryBackGroundColor = 'black';
+            // primaryBackGroundColor = 'black';
+            GLOBAL.primaryTOuchablecolor = '#317F8B';
+            GLOBAL.primaryBackGroundColorforBlue = '#317F8B';
+            GLOBAL.primarylighttext1 = 'black';
+            GLOBAL.primarylighttext2 = 'white';
             GLOBAL.primarylighttext3 = '#18D5F2';
-            // GLOBAL.primarybuttonselect = GLOBAL.primaryBackGroundColor == 'white' ? [] : item.multi_images,
-            GLOBAL.primarybuttonselect = '#E0FFFF';
+            GLOBAL.primarybuttonselect = 'grey';
             GLOBAL.primarybuttonunselect = 'white';
         } else {
             GLOBAL.primaryBackGroundColor = 'black';
@@ -367,6 +377,10 @@ export default class HospitalSearch extends React.Component {
                                     <View style={{ flexDirection: 'row', marginLeft: w(2) }}>
                                         <Text allowFontScaling={false} style={{ fontSize: h(2.8), color: GLOBAL.primarylighttext1, fontWeight: "bold" }}>Cluzn </Text>
                                         <Text allowFontScaling={false} style={{ fontSize: h(2.8), color: 'red', fontWeight: "bold" }}>Plus</Text>
+                                        <Button
+                                        title="CluznPlus Eva"
+                                        onPress={() => {
+                                            this.props.navigation.navigate('HomePage')}}/>
                                     </View>
                                     <Text allowFontScaling={false} style={{ fontSize: h(1.5), color: GLOBAL.primarylighttext1, marginLeft: w(2) }}>Your Caring Partner</Text>
                                 </View>
