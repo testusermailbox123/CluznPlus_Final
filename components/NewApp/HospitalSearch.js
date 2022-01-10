@@ -53,7 +53,7 @@ export default class HospitalSearch extends React.Component {
         this.generateHospitalList();
         this.getCityList()
         BackHandler.addEventListener('hardwareBackPress', function () {
-            console.log(navigation.isFocused());
+            // console.log(navigation.isFocused());
             if (navigation.isFocused()) {
                 Alert.alert(
                     'Exit App',
@@ -90,7 +90,7 @@ export default class HospitalSearch extends React.Component {
             page: counter,
             cityName: selectedItem
         }
-        console.log('data --- ', data);
+        // console.log('data --- ', data);
         axios.post('http://cluznplus.com/cluzn_backend/api/hospital/', data, {
             headers: {
                 token: authtokenfromEnterNameDetails
@@ -109,11 +109,11 @@ export default class HospitalSearch extends React.Component {
                     allDepartment: this.state.hospitalList,
                     isloading: false
                 });
-                console.log("hospitalList", this.state.hospitalList);
-                console.log("res", response.data.data);
+                // console.log("hospitalList", this.state.hospitalList);
+                // console.log("res", response.data.data);
             })
             .catch((error) => {
-                console.log('error ' + error);
+                // console.log('error ' + error);
                 this.setState({ hospitalList: [] })
             });
     }
@@ -157,7 +157,7 @@ export default class HospitalSearch extends React.Component {
     }
 
     _onEndReachedThreshold() {
-        console.log('in _onEndReachedThreshold')
+        // console.log('in _onEndReachedThreshold')
         this.generateHospitalList()
     }
 
@@ -183,7 +183,7 @@ export default class HospitalSearch extends React.Component {
 
             })
             .catch((error) => {
-                console.log('error ' + error);
+                // console.log('error ' + error);
                 this.setState({ cityList: [] })
             });
     }
@@ -223,7 +223,7 @@ export default class HospitalSearch extends React.Component {
         this.setState({
             hospitalList: []
         });
-        console.log('in citynameset')
+        // console.log('in citynameset')
         this.generateHospitalList(selectedItem);
     }
 
@@ -405,7 +405,7 @@ export default class HospitalSearch extends React.Component {
                                     buttonStyle={{ width: h(20), height: h(4.5), color: GLOBAL.primarylighttext2, backgroundColor: 'white', borderRadius: h(1), alignSelf: 'flex-end', marginTop: -w(7) }}
                                     data={this.state.cityList}
                                     onSelect={(selectedItem, index) => {
-                                        console.log(selectedItem, index)
+                                        // console.log(selectedItem, index)
                                         this.setState({
                                             cityname1: selectedItem
                                         })

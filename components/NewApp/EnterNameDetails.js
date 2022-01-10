@@ -53,7 +53,7 @@ export default class EnterNameDetails extends React.Component {
                 })
             })
                 .catch((error) => {
-                    console.log('error ' + error);
+                    // console.log('error ' + error);
                 });
         }
     }

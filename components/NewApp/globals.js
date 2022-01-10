@@ -12,5 +12,6 @@ module.exports = {
     eva_midpink : '#FFA8A8', 
     eva_darkpink : '#DE655F', 
     eva_blue : '#1E1C61', 
-    eva_black : '#2B2B2B'
-};
+    eva_black : '#2B2B2B',
+    eva_green:'#303030'
+}

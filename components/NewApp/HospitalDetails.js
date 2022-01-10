@@ -63,7 +63,7 @@ export default class HospitalDetails extends Component {
     }
 
     render() {
-        console.log("checking", this.props.route.params);
+        // console.log("checking", this.props.route.params);
         const { hospitalname2, hospitallocation2, hospitaldesc2, hospitalmultimg1, hospitalvideo1 } = this.props.route.params;
 
         return (

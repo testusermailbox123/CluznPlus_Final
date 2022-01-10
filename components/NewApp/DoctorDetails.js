@@ -14,7 +14,7 @@ export default class DoctorDetails extends React.Component {
 
     render() {
         const { firstname, lastname, doctorimage, doctordescription, doctorspecial } = this.props.route.params;
-        console.log(doctordescription);
+        // console.log(doctordescription);
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor:'white' }}>
                 <StatusBar barStyle="light-content" hidden={false}

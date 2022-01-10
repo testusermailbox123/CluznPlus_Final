@@ -54,7 +54,7 @@ export default class EnterGeneratedOTP extends React.Component {
 
     dataget() {
         const { authtokenfromgenerateotpscreen, confirmationdata, phonenumberfromgenerateotpscreen } = this.props.route.params;
-        console.log(phonenumberfromgenerateotpscreen)
+        // console.log(phonenumberfromgenerateotpscreen)
         this.signInWithPhoneNumber(phonenumberfromgenerateotpscreen)
         this.setState({
             confirmationdata_fromgenerateotp: confirmationdata,
@@ -68,15 +68,15 @@ export default class EnterGeneratedOTP extends React.Component {
     }
 
     async signInWithPhoneNumber(phone) {
-        console.log('https://2factor.in/API/V1/' + apikey + '/SMS/' + phone + '/AUTOGEN/OTP1')
+        // console.log('https://2factor.in/API/V1/' + apikey + '/SMS/' + phone + '/AUTOGEN/OTP1')
         try {
             axios.post('https://2factor.in/API/V1/' + apikey + '/SMS/' + phone + '/AUTOGEN').then(response => {
                 this.setState({
                     details: response.data.Details,
                     status: response.data.Status
                 })
-                console.log(this.state.details)
-                console.log(this.state.status)
+                // console.log(this.state.details)
+                // console.log(this.state.status)
             })
         } catch (error) {
             //console.log(error)
@@ -85,12 +85,12 @@ export default class EnterGeneratedOTP extends React.Component {
     }
 
     async generateotp() {
-        console.log('this.state.signInWithPhoneNumber from  generateotp == ', this.state.phonenumberfrom_GeneratedOTP)
+        // console.log('this.state.signInWithPhoneNumber from  generateotp == ', this.state.phonenumberfrom_GeneratedOTP)
         try {
             //const confirmation = await auth().signInWithPhoneNumber(this.state.phonenumberfrom_GeneratedOTP);
             this.setState({ confirm: confirmation });
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             alert(error);
         }
     }
@@ -98,7 +98,7 @@ export default class EnterGeneratedOTP extends React.Component {
     handleKeyPress(event) {
         alert(event.key);
         if (event.key === 'Enter') {
-            console.log('enter press here! ')
+            // console.log('enter press here! ')
         }
     }
 
@@ -106,26 +106,26 @@ export default class EnterGeneratedOTP extends React.Component {
         if (!this.state.isChecked) {
             alert('Please accept the Terms and Conditions to proceed..')
         } else {
-            console.log('https://2factor.in/API/V1/' + apikey + '/SMS/VERIFY/' + this.state.details + '/' + this.state.userotp1 + this.state.userotp2 + this.state.userotp3 + this.state.userotp4 + this.state.userotp5 + this.state.userotp6)
+            // console.log('https://2factor.in/API/V1/' + apikey + '/SMS/VERIFY/' + this.state.details + '/' + this.state.userotp1 + this.state.userotp2 + this.state.userotp3 + this.state.userotp4 + this.state.userotp5 + this.state.userotp6)
             if ((this.state.userotp1 + this.state.userotp2 + this.state.userotp3 + this.state.userotp4 + this.state.userotp5 + this.state.userotp6).length == 6) {
                 try {
                     axios.post('https://2factor.in/API/V1/' + apikey + '/SMS/VERIFY/' + this.state.details + '/' + this.state.userotp1 + this.state.userotp2 + this.state.userotp3 + this.state.userotp4 + this.state.userotp5 + this.state.userotp6).then(response => {
-                        console.log(response.data.Status)
-                        console.log(response.data.Details)
-                        console.log('Login successfull');
+                        // console.log(response.data.Status)
+                        // console.log(response.data.Details)
+                        // console.log('Login successfull');
                         AsyncStorage.setItem('LoggedIn', 'Yes')
                         AsyncStorage.setItem('auth_token', this.state.authtokenfrom_EnterGeneratedOTP)
-                        console.log('Auth toke value is = ', this.state.authtokenfrom_EnterGeneratedOTP);
+                        // console.log('Auth toke value is = ', this.state.authtokenfrom_EnterGeneratedOTP);
                         //response.data.Details == "OTP Matched" && 
-                        console.log('this.state.confirmationdata_fromgenerateotp', response.data.Details)
-                        console.log('this.state.confirmationdata_fromgenerateotp', this.state.confirmationdata_fromgenerateotp)
+                        // console.log('this.state.confirmationdata_fromgenerateotp', response.data.Details)
+                        // console.log('this.state.confirmationdata_fromgenerateotp', this.state.confirmationdata_fromgenerateotp)
                         if (this.state.confirmationdata_fromgenerateotp.toString() == "false") {
-                            console.log('this.state.confirmationdata_fromgenerateotp', this.state.confirmationdata_fromgenerateotp)
+                            // console.log('this.state.confirmationdata_fromgenerateotp', this.state.confirmationdata_fromgenerateotp)
                             this.props.navigation.navigate('EnterNameDetails', {
                                 authtokenfromEnterGeneratedOTP: this.state.authtokenfrom_EnterGeneratedOTP
                             })
                         } else {
-                            console.log(this.state.confirmationdata_fromgenerateotp)
+                            // console.log(this.state.confirmationdata_fromgenerateotp)
                             this.props.navigation.navigate('HospitalSearch', {
                                 authtokenfromEnterNameDetails: this.state.authtokenfrom_EnterGeneratedOTP
                             })
@@ -133,7 +133,7 @@ export default class EnterGeneratedOTP extends React.Component {
                         }
                         return response
                     }).catch((error) => {
-                        console.log('error is ----', error)
+                        // console.log('error is ----', error)
                         //alert(error);
                         alert('OTP not correct. Please enter a valid OTP')
                     }).finally((response) => {

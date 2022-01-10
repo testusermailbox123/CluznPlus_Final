@@ -38,7 +38,7 @@ export default class HospitalDepartments extends React.Component {
 
     filterdata(text) {
         let searchtext = text
-        console.log('searchtext =   ', searchtext)
+        // console.log('searchtext =   ', searchtext)
         let filteredalldata = this.state.alloriginaldata.filter(x => x.title.toLowerCase().includes(searchtext.toLowerCase()))
         this.setState({
             allmodifieddata: filteredalldata
@@ -65,7 +65,7 @@ export default class HospitalDepartments extends React.Component {
 
     render() {
         const { hospitalname, hospitallocation, hospitaldesc, hospitalimg, hospitalmultimg, hospitalvideo } = this.props.route.params;
-        console.log('allthedata ===  ', this.state.allthedata)
+        // console.log('allthedata ===  ', this.state.allthedata)
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar barStyle="light-content" hidden={false}

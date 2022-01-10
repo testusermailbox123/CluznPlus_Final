@@ -38,7 +38,7 @@ export default class GenerateOtpforLoginScreen extends React.Component {
         const { navigation } = this.props;
 
         BackHandler.addEventListener('hardwareBackPress', function () {
-            console.log(navigation.isFocused());
+            // console.log(navigation.isFocused());
             if (navigation.isFocused()) {
                 Alert.alert(
                     'Exit App',
@@ -83,7 +83,7 @@ export default class GenerateOtpforLoginScreen extends React.Component {
                     this.setState({
                         users: response.data.data
                     })
-                    console.log('user  - ', this.state.users[0].is_name)
+                    // console.log('user  - ', this.state.users[0].is_name)
                     this.props.navigation.navigate('EnterGeneratedOTP', {
                         authtokenfromgenerateotpscreen: this.state.users[0].auth_token,
                         confirmationdata: this.state.users[0].is_name,
@@ -92,7 +92,7 @@ export default class GenerateOtpforLoginScreen extends React.Component {
                     })
                 })
                     .catch((error) => {
-                        console.log('error ' + error);
+                        // console.log('error ' + error);
 
                         alert(error)
 

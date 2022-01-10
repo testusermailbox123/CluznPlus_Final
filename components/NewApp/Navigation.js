@@ -15,6 +15,8 @@ import SplashScreen from './SplashScreen'
 GLOBAL = require('./globals');
 import HomePage from './Cluzn-Eva/HomePage'
 import Categories from './Cluzn-Eva/Categories'
+import DoctorDescription from './Cluzn-Eva/DoctorDescription'
+import AppointmentDetails from './Cluzn-Eva/AppointmentDetails'
 
 const HomeStack = createStackNavigator();
 
@@ -38,6 +40,8 @@ export default function HomeStackScreen({ navigation }) {
         <HomeStack.Screen name="HospitalDetails" component={HospitalDetails}></HomeStack.Screen>
         <HomeStack.Screen name="HomePage" component={HomePage}></HomeStack.Screen>
         <HomeStack.Screen name="Categories" component={Categories}></HomeStack.Screen>
+        <HomeStack.Screen name="DoctorDescription" component={DoctorDescription}></HomeStack.Screen>
+        <HomeStack.Screen name="AppointmentDetails" component={AppointmentDetails}></HomeStack.Screen>
       </HomeStack.Navigator>
     </NavigationContainer>
   )

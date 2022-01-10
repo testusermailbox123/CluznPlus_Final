@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
-import { h, w } from '../../utils/Dimensions'
-
-
 
 const DATA = [];
 

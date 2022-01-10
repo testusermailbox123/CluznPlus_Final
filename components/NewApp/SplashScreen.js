@@ -17,7 +17,7 @@ const SplashScreen = ({ navigation }) => {
       //console.log('loggedInSTatus', loggedInSTatus)
       if (loggedInSTatus === 'Yes') {
         const authtoken = await AsyncStorage.getItem('auth_token');
-        console.log('token key ', authtoken)
+        // console.log('token key ', authtoken)
         navigation.navigate('HospitalSearch', {
           authtokenfromEnterNameDetails: authtoken
         })
@@ -31,15 +31,15 @@ const SplashScreen = ({ navigation }) => {
   }, [])
 
   const checkUserLoggedIn = async () => {
-    console.log('check user login')
+    // console.log('check user login')
     const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
-    console.log('loggedInSTatus', loggedInSTatus)
+    // console.log('loggedInSTatus', loggedInSTatus)
     if (loggedInSTatus === 'Yes') {
       navigation.navigate('HospitalSearch')
     } else {
       navigation.navigate('GenerateOtpforLoginScreen')
     }
-    console.log('loggedInSTatus', loggedInSTatus)
+    // console.log('loggedInSTatus', loggedInSTatus)
   }
 
   return (
