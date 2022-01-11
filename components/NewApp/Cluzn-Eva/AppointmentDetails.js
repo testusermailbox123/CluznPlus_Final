@@ -303,6 +303,15 @@ export default class AppointmentDetails extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
+                        <TouchableOpacity >
+                            <Image style={{
+                                height: heighttoDP(number = '3.5%'),
+                                width: heighttoDP(number = '3.5%'),
+                                marginTop: -heighttoDP(number = '4.8%'),
+                                marginLeft: widthtoDP(number = "65%")
+                            }}
+                                source={require('../../assets/icons/phone.png')} />
+                        </TouchableOpacity>
                     </View>
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -323,11 +332,20 @@ export default class AppointmentDetails extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
+                        <TouchableOpacity >
+                            <Image style={{
+                                height: heighttoDP(number = '3.5%'),
+                                width: heighttoDP(number = '3.5%'),
+                                marginTop: -heighttoDP(number = '4.8%'),
+                                marginLeft: widthtoDP(number = "65%")
+                            }}
+                                source={require('../../assets/icons/email.png')} />
+                        </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={{
-                        backgroundColor: GLOBAL.eva_midpink,
+                        backgroundColor: GLOBAL.eva_darkpink,
                         height: heighttoDP(number = '6%'),
-                        width: widthtoDP(number = "83%"),
+                        width: widthtoDP(number = "65%"),
                         alignSelf: 'center',
                         alignItems: 'center', justifyContent: 'center',
                         marginTop: heighttoDP(number = '5%'),
