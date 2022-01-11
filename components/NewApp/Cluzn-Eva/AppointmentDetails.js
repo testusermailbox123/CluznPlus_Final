@@ -1,22 +1,40 @@
 import React, { Component, useState } from 'react'
-import { Text, View, SafeAreaView, StatusBar, Alert, Button,KeyboardAvoidingView,
-     TextInput, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet } from 'react-native'
+import {
+    Text, View, SafeAreaView, StatusBar, Alert, Button, KeyboardAvoidingView,
+    TextInput, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet
+} from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
-
-
 
 export default class AppointmentDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
             selectdate: '',
-            opendate: false
+            opendate: false,
+            selecttime: '',
+            opentime: false,
+            dd: new Date(),
+            format: ''
         }
 
     }
+
+    tConvert(time) {
+        // Check correct time format and split into components
+        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+        if (time.length > 1) { // If time format correct
+            time = time.slice(1);  // Remove full string match value
+            time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+            time[0] = +time[0] % 12 || 12; // Adjust hours
+        }
+        return time.join(''); // return adjusted time or original string
+    }
+
+
     checkSwitch = (param) => {
 
         switch (param) {
@@ -98,18 +116,26 @@ export default class AppointmentDetails extends Component {
                         marginTop: heighttoDP(number = '2.5%')
                     }}>
                         <View style={{ marginRight: heighttoDP(number = '5%') }}>
-                            <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>First Name</Text>
-                            <TextInput style={{
-                                height: heighttoDP(number = '6%'),
-                                width: widthtoDP(number = "37%"),
-                                borderRadius: heighttoDP(number = '10%'),
-                                borderWidth: heighttoDP(number = '.25%'),
-                                borderColor: GLOBAL.eva_midpink
-                            }} />
+                            <Text style={{
+                                marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
+                            }}>First Name</Text>
+                            <TextInput
+                                maxLength={9}
+                                style={{
+                                    paddingLeft: widthtoDP(number = '4%'),
+                                    fontSize: heighttoDP(number = '2.7%'),
+                                    height: heighttoDP(number = '6%'),
+                                    width: widthtoDP(number = "37%"),
+                                    borderRadius: heighttoDP(number = '10%'),
+                                    borderWidth: heighttoDP(number = '.25%'),
+                                    borderColor: GLOBAL.eva_midpink
+                                }} />
                         </View>
                         <View>
                             <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
                             <TextInput style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
                                 height: heighttoDP(number = '6%'),
                                 width: widthtoDP(number = "37%"),
                                 borderRadius: heighttoDP(number = '10%'),
@@ -124,20 +150,32 @@ export default class AppointmentDetails extends Component {
                     }}>
                         <Text style={{
                             marginBottom: heighttoDP(number = '1%')
-                            , fontWeight: 'bold'
+                            , fontWeight: 'bold',
                         }}>Appointment Date</Text>
-                        <TextInput style={{
-                            height: heighttoDP(number = '6%'),
-                            width: widthtoDP(number = "83%"),
-                            borderRadius: heighttoDP(number = '10%'),
-                            borderWidth: heighttoDP(number = '.25%'),
-                            borderColor: GLOBAL.eva_midpink
-                        }} />
+                        <TextInput
+                            value={this.state.selectdate}
+                            onFocus={() => {
+                                console.log('is focused')
+                                this.setState({
+                                    opendate: true,
+                                    opentime: false
+                                })
+                            }}
+                            maxLength={11}
+                            style={{
+                                paddingRight: widthtoDP(number = '20%'),
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
                         <TouchableOpacity
                             onPress={() => {
-                                this.setState({
-                                    
-                                })
+
+
                             }}
                         >
                             <Image style={{
@@ -162,10 +200,84 @@ export default class AppointmentDetails extends Component {
                             onConfirm={(e) => {
                                 console.log(e)
                                 this.setState({
+                                    dd: e,
                                     opendate: false,
                                     selectdate: (e.getDate()) + '-' + this.checkSwitch(e.getMonth().toString()) + '-' + (e.getFullYear())
                                 })
                                 console.log(this.state.selectdate)
+                            }}
+                            onCancel={() => {
+                                // setOpen(false)
+                            }}
+                        />
+
+                    </View>
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <Text style={{
+                            marginBottom: heighttoDP(number = '1%')
+                            , fontWeight: 'bold'
+                        }}>Appointment Time</Text>
+                        <TextInput
+                            value={this.state.selecttime}
+                            onFocus={() => {
+                                console.log('is focused')
+                                this.setState({
+                                    opentime: true
+                                })
+                            }}
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
+                        <TouchableOpacity >
+                            <Image style={{
+                                height: heighttoDP(number = '3.5%'),
+                                width: heighttoDP(number = '3.5%'),
+                                marginTop: -heighttoDP(number = '4.8%'),
+                                marginLeft: widthtoDP(number = "65%")
+                            }}
+                                source={require('../../assets/icons/time.png')} />
+                        </TouchableOpacity>
+                        <DatePicker
+                            mode='time'
+                            modal
+                            open={this.state.opentime}
+                            date={this.state.dd}
+                            is24hourSource='locale'
+                            minuteInterval={30}
+                            minimumDate={new Date()}
+                            title='Select Appointment Time'
+                            textColor={GLOBAL.eva_darkpink}
+                            onDateChange={(e) => {
+                                console.log(e)
+                            }}
+                            onConfirm={(e) => {
+                                console.log('before' + this.state.opentime)
+                                if ((e.toTimeString()).substring(0, 2) > 12) {
+                                    this.setState({
+                                        format: "PM",
+                                        opentime: false,
+                                    })
+                                } else {
+                                    this.setState({
+                                        format: "AM",
+                                        opentime: false,
+                                    })
+                                }
+                                this.setState({
+                                    selecttime: ((this.tConvert(e.toTimeString().substring(0, 8))).substring(0, (this.tConvert(e.toTimeString().substring(0, 8))).length - 5) + " " + this.state.format),
+                                    opentime: false,
+                                    // opendate: false,
+                                })
+                                console.log('after' + this.state.opentime)
                             }}
                             onCancel={() => {
                                 // setOpen(false)
@@ -179,39 +291,18 @@ export default class AppointmentDetails extends Component {
                         <Text style={{
                             marginBottom: heighttoDP(number = '1%')
                             , fontWeight: 'bold'
-                        }}>Appointment Time</Text>
-                        <TextInput style={{
-                            height: heighttoDP(number = '6%'),
-                            width: widthtoDP(number = "83%"),
-                            borderRadius: heighttoDP(number = '10%'),
-                            borderWidth: heighttoDP(number = '.25%'),
-                            borderColor: GLOBAL.eva_midpink
-                        }} />
-                        <TouchableOpacity >
-                            <Image style={{
-                                height: heighttoDP(number = '3.5%'),
-                                width: heighttoDP(number = '3.5%'),
-                                marginTop: -heighttoDP(number = '4.8%'),
-                                marginLeft: widthtoDP(number = "65%")
-                            }}
-                                source={require('../../assets/icons/time.png')} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{
-                        marginTop: widthtoDP(number = "5%"),
-                        alignItems: 'center', justifyContent: 'center'
-                    }}>
-                        <Text style={{
-                            marginBottom: heighttoDP(number = '1%')
-                            , fontWeight: 'bold'
                         }}>Mobile Number</Text>
-                        <TextInput style={{
-                            height: heighttoDP(number = '6%'),
-                            width: widthtoDP(number = "83%"),
-                            borderRadius: heighttoDP(number = '10%'),
-                            borderWidth: heighttoDP(number = '.25%'),
-                            borderColor: GLOBAL.eva_midpink
-                        }} />
+                        <TextInput
+                            maxLength={10}
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
                     </View>
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -221,15 +312,17 @@ export default class AppointmentDetails extends Component {
                             marginBottom: heighttoDP(number = '1%')
                             , fontWeight: 'bold'
                         }}>E-Mail</Text>
-                        <TextInput 
-                        maxLength={20}
-                        style={{paddingHorizontal:heighttoDP(number = '10%'),
-                            height: heighttoDP(number = '6%'),
-                            width: widthtoDP(number = "83%"),
-                            borderRadius: heighttoDP(number = '10%'),
-                            borderWidth: heighttoDP(number = '.25%'),
-                            borderColor: GLOBAL.eva_midpink
-                        }} />
+                        <TextInput
+                            maxLength={20}
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
                     </View>
                     <TouchableOpacity style={{
                         backgroundColor: GLOBAL.eva_midpink,
