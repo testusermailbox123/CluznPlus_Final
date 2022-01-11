@@ -108,7 +108,7 @@ export default class HomePage extends Component {
                     </TouchableOpacity>
                     <View style={{
                         marginTop: widthtoDP(number = '4%'),
-                        height: heighttoDP(number = '40%'), width: widthtoDP(number = '100%')
+                        height: heighttoDP(number = '37%'), width: widthtoDP(number = '100%')
                     }}>
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
@@ -118,7 +118,8 @@ export default class HomePage extends Component {
                         <VirtualizedList
                             style={{
                                 marginTop: heighttoDP(number = '5%'),
-                                marginBottom: heighttoDP(number = '1%'), height: heighttoDP(number = '1%')
+                                marginBottom: heighttoDP(number = '1%'), 
+                                height: heighttoDP(number = '1%')
                             }}
                             data={DATA}
 
@@ -127,29 +128,21 @@ export default class HomePage extends Component {
                             getItemCount={getItemCount}
                             getItem={getItem}
                             horizontal={true}
-                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                         />
                     </View>
-                    <View style={{
-                        marginTop: widthtoDP(number = '4%'),
-                        height: heighttoDP(number = '40%'), width: widthtoDP(number = '100%')
+                    <View style={{marginTop: widthtoDP(number = '4%'),
+                        height: heighttoDP(number = '100%'), 
+                        width: widthtoDP(number = '100%')
                     }}>
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
                             fontWeight: 'bold', marginLeft: widthtoDP(number = "6%")
                         }}>Categories</Text>
-                        <View style={{
-                            // backgroundColor: 'red',
-                            height: heighttoDP(number = '40%'), width: widthtoDP(number = '100%')
-                        }}>
-                            {/* <VirtualizedList
-                                data={DATA}
-                                ListHeaderComponent={getHeader}
-                                ListFooterComponent={getFooter} /> */}
                             <VirtualizedList
                                 style={{
                                     marginBottom: heighttoDP(number = '5%'),
-
+                                    height:heighttoDP(number='100%')
                                     // marginTop: heighttoDP(number = '5%'),
                                     // marginBottom: heighttoDP(number = '1%'), height: heighttoDP(number = '1%')
                                 }}
@@ -222,10 +215,8 @@ export default class HomePage extends Component {
                                 horizontal={false}
                                 showsVerticalScrollIndicator={false}
                             />
-                        </View>
-                        <View style={{ height: 20, width: 50 }}>
-                            <Text>Varun</Text>
-                        </View>
+                        {/* </View> */}
+                        
                     </View>
                 </ScrollView>
             </SafeAreaView>
