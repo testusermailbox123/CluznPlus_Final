@@ -260,7 +260,7 @@ export default class Categories extends Component {
                                                     borderRadius: heighttoDP(number = '1%'),
 
                                                 }}
-                                                source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }} />
+                                                source={{ uri: "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg" }} />
                                             <View style={{
                                                 marginLeft: heighttoDP(number = '2%'),
                                                 width: heighttoDP(number = '27%'),
@@ -390,7 +390,7 @@ export default class Categories extends Component {
                                                     borderRadius: heighttoDP(number = '1%'),
 
                                                 }}
-                                                source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }} />
+                                                source={{ uri: "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg" }} />
                                             <View style={{
                                                 marginLeft: heighttoDP(number = '2%'),
                                                 width: heighttoDP(number = '27%'),

@@ -7,7 +7,7 @@ const DATA = [];
 
 const getItem = (data, index) => ({
     id: Math.random().toString(12).substring(0),
-    title: `Item box ${index + 1}`
+    title: `Package ${index + 1}`
 });
 
 const getItemCount = (data) => 5;
@@ -22,7 +22,7 @@ const Item = ({ title }) => (
                 marginLeft: heighttoDP(number = '9%'),
                 marginTop: -heighttoDP(number = '5%')
             }}
-            source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }} />
+            source={require('../../assets/icons/Categories.png')}/>
         <Text style={styles.title}>{title}</Text>
         <TouchableOpacity style={{
             alignSelf: 'center', justifyContent: 'center',
@@ -184,7 +184,9 @@ export default class HomePage extends Component {
                                                             marginLeft: heighttoDP(number = '6%'),
                                                             marginTop: -heighttoDP(number = '2%')
                                                         }}
-                                                        source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }} />
+                                                        source={require('../../assets/icons/1.png')}/>
+                                                         {/* source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }}  */}
+                                                        
                                                     <Text
                                                         style={{
                                                             color: GLOBAL.eva_blue, fontWeight: 'bold',
@@ -207,7 +209,7 @@ export default class HomePage extends Component {
                                                         marginLeft: widthtoDP(number = '12%'),
                                                         marginTop: heighttoDP(number = '6%')
                                                     }}
-                                                    source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }} />
+                                                    source={require('../../assets/icons/Home.png')} />
 
                                             </View>
                                         </View>
