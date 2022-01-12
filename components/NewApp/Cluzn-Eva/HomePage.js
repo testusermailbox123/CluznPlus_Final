@@ -17,12 +17,13 @@ const Item = ({ title }) => (
     <View style={styles.item}>
         <Image
             style={{
-                height: heighttoDP(number = '13%'), width: heighttoDP(number = '13%'),
+                height: heighttoDP(number = '12%'), 
+                width: heighttoDP(number = '12%'),
                 borderRadius: heighttoDP(number = '2%'),
-                marginLeft: heighttoDP(number = '9%'),
-                marginTop: -heighttoDP(number = '5%')
+                marginLeft: heighttoDP(number = '4%'),
+                marginTop: -heighttoDP(number = '3%')
             }}
-            source={require('../../assets/icons/Categories.png')}/>
+            source={require('../../assets/icons/Categories.png')} />
         <Text style={styles.title}>{title}</Text>
         <TouchableOpacity style={{
             alignSelf: 'center', justifyContent: 'center',
@@ -34,7 +35,7 @@ const Item = ({ title }) => (
             <Text style={{
                 alignSelf: 'center', justifyContent: 'center', color: 'white'
             }}
-            >Enquire Now</Text>
+            >Book Now</Text>
         </TouchableOpacity>
     </View>
 
@@ -44,15 +45,14 @@ const Item = ({ title }) => (
 
 export default class HomePage extends Component {
 
-    _onPress(item) 
-    {
+    _onPress(item) {
         this.props.navigation.navigate('Categories', {
-            
+
         });
     }
 
     render() {
-        
+
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
                 <StatusBar barStyle="light-content" hidden={false}
@@ -64,21 +64,26 @@ export default class HomePage extends Component {
                     backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
+                    <Text style={{alignSelf: 'center', fontWeight: 'bold', marginTop: heighttoDP(number = '4%'),
+                    fontSize: heighttoDP(number = '3%'), }}>Cluzn EVA</Text>
                     <Text style={{
-                        color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
+                        color: GLOBAL.eva_black, marginTop: heighttoDP(number = '1%'),
+                        fontWeight: 'bold', fontSize: heighttoDP(number = '2.5%'),
                         marginLeft: widthtoDP(number = "5%")
                     }}>Hello Varun,</Text>
                     <Text style={{
-                        color: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '5%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '4%'),
+                        color: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '1%'),
+                        fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                         marginLeft: widthtoDP(number = "5%")
                     }}>Find Your Desired Health Solution</Text>
                     <TouchableOpacity
                         style={{
-                            backgroundColor: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '5%'),
+                            backgroundColor: GLOBAL.eva_midpink, 
+                            marginTop: heighttoDP(number = '3%'),
                             borderRadius: heighttoDP(number = '2%'),
-                            alignSelf: 'center', width: widthtoDP(number = '85%'), height: heighttoDP(number = '14%')
+                            alignSelf: 'center', 
+                            width: widthtoDP(number = '85%'), 
+                            height: heighttoDP(number = '10%')
                         }}
                     >
                         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -92,23 +97,38 @@ export default class HomePage extends Component {
                                 width: widthtoDP(number = '55%'),
                                 alignItems: 'center', justifyContent: 'space-evenly'
                             }}>
-                                <Text>Varun</Text>
-                                <Text>Sahu</Text>
+                                <Text>Book</Text>
+                                <Text>Workshop</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={{
-                            backgroundColor: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '5%'),
-                            borderRadius: heighttoDP(number = '2%'), alignItems: 'center', justifyContent: 'center',
-                            alignSelf: 'center', width: widthtoDP(number = '85%'), height: heighttoDP(number = '20%')
+                            backgroundColor: GLOBAL.eva_midpink, 
+                            marginTop: heighttoDP(number = '4%'),
+                            borderRadius: heighttoDP(number = '2%'), 
+                            alignItems: 'center', justifyContent: 'center',
+                            alignSelf: 'center', 
+                            width: widthtoDP(number = '85%'), 
+                            height: heighttoDP(number = '20%')
                         }}
                     >
-                        <Text>Banner</Text>
+                        {/* <Text>Banner</Text> */}
+                        <Image
+                            style={{
+                                width: widthtoDP(number = '85%'), height: heighttoDP(number = '20%'),
+                                borderRadius: heighttoDP(number = '2%'),
+                                // marginLeft: heighttoDP(number = '6%'),
+                                // marginTop: -heighttoDP(number = '2%')
+                            }}
+                            source={require('../../assets/icons/banner.png')} />
+                        {/* source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }}  */}
+
                     </TouchableOpacity>
                     <View style={{
                         marginTop: widthtoDP(number = '4%'),
-                        height: heighttoDP(number = '37%'), width: widthtoDP(number = '100%')
+                        height: heighttoDP(number = '27%'), 
+                        width: widthtoDP(number = '100%')
                     }}>
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
@@ -117,8 +137,8 @@ export default class HomePage extends Component {
 
                         <VirtualizedList
                             style={{
-                                marginTop: heighttoDP(number = '5%'),
-                                marginBottom: heighttoDP(number = '1%'), 
+                                // marginTop: heighttoDP(number = '2%'),
+                                // marginBottom: heighttoDP(number = '1%'),
                                 height: heighttoDP(number = '1%')
                             }}
                             data={DATA}
@@ -131,92 +151,94 @@ export default class HomePage extends Component {
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
-                    <View style={{marginTop: widthtoDP(number = '4%'),
-                        height: heighttoDP(number = '100%'), 
+                    <View style={{
+                        marginTop: widthtoDP(number = '4%'),
+                        height: heighttoDP(number = '100%'),
                         width: widthtoDP(number = '100%')
                     }}>
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
                             fontWeight: 'bold', marginLeft: widthtoDP(number = "6%")
                         }}>Categories</Text>
-                            <VirtualizedList
-                                style={{
-                                    marginBottom: heighttoDP(number = '5%'),
-                                    height:heighttoDP(number='100%')
-                                    // marginTop: heighttoDP(number = '5%'),
-                                    // marginBottom: heighttoDP(number = '1%'), height: heighttoDP(number = '1%')
+                        <VirtualizedList
+                            style={{
+                                marginBottom: heighttoDP(number = '5%'),
+                                height: heighttoDP(number = '100%')
+                                // marginTop: heighttoDP(number = '5%'),
+                                // marginBottom: heighttoDP(number = '1%'), height: heighttoDP(number = '1%')
+                            }}
+                            data={DATA}
+                            nestedScrollEnabled={true}
+                            renderItem={({ item }) =>
+
+                                <TouchableOpacity style={{
+                                    height: heighttoDP(number = '25%'),
+                                    width: widthtoDP(number = '90%'),
+
+                                    marginVertical: heighttoDP(number = '3%'),
+                                    alignSelf: 'center', justifyContent: 'center'
                                 }}
-                                data={DATA}
-                                nestedScrollEnabled={true}
-                                renderItem={({ item }) =>
-
-                                    <TouchableOpacity style={{
-                                        height: heighttoDP(number = '25%'),
-                                        width: widthtoDP(number = '90%'),
-
-                                        marginVertical: heighttoDP(number = '3%'),
-                                        alignSelf: 'center', justifyContent: 'center'
-                                    }}
                                     onPress={() => this._onPress(item)}
-                                    >
-                                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                                >
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                                        <View style={{
+                                            width: widthtoDP(number = '30%'),
+                                            alignItems: 'center', justifyContent: 'center'
+                                        }}>
                                             <View style={{
+                                                marginLeft: widthtoDP(number = '7%'),
                                                 width: widthtoDP(number = '30%'),
-                                                alignItems: 'center', justifyContent: 'center'
-                                            }}>
-                                                <View style={{
-                                                    marginLeft: widthtoDP(number = '7%'),
-                                                    width: widthtoDP(number = '30%'),
-                                                    height: heighttoDP(number = '20%'),
-                                                    backgroundColor: 'white', borderRadius: widthtoDP(number = '4%')
-                                                }}>
-                                                    <Image
-                                                        style={{
-                                                            height: heighttoDP(number = '13%'), width: heighttoDP(number = '13%'),
-                                                            borderRadius: heighttoDP(number = '2%'),
-                                                            marginLeft: heighttoDP(number = '6%'),
-                                                            marginTop: -heighttoDP(number = '2%')
-                                                        }}
-                                                        source={require('../../assets/icons/1.png')}/>
-                                                         {/* source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }}  */}
-                                                        
-                                                    <Text
-                                                        style={{
-                                                            color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                            fontSize: heighttoDP(number = '3%'),
-                                                            marginTop: heighttoDP(number = '3%'),
-                                                            alignSelf: 'center'
-                                                        }}
-                                                    >Varun</Text>
-                                                </View>
-                                            </View>
-                                            <View style={{
-                                                width: widthtoDP(number = '55%'),
-                                                alignItems: 'center', justifyContent: 'space-evenly'
+                                                height: heighttoDP(number = '20%'),
+                                                backgroundColor: 'white', borderRadius: widthtoDP(number = '4%')
                                             }}>
                                                 <Image
                                                     style={{
-                                                        height: heighttoDP(number = '13%'),
-                                                        width: widthtoDP(number = '45%'),
+                                                        height: heighttoDP(number = '13%'), 
+                                                        width: heighttoDP(number = '13%'),
                                                         borderRadius: heighttoDP(number = '2%'),
-                                                        marginLeft: widthtoDP(number = '12%'),
-                                                        marginTop: heighttoDP(number = '6%')
+                                                        marginLeft: heighttoDP(number = '6%'),
+                                                        marginTop: -heighttoDP(number = '2%')
                                                     }}
-                                                    source={require('../../assets/icons/Home.png')} />
+                                                    source={require('../../assets/icons/1.png')} />
+                                                {/* source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }}  */}
 
+                                                <Text
+                                                    style={{
+                                                        color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                        fontSize: heighttoDP(number = '3%'),
+                                                        marginTop: heighttoDP(number = '3%'),
+                                                        alignSelf: 'center'
+                                                    }}
+                                                >Varun</Text>
                                             </View>
                                         </View>
-                                    </TouchableOpacity>
+                                        <View style={{
+                                            width: widthtoDP(number = '55%'),
+                                            alignItems: 'center', justifyContent: 'space-evenly'
+                                        }}>
+                                            <Image
+                                                style={{
+                                                    height: heighttoDP(number = '13%'),
+                                                    width: widthtoDP(number = '45%'),
+                                                    borderRadius: heighttoDP(number = '2%'),
+                                                    marginLeft: widthtoDP(number = '12%'),
+                                                    marginTop: heighttoDP(number = '6%')
+                                                }}
+                                                source={require('../../assets/icons/Home.png')} />
 
-                                }
-                                keyExtractor={(item, index) => item + index}
-                                getItemCount={getItemCount}
-                                getItem={getItem}
-                                horizontal={false}
-                                showsVerticalScrollIndicator={false}
-                            />
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+
+                            }
+                            keyExtractor={(item, index) => item + index}
+                            getItemCount={getItemCount}
+                            getItem={getItem}
+                            horizontal={false}
+                            showsVerticalScrollIndicator={false}
+                        />
                         {/* </View> */}
-                        
+
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -228,14 +250,14 @@ const styles = StyleSheet.create({
 
     item: {
         backgroundColor: 'white',
-        height: heighttoDP(number = '22%'),
-        width: heighttoDP(number = '20%'),
-        marginHorizontal: widthtoDP(number = '5%'),
+        height: heighttoDP(number = '18%'),
+        width: heighttoDP(number = '15%'),
+        marginHorizontal: widthtoDP(number = '4%'),
         // padding: 20,
         borderRadius: 20,
         marginTop: heighttoDP(number = '5%')
     },
-    title: {
-        fontSize: 32,
+    title: {alignSelf: 'center',
+        fontSize: 15,
     },
 });
