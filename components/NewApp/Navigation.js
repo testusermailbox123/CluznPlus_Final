@@ -17,6 +17,9 @@ import HomePage from './Cluzn-Eva/HomePage'
 import Categories from './Cluzn-Eva/Categories'
 import DoctorDescription from './Cluzn-Eva/DoctorDescription'
 import AppointmentDetails from './Cluzn-Eva/AppointmentDetails'
+import WorkShop from './Cluzn-Eva/WorkShop'
+import WorkShopDetails from './Cluzn-Eva/WorkShopDetails'
+import PackageDetails from './Cluzn-Eva/PackageDetails'
 
 const HomeStack = createStackNavigator();
 
@@ -42,6 +45,9 @@ export default function HomeStackScreen({ navigation }) {
         <HomeStack.Screen name="Categories" component={Categories}></HomeStack.Screen>
         <HomeStack.Screen name="DoctorDescription" component={DoctorDescription}></HomeStack.Screen>
         <HomeStack.Screen name="AppointmentDetails" component={AppointmentDetails}></HomeStack.Screen>
+        <HomeStack.Screen name="WorkShop" component={WorkShop}></HomeStack.Screen>
+        <HomeStack.Screen name="WorkShopDetails" component={WorkShopDetails}></HomeStack.Screen>
+        <HomeStack.Screen name="PackageDetails" component={PackageDetails}></HomeStack.Screen>
       </HomeStack.Navigator>
     </NavigationContainer>
   )

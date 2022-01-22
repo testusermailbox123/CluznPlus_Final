@@ -90,7 +90,7 @@ export default class HospitalSearch extends React.Component {
             page: counter,
             cityName: selectedItem
         }
-        // console.log('data --- ', data);
+        console.log('token --- ', authtokenfromEnterNameDetails);
         axios.post('http://cluznplus.com/cluzn_backend/api/hospital/', data, {
             headers: {
                 token: authtokenfromEnterNameDetails
