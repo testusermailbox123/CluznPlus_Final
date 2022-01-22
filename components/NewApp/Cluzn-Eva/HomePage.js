@@ -14,7 +14,7 @@ export default class HomePage extends Component {
         this.state = {
             planlist: [],
             categorieslist: [],
-            videos:[]
+            videos: []
         }
     }
 
@@ -40,6 +40,7 @@ export default class HomePage extends Component {
     }
 
     _onPresscategories(myitem) {
+        console.log("myitem.videos" + myitem.videos)
         this.props.navigation.navigate('Categories', {
             videos: myitem.videos,
         });
@@ -80,6 +81,7 @@ export default class HomePage extends Component {
         this.setState({
             categorieslist: [...this.state.categorieslist, ...result.data],
         });
+        console.log("categorieslist -------- ", this.state.categorieslist)
     }
 
     render() {
@@ -218,13 +220,15 @@ export default class HomePage extends Component {
 
                     {this.state.categorieslist.map((myitem) => {
                         return (
-                            <TouchableOpacity style={{
-                                height: heighttoDP(number = '25%'),
-                                width: widthtoDP(number = '90%'),
+                            <TouchableOpacity
+                                key={myitem.id}
+                                style={{
+                                    height: heighttoDP(number = '25%'),
+                                    width: widthtoDP(number = '90%'),
 
-                                marginVertical: heighttoDP(number = '3%'),
-                                alignSelf: 'center', justifyContent: 'center'
-                            }}
+                                    marginVertical: heighttoDP(number = '3%'),
+                                    alignSelf: 'center', justifyContent: 'center'
+                                }}
                                 onPress={() => this._onPresscategories(myitem)}
                             >
                                 <View style={{ flex: 1, flexDirection: 'row' }}>

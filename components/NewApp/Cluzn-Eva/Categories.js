@@ -18,7 +18,17 @@ export default class Categories extends Component {
             videoFlag: true,
             blogsFlag: false,
             BookAppointmentFlag: false,
+            videos:[]
         }
+    }
+
+    UNSAFE_componentWillMount() {
+        const { videos } = this.props.route.params;
+        this.setState({
+            videos: videos,
+           
+        })
+        console.log(this.state.videos)
     }
 
     pressblogButton() {
