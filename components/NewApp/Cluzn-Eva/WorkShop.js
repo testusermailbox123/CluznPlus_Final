@@ -2,13 +2,8 @@ import React, { Component } from 'react'
 import { Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
-
-const DATA = [];
-const getItemCount = (data) => 5;
-const getItem = (data, index) => ({
-    id: Math.random().toString(12).substring(0),
-    title: `Item box ${index + 1}`
-});
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 export default class WorkShop extends Component {
 
@@ -16,13 +11,43 @@ export default class WorkShop extends Component {
         super(props)
 
         this.state = {
-
+            workshoplist: [],
+            image: '',
+            wookshopid:''
         }
     }
 
     _onPress(item) {
         this.props.navigation.navigate('WorkShopDetails', {
+            image: item.image,
+            wookshopid : item.id
         });
+    }
+
+    UNSAFE_componentWillMount() {
+        const { navigation } = this.props;
+        this.generateworkshoplist();
+    }
+
+    generateworkshoplist() {
+        // const authtoken = AsyncStorage.getItem('auth_token')
+
+        axios.get('http://cluznplus.com/cluzn_backend/api/getWebbinar', {
+            headers: {
+                token: ''
+            }
+        })
+            .then(response => {
+
+                console.log("workshoplist - ", response.data.data);
+                this.setState({
+                    workshoplist: [...this.state.workshoplist, ...response.data.data],
+                });
+                console.log(this.state.workshoplist)
+            })
+            .catch((error) => {
+                this.setState({ workshoplist: [] })
+            });
     }
 
     render() {
@@ -72,12 +97,16 @@ export default class WorkShop extends Component {
                         width: widthtoDP(number = '100%')
                     }}>
 
-                        <VirtualizedList
-                            showsVerticalScrollIndicator={false}
+                        <FlatList
                             style={{
-                                marginBottom: heighttoDP(number = '5%'),
+                                height: heighttoDP(number = '1%'),
+                                marginBottom: heighttoDP(number = '7%'),
                             }}
-                            data={DATA}
+                            data={this.state.workshoplist}
+
+                            keyExtractor={(item, index) => item + index}
+                            // horizontal={true}
+                            showsVerticalScrollIndicator={false}
                             renderItem={({ item }) =>
 
                                 <TouchableOpacity
@@ -95,7 +124,7 @@ export default class WorkShop extends Component {
                                             color: GLOBAL.eva_blue, fontWeight: 'bold',
                                             fontSize: heighttoDP(number = '1.8%')
                                         }}
-                                        >Irregular periods -Causes and Treatment for Irregular Periods</Text>
+                                        >{item.name}</Text>
                                         <Image
                                             style={{
                                                 height: heighttoDP(number = '20%'),
@@ -103,16 +132,13 @@ export default class WorkShop extends Component {
                                                 borderRadius: heighttoDP(number = '4%'),
                                                 marginTop: heighttoDP(number = '2%'),
                                             }}
-                                            source={{ uri: "https://switchindia.org/images/medical-innovation/medical-innovation-workshop-0102.jpg" }} />
+                                            source={{ uri: item.image }}
+                                        // source={{ uri: "https://switchindia.org/images/medical-innovation/medical-innovation-workshop-0102.jpg" }}
+                                        />
 
                                     </View>
                                 </TouchableOpacity>
-
                             }
-                            keyExtractor={(item, index) => item + index}
-                            getItemCount={getItemCount}
-                            getItem={getItem}
-
                         />
                     </View>
                 </View>

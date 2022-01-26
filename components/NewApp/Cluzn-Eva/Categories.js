@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet } from 'react-native'
+import { Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, ActivityIndicator, StyleSheet } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
+import { WebView } from 'react-native-webview';
+import Video from 'react-native-video';
 GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
+import axios from 'axios';
 const DATA = [];
 const getItemCount = (data) => 5;
 const getItem = (data, index) => ({
@@ -18,17 +21,19 @@ export default class Categories extends Component {
             videoFlag: true,
             blogsFlag: false,
             BookAppointmentFlag: false,
-            videos:[]
+            videos: [],
+            isloading1: false,
+            packageId: '',
+            bookAppointmentList: []
         }
     }
 
     UNSAFE_componentWillMount() {
-        const { videos } = this.props.route.params;
+        const { videos, packageId } = this.props.route.params;
         this.setState({
             videos: videos,
-           
+            packageId: packageId
         })
-        console.log(this.state.videos)
     }
 
     pressblogButton() {
@@ -39,12 +44,36 @@ export default class Categories extends Component {
         })
     }
 
+    generateBookAppointmentList() {
+        let api = "http://cluznplus.com/cluzn_backend/api/category-doctors/" + this.state.packageId
+
+        axios.get(api, {
+            headers: {
+                token: ""
+            }
+        })
+            .then(response => {
+
+                this.setState({
+                    bookAppointmentList: [...this.state.bookAppointmentList, ...response.data],
+                });
+
+            })
+            .catch((error) => {
+                this.setState({ bookAppointmentList: [] })
+                console.log(error)
+            });
+
+    }
+
     pressbookButton() {
         this.setState({
             blogsFlag: false,
             videoFlag: false,
-            BookAppointmentFlag: true
+            BookAppointmentFlag: true,
+            bookAppointmentList: []
         })
+        this.generateBookAppointmentList()
     }
 
     pressvideoButton() {
@@ -54,125 +83,268 @@ export default class Categories extends Component {
             BookAppointmentFlag: false
         })
     }
-    _onPress(item) 
-    {
+    _onPressBookAppointment(item) {
         this.props.navigation.navigate('DoctorDescription', {
-            
+            docfname: item.first_name,
+            doclname: item.last_name,
+            docfullimage: item.image,
+            docspecialization: item.specialization,
+            docdescription: item.description,
+            docvideo: item.video,
+            docimage: item.image,
         });
     }
     render() {
         if (this.state.videoFlag == true) {
-            return (
-                <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-                    <StatusBar barStyle="light-content" hidden={false}
-                        backgroundColor='#FEE1DC'
-                        translucent={true}>
-                    </StatusBar>
-                    <View style={{
-                        flex: 1,
-                        backgroundColor: GLOBAL.eva_lightpink,
-                        height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
-                    }}>
-                        <Text style={{
-                            color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
-                            fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
-                            marginLeft: widthtoDP(number = "5%")
-                        }}>Hello Varun,</Text>
+            if (this.state.isloading1 == false) {
+                return (
+                    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+                        <StatusBar barStyle="light-content" hidden={false}
+                            backgroundColor='#FEE1DC'
+                            translucent={true}>
+                        </StatusBar>
                         <View style={{
-                            flexDirection: 'row',
-                            width: widthtoDP(number = '100%'),
-                            marginTop: widthtoDP(number = '5%'),
-                            justifyContent: 'center', height: heighttoDP(number = '15%')
+                            flex: 1,
+                            backgroundColor: GLOBAL.eva_lightpink,
+                            height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                         }}>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: GLOBAL.eva_darkpink,
-                                    width: widthtoDP(number = '30%'),
-                                    height: heighttoDP(number = '7%'),
-                                    borderRadius: heighttoDP(number = '2%'),
-                                    alignItems: 'center', justifyContent: 'center',
-                                    marginRight: heighttoDP(number = '1%'),
-                                }}
-                            >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                >Videos</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                            onPress={() => this.pressblogButton()}
-                                style={{
-                                    backgroundColor: GLOBAL.eva_midpink,
-                                    width: widthtoDP(number = '30%'),
-                                    height: heighttoDP(number = '7%'),
-                                    borderRadius: heighttoDP(number = '2%'),
-                                    alignItems: 'center', justifyContent: 'center',
-                                    marginRight: heighttoDP(number = '1%')
-                                }}
-                            >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                >Blogs</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => this.pressbookButton()}
-                                style={{
-                                    backgroundColor: GLOBAL.eva_midpink,
-                                    width: widthtoDP(number = '30%'),
-                                    height: heighttoDP(number = '7%'),
-                                    borderRadius: heighttoDP(number = '2%'),
-                                    alignItems: 'center', justifyContent: 'center'
-                                }}
-                            >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                >Book Appointment</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{
-                            height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
-                        }}>
-
-                            <VirtualizedList
-                                showsVerticalScrollIndicator={false}
-                                style={{
-                                    marginBottom: heighttoDP(number = '5%'),
-                                }}
-                                data={DATA}
-                                renderItem={({ item }) =>
-                                
-                                    <TouchableOpacity style={{
-                                        height: heighttoDP(number = '25%'),
-                                        width: widthtoDP(number = '90%'),
-                                        marginVertical: heighttoDP(number = '3%'),
-                                        alignSelf: 'center', justifyContent: 'center',
-                                        // backgroundColor:'red'
+                            <Text style={{
+                                color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
+                                fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
+                                marginLeft: widthtoDP(number = "5%")
+                            }}>Hello Varun,</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                width: widthtoDP(number = '100%'),
+                                marginTop: widthtoDP(number = '5%'),
+                                justifyContent: 'center', height: heighttoDP(number = '15%')
+                            }}>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: GLOBAL.eva_darkpink,
+                                        width: widthtoDP(number = '30%'),
+                                        height: heighttoDP(number = '7%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        alignItems: 'center', justifyContent: 'center',
+                                        marginRight: heighttoDP(number = '1%'),
                                     }}
-                                    >
-                                        <View>
-                                            <Text style={{
-                                                color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                fontSize: heighttoDP(number = '1.5%')
-                                            }}
-                                            >Irregular periods -Causes and Treatment for Irregular Periods</Text>
-                                            <Image
-                                                style={{
-                                                    height: heighttoDP(number = '20%'),
-                                                    width: widthtoDP(number = '90%'),
-                                                    borderRadius: heighttoDP(number = '4%'),
-                                                    marginTop: heighttoDP(number = '2%'),
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Videos</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this.pressblogButton()}
+                                    style={{
+                                        backgroundColor: GLOBAL.eva_midpink,
+                                        width: widthtoDP(number = '30%'),
+                                        height: heighttoDP(number = '7%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        alignItems: 'center', justifyContent: 'center',
+                                        marginRight: heighttoDP(number = '1%')
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Blogs</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this.pressbookButton()}
+                                    style={{
+                                        backgroundColor: GLOBAL.eva_midpink,
+                                        width: widthtoDP(number = '30%'),
+                                        height: heighttoDP(number = '7%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        alignItems: 'center', justifyContent: 'center'
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Book Appointment</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{
+                                height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
+                            }}>
+
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    style={{
+                                        marginBottom: heighttoDP(number = '5%'),
+                                    }}
+                                    data={this.state.videos}
+                                    renderItem={({ item }) =>
+
+                                        <View style={{
+                                            height: heighttoDP(number = '25%'),
+                                            width: widthtoDP(number = '90%'),
+                                            marginVertical: heighttoDP(number = '3%'),
+                                            alignSelf: 'center', justifyContent: 'center',
+                                            // backgroundColor:'red'
+                                        }}
+                                        >
+                                            <View>
+                                                <Text style={{
+                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                    fontSize: heighttoDP(number = '1.5%')
                                                 }}
-                                                source={{ uri: "https://pe-images.s3.amazonaws.com/basics/cc/image-size-resolution/resize-images-for-print/original-image.jpg" }} />
+                                                >{item.title}</Text>
+                                                <View style={{
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    height: heighttoDP(number = '20%'),
+                                                    width: widthtoDP(number = '90%')
+                                                }}>
 
+                                                    <Video
+                                                        source={{
+                                                            uri: 'http://techslides.com/demos/sample-videos/small.mp4'
+                                                            // item.video 
+                                                        }}   // Can be a URL or a local file.
+                                                        ref={(ref) => { this.player = ref }}
+                                                        paused={true}
+                                                        // controls={true}
+                                                        onBuffer={() => {
+                                                            this.setState({ isloading: false })
+                                                        }}
+                                                        style={{
+                                                            flex: 1,
+                                                            backgroundColor: 'red',
+                                                            position: 'absolute',
+                                                            top: 0,
+                                                            left: 0,
+                                                            bottom: 0,
+                                                            right: 0,
+                                                        }}
+                                                    />
+                                                </View>
+                                            </View>
                                         </View>
-                                    </TouchableOpacity>
 
-                                }
-                                keyExtractor={(item, index) => item + index}
-                                getItemCount={getItemCount}
-                                getItem={getItem}
+                                    }
+                                    keyExtractor={(item, index) => item + index}
 
-                            />
+                                />
+                            </View>
                         </View>
-                    </View>
-                </SafeAreaView>
-            )
+                    </SafeAreaView>
+                )
+            }
+            else {
+
+                return (
+                    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+                        <StatusBar barStyle="light-content" hidden={false}
+                            backgroundColor='#FEE1DC'
+                            translucent={true}>
+                        </StatusBar>
+                        <View style={{
+                            flex: 1,
+                            backgroundColor: GLOBAL.eva_lightpink,
+                            height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
+                        }}>
+                            <Text style={{
+                                color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
+                                fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
+                                marginLeft: widthtoDP(number = "5%")
+                            }}>Hello Varun,</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                width: widthtoDP(number = '100%'),
+                                marginTop: widthtoDP(number = '5%'),
+                                justifyContent: 'center', height: heighttoDP(number = '15%')
+                            }}>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: GLOBAL.eva_darkpink,
+                                        width: widthtoDP(number = '30%'),
+                                        height: heighttoDP(number = '7%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        alignItems: 'center', justifyContent: 'center',
+                                        marginRight: heighttoDP(number = '1%'),
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Videos</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this.pressblogButton()}
+                                    style={{
+                                        backgroundColor: GLOBAL.eva_midpink,
+                                        width: widthtoDP(number = '30%'),
+                                        height: heighttoDP(number = '7%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        alignItems: 'center', justifyContent: 'center',
+                                        marginRight: heighttoDP(number = '1%')
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Blogs</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this.pressbookButton()}
+                                    style={{
+                                        backgroundColor: GLOBAL.eva_midpink,
+                                        width: widthtoDP(number = '30%'),
+                                        height: heighttoDP(number = '7%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        alignItems: 'center', justifyContent: 'center'
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Book Appointment</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{
+                                height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
+                            }}>
+
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    style={{
+                                        marginBottom: heighttoDP(number = '5%'),
+                                    }}
+                                    data={this.state.videos}
+                                    renderItem={({ item }) =>
+
+                                        <View style={{
+                                            height: heighttoDP(number = '25%'),
+                                            width: widthtoDP(number = '90%'),
+                                            marginVertical: heighttoDP(number = '3%'),
+                                            alignSelf: 'center', justifyContent: 'center',
+                                            // backgroundColor:'red'
+                                        }}
+                                        >
+                                            <View>
+                                                <Text style={{
+                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                    fontSize: heighttoDP(number = '1.5%')
+                                                }}
+                                                >{item.title}</Text>
+                                                <Text style={{
+                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                    fontSize: heighttoDP(number = '1.5%')
+                                                }}
+                                                >{item.video}</Text>
+
+
+
+                                                <View style={{
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    height: heighttoDP(number = '20%'),
+                                                    width: widthtoDP(number = '90%')
+                                                }}>
+                                                    <ActivityIndicator animating={this.state.isloading1} size="large" color="red" />
+                                                </View>
+                                            </View>
+                                        </View>
+
+                                    }
+
+                                />
+                            </View>
+                        </View>
+                    </SafeAreaView>
+                )
+            }
         }
         else if (this.state.blogsFlag == true) {
             return (
@@ -243,12 +415,12 @@ export default class Categories extends Component {
                             height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
                         }}>
 
-                            <VirtualizedList
+                            <FlatList
                                 showsVerticalScrollIndicator={false}
                                 style={{
                                     marginBottom: heighttoDP(number = '5%'),
                                 }}
-                                data={DATA}
+                                data={this.state.videos}
                                 renderItem={({ item }) =>
 
                                     <TouchableOpacity style={{
@@ -282,11 +454,11 @@ export default class Categories extends Component {
 
                                                 }}>Sahu</Text>
                                                 <Text numberOfLines={8}>
-                                                Ive yet to meet women who enjoy being on their period or 
-                                                experience the lovely mood changes that often come with it. 
-                                                Many women simply deal with the irritability and bloating and 
-                                                get on with life. But sometimes even the toughest of us need 
-                                                a little relief from our premenstrual problems...
+                                                    Ive yet to meet women who enjoy being on their period or
+                                                    experience the lovely mood changes that often come with it.
+                                                    Many women simply deal with the irritability and bloating and
+                                                    get on with life. But sometimes even the toughest of us need
+                                                    a little relief from our premenstrual problems...
                                                 </Text>
                                             </View>
                                         </View>
@@ -294,14 +466,14 @@ export default class Categories extends Component {
 
                                 }
                                 keyExtractor={(item, index) => item + index}
-                                getItemCount={getItemCount}
-                                getItem={getItem}
+
 
                             />
                         </View>
                     </View>
                 </SafeAreaView>
             )
+
         }
         else {
             return (
@@ -372,12 +544,12 @@ export default class Categories extends Component {
                             height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
                         }}>
 
-                            <VirtualizedList
+                            <FlatList
                                 showsVerticalScrollIndicator={false}
                                 style={{
                                     marginBottom: heighttoDP(number = '5%'),
                                 }}
-                                data={DATA}
+                                data={this.state.bookAppointmentList}
                                 renderItem={({ item }) =>
 
                                     <TouchableOpacity style={{
@@ -388,7 +560,7 @@ export default class Categories extends Component {
                                         backgroundColor: GLOBAL.eva_midpink,
                                         borderRadius: heighttoDP(number = '2%')
                                     }}
-                                    onPress={() => this._onPress(item)}
+                                        onPress={() => this._onPressBookAppointment(item)}
                                     >
                                         <View style={{ flexDirection: 'row' }}>
 
@@ -400,7 +572,10 @@ export default class Categories extends Component {
                                                     borderRadius: heighttoDP(number = '1%'),
 
                                                 }}
-                                                source={{ uri: "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg" }} />
+                                                source={{
+                                                    uri: "http://cluznplus.com/cluzn_backend/images/" + item.image
+                                                    // "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg"
+                                                }} />
                                             <View style={{
                                                 marginLeft: heighttoDP(number = '2%'),
                                                 width: heighttoDP(number = '27%'),
@@ -411,29 +586,23 @@ export default class Categories extends Component {
                                                     color: GLOBAL.eva_blue,
                                                     fontSize: heighttoDP(number = '3%'),
                                                     // marginTop: -heighttoDP(number = '5%')
-                                                }}>Dr. Reema Kane</Text>
+                                                }}>{item.first_name} {item.last_name}</Text>
                                                 <Text style={{
                                                     fontWeight: 'bold',
                                                     color: GLOBAL.eva_green,
                                                     fontSize: heighttoDP(number = '2.3%'),
                                                     marginBottom: heighttoDP(number = '1%')
-                                                }}>Dermatologist</Text>
+                                                }}>{item.specialization}</Text>
                                                 <Text numberOfLines={6}>
-                                                I’ve yet to meet women who enjoy being on their period or 
-                                                experience the lovely mood changes that often come with it. 
-                                                Many women simply deal with the irritability and bloating and 
-                                                get on with life. But sometimes even the toughest of us need 
-                                                a little relief from our premenstrual problems...
+                                                    {item.description}
                                                 </Text>
+
                                             </View>
                                         </View>
                                     </TouchableOpacity>
 
                                 }
                                 keyExtractor={(item, index) => item + index}
-                                getItemCount={getItemCount}
-                                getItem={getItem}
-
                             />
                         </View>
                     </View>

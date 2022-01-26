@@ -19,7 +19,7 @@ export default class HomePage extends Component {
     }
 
     _onPressPackages(item) {
-        this.props.navigation.navigate('Packages', {
+        this.props.navigation.navigate('PackageDetails', {
             amount: item.amount,
             name: item.name,
             expire_in_month: item.expire_in_month
@@ -28,21 +28,24 @@ export default class HomePage extends Component {
 
     _onPress_WorkShop() {
         this.props.navigation.navigate('WorkShop', {
-
+            
         });
     }
 
     UNSAFE_componentWillMount() {
-        console.log("componentDidMount - ");
+        console.log("UNSAFE_componentWillMount - ");
         const { navigation } = this.props;
-        this.generatePlanList();
         this.generateCategoryList();
+        this.generatePlanList();
+
     }
 
     _onPresscategories(myitem) {
         console.log("myitem.videos" + myitem.videos)
+        console.log("myitem.videos " + myitem.id)
         this.props.navigation.navigate('Categories', {
             videos: myitem.videos,
+            packageId: myitem.id,
         });
     }
 
@@ -57,31 +60,30 @@ export default class HomePage extends Component {
                 this.setState({
                     planlist: [...this.state.planlist, ...response.data.data],
                 });
-                console.log("planlist ", this.state.planlist);
+
             })
             .catch((error) => {
                 this.setState({ planlist: [] })
             });
     }
 
-    async generateCategoryList() {
+    generateCategoryList() {
+        axios.get('http://cluznplus.com/cluzn_backend/api/categories', {
+            headers: {
+                token: ""
+            }
+        })
+            .then(response => {
+                // console.log("planlist - ", response.data.data[1]);
+                this.setState({
+                    categorieslist: [...this.state.categorieslist, ...response.data],
+                });
 
-        let result;
-        try {
-            result = await axios.request({
-                method: 'GET',
-                url: `https://cluznplus.com/cluzn_backend/api/categories`,
-                headers: {
-                },
             })
-
-        } catch (err) {
-            err => console.log(err)
-        }
-        this.setState({
-            categorieslist: [...this.state.categorieslist, ...result.data],
-        });
-        console.log("categorieslist -------- ", this.state.categorieslist)
+            .catch((error) => {
+                this.setState({ categorieslist: [] })
+                console.log("categorieslist error", error);
+            });
     }
 
     render() {
@@ -186,7 +188,7 @@ export default class HomePage extends Component {
                                             marginTop: -heighttoDP(number = '3%')
                                         }}
 
-                                        source={{ uri: "http://cluznplus.com/cluzn_backend/images/" + item.image }}
+                                        source={{ uri: item.image }}
                                     />
 
                                     <Text style={styles.title}>{item.name}</Text>
@@ -254,7 +256,7 @@ export default class HomePage extends Component {
                                             <Text
                                                 style={{
                                                     color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                    fontSize: heighttoDP(number = '3%'),
+                                                    fontSize: heighttoDP(number = '2%'),
                                                     marginTop: heighttoDP(number = '3%'),
                                                     alignSelf: 'center'
                                                 }}
@@ -281,78 +283,6 @@ export default class HomePage extends Component {
                             </TouchableOpacity>
                         )
                     })}
-
-                    {/* <FlatList
-                            data={this.state.hospitalList}
-                             ={false}
-                            contentContainerStyle={{ paddingBottom: h(55) }}
-                            showsVerticalScrollIndicator={false}
-                            onEndReachedThreshold={0.08} // Tried 0, 0.01, 0.1, 0.7, 50, 100, 700
-                            onEndReached={({ distanceFromEnd }) => {
-                                this.generateHospitalList()
-                            }}
-                            keyExtractor={(item, index) => item + index}
-                            renderItem={({ item }) =>
-
-                                <TouchableOpacity style={{
-                                    height: heighttoDP(number = '25%'),
-                                    width: widthtoDP(number = '90%'),
-
-                                    marginVertical: heighttoDP(number = '3%'),
-                                    alignSelf: 'center', justifyContent: 'center'
-                                }}
-                                    onPress={() => this._onPress(item)}
-                                >
-                                    <View style={{ flex: 1, flexDirection: 'row' }}>
-                                        <View style={{
-                                            width: widthtoDP(number = '30%'),
-                                            alignItems: 'center', justifyContent: 'center'
-                                        }}>
-                                            <View style={{
-                                                marginLeft: widthtoDP(number = '7%'),
-                                                width: widthtoDP(number = '30%'),
-                                                height: heighttoDP(number = '20%'),
-                                                backgroundColor: 'white', borderRadius: widthtoDP(number = '4%')
-                                            }}>
-                                                <Image
-                                                    style={{
-                                                        height: heighttoDP(number = '13%'),
-                                                        width: heighttoDP(number = '13%'),
-                                                        borderRadius: heighttoDP(number = '2%'),
-                                                        marginLeft: heighttoDP(number = '6%'),
-                                                        marginTop: -heighttoDP(number = '2%')
-                                                    }}
-                                                    source={require('../../assets/icons/1.png')} />
-                                                <Text
-                                                    style={{
-                                                        color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                        fontSize: heighttoDP(number = '3%'),
-                                                        marginTop: heighttoDP(number = '3%'),
-                                                        alignSelf: 'center'
-                                                    }}
-                                                >Varun</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{
-                                            width: widthtoDP(number = '55%'),
-                                            alignItems: 'center', justifyContent: 'space-evenly'
-                                        }}>
-                                            <Image
-                                                style={{
-                                                    height: heighttoDP(number = '13%'),
-                                                    width: widthtoDP(number = '45%'),
-                                                    borderRadius: heighttoDP(number = '2%'),
-                                                    marginLeft: widthtoDP(number = '12%'),
-                                                    marginTop: heighttoDP(number = '6%')
-                                                }}
-                                                source={require('../../assets/icons/Home.png')} />
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            }
-                        >
-                        </FlatList>*/}
-                    {/* </View> */}
                 </ScrollView>
             </SafeAreaView>
         )

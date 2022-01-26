@@ -9,6 +9,22 @@ GLOBAL = require('../globals');
 
 export default class WorkShopDetails extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            image: '',
+            wookshopid: ''
+        }
+    }
+
+    UNSAFE_componentWillMount() {
+        const { image, wookshopid } = this.props.route.params;
+        this.setState({
+            image: image,
+            wookshopid: wookshopid
+        });
+    }
+
     render() {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -16,18 +32,29 @@ export default class WorkShopDetails extends Component {
                     backgroundColor='#FEE1DC'
                     translucent={true}>
                 </StatusBar>
-                <View style={{ flex: 1 }}>
-                    <View style={{ flex: 2 }}>
+                <View>
+                    <View style={{
+
+                        height: heighttoDP(number = '90%'),
+                        alignSelf: 'center', justifyContent: 'center',
+                        width: widthtoDP(number = '97%'),
+
+                    }}>
                         <Image
-                            style={{ flex: 2 }}
+                            style={{
+                                height: heighttoDP(number = '90%'),
+                                width: widthtoDP(number = '97%'),
+                            }}
                             source={{
-                                uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                uri: this.state.image
                             }}
                         />
                     </View>
                     <View style={{
-                        flex: 1,
-                        alignItems: 'center', justifyContent: 'center',
+
+                        marginTop: heighttoDP(number = '2%'),
+                        alignItems: 'center',
+                        justifyContent: 'center',
                     }}>
                         <TouchableOpacity
                             style={{
