@@ -13,7 +13,8 @@ export default class Webinar extends Component {
         this.state = {
             workshoplist: [],
             image: '',
-            wookshopid: ''
+            wookshopid: '',
+            webname:''
         }
     }
 
@@ -22,7 +23,8 @@ export default class Webinar extends Component {
             image: item.image,
             wookshopid: item.id,
             amount:item.amount,
-            descript: item.description
+            descript: item.description,
+            webname:this.state.webname
         });
     }
 

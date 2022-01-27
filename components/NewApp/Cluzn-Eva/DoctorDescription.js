@@ -25,6 +25,12 @@ export default class DoctorDescription extends Component {
         }
     }
 
+    _onPressVideo(item) {
+        this.props.navigation.navigate('Video1', {
+            video_url: this.state.docvideo
+        });
+    }
+
     UNSAFE_componentWillMount() {
         const { docfname, doclname, docfullimage, docspecialization, docdescription,
             docvideo, docimage } = this.props.route.params;
@@ -37,12 +43,6 @@ export default class DoctorDescription extends Component {
             docvideo: docvideo,
             docimage: docimage
         })
-    }
-
-    _onPress(item) {
-        this.props.navigation.navigate('AppointmentDetails', {
-
-        });
     }
 
     render() {
@@ -59,15 +59,17 @@ export default class DoctorDescription extends Component {
                     }}>
                         <Image
                             style={{
+                                backgroundColor: 'red',
                                 height: heighttoDP(number = '35%'),
                             }}
                             source={{
-                                uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                uri: "http://cluznplus.com/cluzn_backend/images/" + this.state.docfullimage,
                             }}
                         />
                     </View>
                     <View style={{
-                        flex: 2, marginLeft: heighttoDP(number = '3%'),
+                        flex: 2,
+                        marginLeft: heighttoDP(number = '3%'),
                         marginTop: heighttoDP(number = '3%')
                     }}>
                         <Text style={{
@@ -98,45 +100,40 @@ export default class DoctorDescription extends Component {
                             fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
                             fontSize: heighttoDP(number = '2.5%')
                         }}>About Doctor</Text>
-                        <Text style={{ marginTop: heighttoDP(number = '3%'), }}>{this.state.docdescription}</Text>
                         <Text style={{
-                            fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
-                            fontSize: heighttoDP(number = '2.5%')
-                        }}>Video</Text>
+                            marginTop: heighttoDP(number = '3%'),
+                            width: widthtoDP(number = '90%'),
+                            height: heighttoDP(number = '20%'),
+                        }}>{this.state.docdescription}</Text>
+                        <Text
+                            numberOfLines={5}
+                            style={{
+                                fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
+                                fontSize: heighttoDP(number = '2.5%')
+                            }}>Video</Text>
                         <View style={{
                             alignItems: 'center',
                             justifyContent: 'center',
                             height: heighttoDP(number = '20%'),
                             width: widthtoDP(number = '90%')
                         }}>
-
-                            <Video
-                                source={{
-                                    uri: 'http://techslides.com/demos/sample-videos/small.mp4'
-                                    // item.video 
-                                }}   // Can be a URL or a local file.
-                                ref={(ref) => { this.player = ref }}
-                                // paused={true}
-                                // controls={true}
-                                onBuffer={() => {
-                                    this.setState({ isloading: false })
-                                }}
-                                bufferConfig={{
-                                    minBufferMs: 15000,
-                                    maxBufferMs: 50000,
-                                    bufferForPlaybackMs: 2500,
-                                    bufferForPlaybackAfterRebufferMs: 5000
-                                }}
+                            <TouchableOpacity
+                                onPress={() => this._onPressVideo()}
                                 style={{
-                                    backgroundColor: 'red',
-                                    position: 'relative',
-                                    top: 0,
-                                    left: 0,
-                                    bottom: 0,
-                                    right: 0,
-                                    
-                                }}
-                            />
+                                    height: heighttoDP(number = '20%'),
+                                    width: widthtoDP(number = '90%')
+                                }}>
+                                <Image
+                                    style={{
+                                        marginTop: heighttoDP(number = '2%'),
+                                        height: heighttoDP(number = '20%'),
+                                        width: widthtoDP(number = '90%')
+                                    }}
+                                    source={{
+                                        uri: "http://cluznplus.com/cluzn_backend/images/" + this.state.docimage
+                                    }}
+                                />
+                            </TouchableOpacity>
                         </View>
                         <Text style={{
                             fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
@@ -151,9 +148,8 @@ export default class DoctorDescription extends Component {
                         }}>
                             <Image
                                 style={{
-                                    width: widthtoDP(number = '88%'),
+                                    width: widthtoDP(number = '90%'),
                                     height: heighttoDP(number = '20%')
-
                                 }}
                                 source={{
                                     uri: "http://cluznplus.com/cluzn_backend/images/" + this.state.docimage

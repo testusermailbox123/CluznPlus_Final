@@ -39,12 +39,12 @@ export default class Categories extends Component {
     }
 
     updateFlag() {
-        if(this.state.videoLoadedLength >= this.state.videos.length - 1) {
-            setTimeout( () => {
+        if (this.state.videoLoadedLength >= this.state.videos.length - 1) {
+            setTimeout(() => {
                 this.setState({
                     videoBufferFlag: false
                 });
-            },3000);
+            }, 3000);
         }
     }
 
@@ -106,6 +106,14 @@ export default class Categories extends Component {
             docimage: item.image,
         });
     }
+
+    _onPressVideo(item) {
+        this.props.navigation.navigate('Video1', {
+            video_url : item.video
+        });
+    }
+
+
     render() {
         if (this.state.videoFlag == true) {
             if (this.state.isloading1 == false) {
@@ -172,15 +180,16 @@ export default class Categories extends Component {
                                     >Book Appointment</Text>
                                 </TouchableOpacity>
                             </View>
-                            
-                            {this.state.videoBufferFlag ?
-                              <View style={{ flex: 1, alignItems: "center", justifyContent: "center", zIndex: 2000 }}>
 
-                            <ActivityIndicator style={{
-                                height: '100%',
-                                width: '100%'}} animating={true} size="large" color="red" /></View>
-                            : <Text></Text>}
-                            
+                            {/* {this.state.videoBufferFlag ?
+                                <View style={{ flex: 1, alignItems: "center", justifyContent: "center", zIndex: 2000 }}>
+
+                                    <ActivityIndicator style={{
+                                        height: '100%',
+                                        width: '100%'
+                                    }} animating={true} size="large" color="red" /></View>
+                                : <Text></Text>} */}
+
                             <View style={{
                                 height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
                             }}>
@@ -206,14 +215,25 @@ export default class Categories extends Component {
                                                     fontSize: heighttoDP(number = '1.5%')
                                                 }}
                                                 >{item.title}</Text>
-                                                <View style={{
+                                                <TouchableOpacity 
+                                                onPress={() => this._onPressVideo(item)}
+                                                style={{
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     height: heighttoDP(number = '20%'),
                                                     width: widthtoDP(number = '90%'),
                                                 }}>
-                                                    
-                                                    <Video
+                                                    <Image
+                                                        style={{
+                                                            marginLeft: heighttoDP(number = '3%'),
+                                                            height: heighttoDP(number = '21%'),
+                                                            width: heighttoDP(number = '14%'),
+                                                            borderRadius: heighttoDP(number = '1%'),
+
+                                                        }}
+                                                        source={{ uri: "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg" }} />
+
+                                                    {/* <Video
                                                         source={{
                                                             uri: 'http://techslides.com/demos/sample-videos/small.mp4'
                                                         }}   // Can be a URL or a local file.
@@ -235,10 +255,11 @@ export default class Categories extends Component {
                                                             width: '100%',
                                                             height: '30%'
                                                         }}
-                                                    />
-                                                </View>
+                                                    /> */}
+                                                </TouchableOpacity>
                                             </View>
                                         </View>
+
 
                                     }
                                     keyExtractor={(item, index) => item + index}
@@ -246,7 +267,7 @@ export default class Categories extends Component {
                                 />
                             </View>
                         </View>
-                    </SafeAreaView>
+                    </SafeAreaView >
                 )
             }
             else {

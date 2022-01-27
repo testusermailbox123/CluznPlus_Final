@@ -7,6 +7,7 @@ import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
+import RazorpayCheckout from 'react-native-razorpay';
 
 export default class PurchaseForm extends Component {
     constructor(props) {

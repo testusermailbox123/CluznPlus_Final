@@ -191,7 +191,7 @@ export default class AppointmentDetails extends Component {
                             modal
                             open={this.state.opendate}
                             date={new Date()}
-                            minimumDate={new Date()}
+                            minimumDate={new Date().getDate() + 1}
                             title='Select Appointment Date'
                             textColor={GLOBAL.eva_darkpink}
                             onDateChange={(e) => {

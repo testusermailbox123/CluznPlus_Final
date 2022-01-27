@@ -113,7 +113,7 @@ export default class HospitalSearch extends React.Component {
                 // console.log("res", response.data.data);
             })
             .catch((error) => {
-                // console.log('error ' + error);
+                 console.log('error ' + error);
                 this.setState({ hospitalList: [] })
             });
     }

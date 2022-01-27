@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
-
+import { WebView } from 'react-native-webview';
 export default class WebinarDetails extends Component {
 
     constructor(props) {
@@ -15,17 +15,19 @@ export default class WebinarDetails extends Component {
             image: '',
             wookshopid: '',
             amount: '',
-            descript: ''
+            descript: '',
+            webname: ''
         }
     }
 
     UNSAFE_componentWillMount() {
-        const { image, wookshopid, amount, descript } = this.props.route.params;
+        const { image, wookshopid, amount, descript, webname } = this.props.route.params;
         this.setState({
             image: image,
             wookshopid: wookshopid,
             amount: amount,
-            descript: descript
+            descript: descript,
+            webname: webname
         });
     }
 
@@ -34,6 +36,7 @@ export default class WebinarDetails extends Component {
         this.props.navigation.navigate('WebinarPurchaseForm', {
             wookshopid: this.state.wookshopid,
             amount: this.state.amount,
+            webname: this.state.webname
         });
     }
 
@@ -74,14 +77,29 @@ export default class WebinarDetails extends Component {
                             fontSize: heighttoDP(number = '3%')
                         }}
                         >Description</Text>
-                        <Text style={{
-                            marginTop: heighttoDP(number = '2%'),
-                            fontWeight: 'bold',
-                            fontSize: heighttoDP(number = '2%')
-                        }}
+                        <Text
+                            numberOfLines={5}
+                            style={{
+                                height: heighttoDP(number = '35%'),
+                                width: widthtoDP(number = '90%'),
+                                marginTop: heighttoDP(number = '2%'),
+                                // fontWeight: 'bold',
+                                fontSize: heighttoDP(number = '2%')
+                            }}
                         >{this.state.descript}</Text>
+                        {/* <WebView
+                            style={{
+                                resizeMode: 'cover', 
+                                flex: 1,
+                                backgroundColor: GLOBAL.primaryBackGroundColor
+                            }}
+                            injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=0.5, user-scalable=2.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
+                            scalesPageToFit={false}
+                            source={{ html: '<div style="color:' + GLOBAL.primarylighttext2 + ';">' + (this.state.descript.replace(/background: rgb(238, 238, 238);/g, '')).replace(/border: 1px solid rgb(204, 204, 204);/g, '') + '</div>' }}
+                        // source={{ html: '<div style="color:'+GLOBAL.primarylighttext2+';">'+(doctordescription.replaceAll('background: rgb(238, 238, 238);', '')).replaceAll('border: 1px solid rgb(204, 204, 204);', '')+'</div>' }}
+                        /> */}
                         <Text style={{
-                            marginTop: heighttoDP(number = '10%'),
+                            // marginTop: heighttoDP(number = '10%'),
                             fontWeight: 'bold',
                             fontSize: heighttoDP(number = '3%')
                         }}
@@ -89,7 +107,7 @@ export default class WebinarDetails extends Component {
                         <TouchableOpacity
                             onPress={() => this.onPressButton()}
                             style={{
-                                marginTop: heighttoDP(number = '3%'),
+                                marginTop: heighttoDP(number = '2%'),
                                 backgroundColor: GLOBAL.eva_darkpink,
                                 width: widthtoDP(number = '80%'),
                                 height: heighttoDP(number = '6%'),

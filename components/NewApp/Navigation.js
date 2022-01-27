@@ -22,6 +22,7 @@ import WebinarDetails from './Cluzn-Eva/WebinarDetails'
 import PackageDetails from './Cluzn-Eva/PackageDetails'
 import PurchaseForm from './Cluzn-Eva/PurchaseForm'
 import WebinarPurchaseForm from './Cluzn-Eva/WebinarPurchaseForm'
+import Video1 from './Cluzn-Eva/Video1'
 
 const HomeStack = createStackNavigator();
 
@@ -52,6 +53,8 @@ export default function HomeStackScreen({ navigation }) {
         <HomeStack.Screen name="PackageDetails" component={PackageDetails}></HomeStack.Screen>
         <HomeStack.Screen name="PurchaseForm" component={PurchaseForm}></HomeStack.Screen>
         <HomeStack.Screen name="WebinarPurchaseForm" component={WebinarPurchaseForm}></HomeStack.Screen>
+        <HomeStack.Screen name="Video1" component={Video1}></HomeStack.Screen>
+      
       </HomeStack.Navigator>
     </NavigationContainer>
   )
