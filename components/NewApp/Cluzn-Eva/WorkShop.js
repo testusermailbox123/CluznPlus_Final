@@ -13,14 +13,16 @@ export default class WorkShop extends Component {
         this.state = {
             workshoplist: [],
             image: '',
-            wookshopid:''
+            wookshopid: ''
         }
     }
 
     _onPress(item) {
         this.props.navigation.navigate('WorkShopDetails', {
             image: item.image,
-            wookshopid : item.id
+            wookshopid: item.id,
+            amount:item.amount,
+            descript: item.description
         });
     }
 
@@ -63,34 +65,35 @@ export default class WorkShop extends Component {
                     backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
-                    <Text style={{
-                        color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
-                        marginLeft: widthtoDP(number = "5%")
-                    }}>Hello Varun,</Text>
+
                     <View style={{
-                        flexDirection: 'row',
+                        backgroundColor: '#EF716B',
+                        // flexDirection: 'row',
                         width: widthtoDP(number = '100%'),
                         marginTop: widthtoDP(number = '5%'),
-                        justifyContent: 'center', height: heighttoDP(number = '15%')
+                        // justifyContent: 'center',
+                        height: heighttoDP(number = '20%'),
+                        // borderRadius: heighttoDP(number = '3%'),
+                        borderBottomLeftRadius: heighttoDP(number = '3%'),
+                        borderBottomRightRadius: heighttoDP(number = '3%'),
+                        // borderTopLeftRadius: heighttoDP(number = '3%'),
+                        // borderTopRightRadius: heighttoDP(number = '3%'),
                     }}>
-                        <TouchableOpacity
-                            style={{
-                                backgroundColor: GLOBAL.eva_darkpink,
-                                width: widthtoDP(number = '70%'),
-                                height: heighttoDP(number = '7%'),
-                                borderRadius: heighttoDP(number = '5%'),
-                                alignItems: 'center', justifyContent: 'center',
-                                marginRight: heighttoDP(number = '1%'),
-                            }}
-                        >
-                            <Text style={{
-                                color: 'white', fontWeight: 'bold',
-                                fontSize: heighttoDP(number = '3%')
-                            }}
-                            >Upcoming WorkShops</Text>
-                        </TouchableOpacity>
-
+                        <Text style={{
+                            color: GLOBAL.eva_black,
+                            marginTop: heighttoDP(number = '5%'),
+                            fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
+                            marginLeft: widthtoDP(number = "5%")
+                        }}>Hello Varun,</Text>
+                        <Text style={{
+                            alignSelf: 'center',
+                            marginTop: heighttoDP(number = '2%'),
+                            color: 'white',
+                            marginLeft: widthtoDP(number = "3%"),
+                            fontWeight: 'bold',
+                            fontSize: heighttoDP(number = '2.3%')
+                        }}
+                        >Upcoming WorkShops and Classes for you</Text>
                     </View>
                     <View style={{
                         height: heighttoDP(number = '80%'),
@@ -121,8 +124,9 @@ export default class WorkShop extends Component {
                                 >
                                     <View>
                                         <Text style={{
-                                            color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                            fontSize: heighttoDP(number = '1.8%')
+                                            color: GLOBAL.eva_blue, 
+                                            fontWeight: 'bold',
+                                            fontSize: heighttoDP(number = '2.5%')
                                         }}
                                         >{item.name}</Text>
                                         <Image

@@ -24,7 +24,9 @@ export default class Categories extends Component {
             videos: [],
             isloading1: false,
             packageId: '',
-            bookAppointmentList: []
+            bookAppointmentList: [],
+            videoBufferFlag: true,
+            videoLoadedLength: 0,
         }
     }
 
@@ -34,6 +36,16 @@ export default class Categories extends Component {
             videos: videos,
             packageId: packageId
         })
+    }
+
+    updateFlag() {
+        if(this.state.videoLoadedLength >= this.state.videos.length - 1) {
+            setTimeout( () => {
+                this.setState({
+                    videoBufferFlag: false
+                });
+            },3000);
+        }
     }
 
     pressblogButton() {
@@ -160,10 +172,18 @@ export default class Categories extends Component {
                                     >Book Appointment</Text>
                                 </TouchableOpacity>
                             </View>
+                            
+                            {this.state.videoBufferFlag ?
+                              <View style={{ flex: 1, alignItems: "center", justifyContent: "center", zIndex: 2000 }}>
+
+                            <ActivityIndicator style={{
+                                height: '100%',
+                                width: '100%'}} animating={true} size="large" color="red" /></View>
+                            : <Text></Text>}
+                            
                             <View style={{
                                 height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
                             }}>
-
                                 <FlatList
                                     showsVerticalScrollIndicator={false}
                                     style={{
@@ -190,28 +210,30 @@ export default class Categories extends Component {
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
                                                     height: heighttoDP(number = '20%'),
-                                                    width: widthtoDP(number = '90%')
+                                                    width: widthtoDP(number = '90%'),
                                                 }}>
-
+                                                    
                                                     <Video
                                                         source={{
                                                             uri: 'http://techslides.com/demos/sample-videos/small.mp4'
-                                                            // item.video 
                                                         }}   // Can be a URL or a local file.
                                                         ref={(ref) => { this.player = ref }}
                                                         paused={true}
-                                                        // controls={true}
+                                                        controls={true}
                                                         onBuffer={() => {
-                                                            this.setState({ isloading: false })
+                                                            
+                                                        }}
+                                                        onLoad={() => {
+                                                            console.log("videoLoadedLength", this.state.videoLoadedLength);
+                                                            this.setState({
+                                                                videoLoadedLength: this.state.videoLoadedLength + 1
+                                                            })
+                                                            this.updateFlag();
                                                         }}
                                                         style={{
-                                                            flex: 1,
                                                             backgroundColor: 'red',
-                                                            position: 'absolute',
-                                                            top: 0,
-                                                            left: 0,
-                                                            bottom: 0,
-                                                            right: 0,
+                                                            width: '100%',
+                                                            height: '30%'
                                                         }}
                                                     />
                                                 </View>
@@ -332,7 +354,7 @@ export default class Categories extends Component {
                                                     height: heighttoDP(number = '20%'),
                                                     width: widthtoDP(number = '90%')
                                                 }}>
-                                                    <ActivityIndicator animating={this.state.isloading1} size="large" color="red" />
+                                                    x
                                                 </View>
                                             </View>
                                         </View>

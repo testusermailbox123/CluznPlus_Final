@@ -6,6 +6,7 @@ import {
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class HomePage extends Component {
 
@@ -22,13 +23,14 @@ export default class HomePage extends Component {
         this.props.navigation.navigate('PackageDetails', {
             amount: item.amount,
             name: item.name,
-            expire_in_month: item.expire_in_month
+            expire_in_month: item.expire_in_month,
+            plan_id: item.id
         });
     }
 
     _onPress_WorkShop() {
         this.props.navigation.navigate('WorkShop', {
-            
+
         });
     }
 
@@ -120,23 +122,47 @@ export default class HomePage extends Component {
                             marginTop: heighttoDP(number = '3%'),
                             borderRadius: heighttoDP(number = '2%'),
                             alignSelf: 'center',
-                            width: widthtoDP(number = '85%'),
-                            height: heighttoDP(number = '10%')
+                            width: widthtoDP(number = '90%'),
+                            height: heighttoDP(number = '12%')
                         }}
                     >
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <View style={{
                                 width: widthtoDP(number = '30%'),
-                                alignItems: 'center', justifyContent: 'center'
+                                alignItems: 'center',
+                                justifyContent: 'center'
                             }}>
-                                <Text>Image here</Text>
+                                <Image
+                                    style={{
+                                        height: heighttoDP(number = '11%'),
+                                        width: heighttoDP(number = '13%'),
+                                        borderRadius: heighttoDP(number = '2%'),
+                                        marginLeft: heighttoDP(number = '2%'),
+                                        marginTop: -heighttoDP(number = '2%')
+                                    }}
+                                    source={require('../../assets/icons/doct.png')} />
                             </View>
                             <View style={{
+                                // backgroundColor: 'red',
                                 width: widthtoDP(number = '55%'),
-                                alignItems: 'center', justifyContent: 'space-evenly'
+                                alignItems: 'center',
+                                justifyContent: 'center'
                             }}>
-                                <Text>Book</Text>
-                                <Text>Workshop</Text>
+                                <Text
+                                    style={{
+                                        fontSize: heighttoDP(number = '2%'),
+                                        fontWeight: 'bold', color: '#EB592A'
+                                    }}
+                                >Upcoming Workshop / Class</Text>
+
+                                <Text
+                                    style={{
+                                        marginTop: heighttoDP(number = '1%'),
+                                        marginLeft: -heighttoDP(number = '5.5%'),
+                                        fontSize: heighttoDP(number = '1.5%'),
+                                        // fontWeight: 'bold'
+                                    }}
+                                >Click here to know more</Text>
                             </View>
                         </View>
                     </TouchableOpacity>

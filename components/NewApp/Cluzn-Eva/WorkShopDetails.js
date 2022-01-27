@@ -13,15 +13,19 @@ export default class WorkShopDetails extends Component {
         super(props)
         this.state = {
             image: '',
-            wookshopid: ''
+            wookshopid: '',
+            amount: '',
+            descript: ''
         }
     }
 
     UNSAFE_componentWillMount() {
-        const { image, wookshopid } = this.props.route.params;
+        const { image, wookshopid, amount, descript } = this.props.route.params;
         this.setState({
             image: image,
-            wookshopid: wookshopid
+            wookshopid: wookshopid,
+            amount: amount,
+            descript: descript
         });
     }
 
@@ -35,14 +39,14 @@ export default class WorkShopDetails extends Component {
                 <View>
                     <View style={{
 
-                        height: heighttoDP(number = '90%'),
+                        height: heighttoDP(number = '40%'),
                         alignSelf: 'center', justifyContent: 'center',
                         width: widthtoDP(number = '97%'),
 
                     }}>
                         <Image
                             style={{
-                                height: heighttoDP(number = '90%'),
+                                height: heighttoDP(number = '40%'),
                                 width: widthtoDP(number = '97%'),
                             }}
                             source={{
@@ -51,13 +55,32 @@ export default class WorkShopDetails extends Component {
                         />
                     </View>
                     <View style={{
-
+                        marginLeft: widthtoDP(number = '4%'),
                         marginTop: heighttoDP(number = '2%'),
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}>
+                        <Text style={{
+                            // color: 'white', 
+                            fontWeight: 'bold',
+                            fontSize: heighttoDP(number = '3%')
+                        }}
+                        >Description</Text>
+                        <Text style={{
+                            marginTop: heighttoDP(number = '2%'),
+                            fontWeight: 'bold',
+                            fontSize: heighttoDP(number = '2%')
+                        }}
+                        >{this.state.descript}</Text>
+                        <Text style={{
+                            marginTop: heighttoDP(number = '10%'),
+                            fontWeight: 'bold',
+                            fontSize: heighttoDP(number = '3%')
+                        }}
+                        >Amount : INR {this.state.amount}</Text>
                         <TouchableOpacity
                             style={{
+                                marginTop: heighttoDP(number = '3%'),
                                 backgroundColor: GLOBAL.eva_darkpink,
                                 width: widthtoDP(number = '80%'),
                                 height: heighttoDP(number = '6%'),
@@ -67,6 +90,7 @@ export default class WorkShopDetails extends Component {
                                 alignItems: 'center',
                             }}
                         >
+
                             <Text style={{
                                 color: 'white', fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '3%')
