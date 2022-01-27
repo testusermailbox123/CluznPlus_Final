@@ -19,20 +19,22 @@ export default class PackageDetails extends Component {
             name: '',
             expire_in_month: '',
             plan_id: '',
-            authtoken: ''
+            authtoken: '',
+            plan_image:''
         }
     }
     UNSAFE_componentWillMount() {
-        const { amount,name,expire_in_month, plan_id } = this.props.route.params;
+        const { amount, name, expire_in_month, plan_id,plan_image } = this.props.route.params;
         this.setState({
-            amount:amount,
+            amount: amount,
             name: name,
             expire_in_month: expire_in_month,
-            plan_id: plan_id
+            plan_id: plan_id,
+            plan_image:plan_image
         })
     }
 
-    
+
 
     // componentDidMount() {
     //     setTimeout(async () => {
@@ -66,43 +68,48 @@ export default class PackageDetails extends Component {
     //             console.log("response", response);
     //         })
     //         .catch((error) => {
-                
+
     //         });
     //     }, 1000);
-        
-        
+
+
     // }
 
     onPressButton() {
-        
-        var options = {
-            description: 'Online Fee',
-            image: 'https://i.imgur.com/3g7nmJC.png',
-            currency: 'INR',
-            amount: '100',
-            key: 'rzp_live_Y163BMpztraADc',//'rzp_live_Y163BMpztraADc',
-            name: 'Test',
-            prefill: {
-              email: 'test@email.com',
-              contact: '9176104934',
-              name: 'ReactNativeForYou',
-            },
-            theme: {color: '#528FF0'},
-        };
 
-        RazorpayCheckout.open(options)
-          .then((data) => {
-            console.log("data"+data);
-              // alert(`Success: ${data.razorpay_payment_id}`);
-                // this.purchasePlanList();
-          })
-          .catch((error) => {
-            console.log("error - " + error.description);
-            // handle failure
-            // Alert.alert(`Error: ${error.code} | ${error.description}`);
-          });
-      };
-    
+        this.props.navigation.navigate('PurchaseForm', {
+            plan_id: this.state.plan_id,
+            amount: this.state.amount,
+        });
+
+        // var options = {
+        //     description: 'Online Fee',
+        //     image: 'https://i.imgur.com/3g7nmJC.png',
+        //     currency: 'INR',
+        //     amount: '100',
+        //     key: 'rzp_live_Y163BMpztraADc',//'rzp_live_Y163BMpztraADc',
+        //     name: 'Test',
+        //     prefill: {
+        //         email: 'test@email.com',
+        //         contact: '9176104934',
+        //         name: 'ReactNativeForYou',
+        //     },
+        //     theme: { color: '#528FF0' },
+        // };
+
+        // RazorpayCheckout.open(options)
+        //     .then((data) => {
+        //         console.log("data" + data);
+        //         // alert(`Success: ${data.razorpay_payment_id}`);
+        //         // this.purchasePlanList();
+        //     })
+        //     .catch((error) => {
+        //         console.log("error - " + error.description);
+        //         // handle failure
+        //         // Alert.alert(`Error: ${error.code} | ${error.description}`);
+        //     });
+    };
+
 
     render() {
         return (
@@ -116,7 +123,7 @@ export default class PackageDetails extends Component {
                         <Image
                             style={{ height: heighttoDP(number = '70%') }}
                             source={{
-                                uri: 'https://reactnative.dev/img/tiny_logo.png',
+                                uri: "https://cluznplus.com/cluzn_backend/images/"+this.state.plan_image,
                             }}
                         />
                     </View>
@@ -126,7 +133,7 @@ export default class PackageDetails extends Component {
                             alignItems: 'center', justifyContent: 'center',
                         }}
                     >
-                        
+
                         <Text style={{
                             fontWeight: 'bold',
                             fontSize: heighttoDP(number = '3%')
@@ -137,6 +144,7 @@ export default class PackageDetails extends Component {
                             fontSize: heighttoDP(number = '3%')
                         }}
                         >Valid for {this.state.expire_in_month} Months</Text>
+                        
                     </View>
                     <View style={{
 
@@ -145,10 +153,10 @@ export default class PackageDetails extends Component {
                     }}>
 
                         <TouchableOpacity
-                        onPress={() => this.onPressButton()}
+                            onPress={() => this.onPressButton()}
                             style={{
                                 backgroundColor: GLOBAL.eva_darkpink,
-                                width: widthtoDP(number = '80%'),
+                                width: widthtoDP(number = '90%'),
                                 height: heighttoDP(number = '6%'),
                                 borderRadius: heighttoDP(number = '5%'),
                                 alignSelf: 'center',
@@ -163,7 +171,7 @@ export default class PackageDetails extends Component {
                             }}
                             >Purchase Now</Text>
                         </TouchableOpacity>
-                        
+
                     </View>
                 </View>
             </SafeAreaView>

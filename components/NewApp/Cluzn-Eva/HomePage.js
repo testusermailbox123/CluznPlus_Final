@@ -24,12 +24,13 @@ export default class HomePage extends Component {
             amount: item.amount,
             name: item.name,
             expire_in_month: item.expire_in_month,
-            plan_id: item.id
+            plan_id: item.id,
+            plan_image: item.full_image,
         });
     }
 
     _onPress_WorkShop() {
-        this.props.navigation.navigate('WorkShop', {
+        this.props.navigation.navigate('Webinar', {
 
         });
     }
@@ -153,7 +154,7 @@ export default class HomePage extends Component {
                                         fontSize: heighttoDP(number = '2%'),
                                         fontWeight: 'bold', color: '#EB592A'
                                     }}
-                                >Upcoming Workshop / Class</Text>
+                                >Upcoming Webinar / Class</Text>
 
                                 <Text
                                     style={{

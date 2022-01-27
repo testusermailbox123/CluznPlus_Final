@@ -7,7 +7,7 @@ import {
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 
-export default class WorkShopDetails extends Component {
+export default class WebinarDetails extends Component {
 
     constructor(props) {
         super(props)
@@ -26,6 +26,14 @@ export default class WorkShopDetails extends Component {
             wookshopid: wookshopid,
             amount: amount,
             descript: descript
+        });
+    }
+
+    onPressButton() {
+
+        this.props.navigation.navigate('WebinarPurchaseForm', {
+            wookshopid: this.state.wookshopid,
+            amount: this.state.amount,
         });
     }
 
@@ -79,6 +87,7 @@ export default class WorkShopDetails extends Component {
                         }}
                         >Amount : INR {this.state.amount}</Text>
                         <TouchableOpacity
+                            onPress={() => this.onPressButton()}
                             style={{
                                 marginTop: heighttoDP(number = '3%'),
                                 backgroundColor: GLOBAL.eva_darkpink,
@@ -95,7 +104,7 @@ export default class WorkShopDetails extends Component {
                                 color: 'white', fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '3%')
                             }}
-                            >Book WorkShops</Text>
+                            >Book Seat</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

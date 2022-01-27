@@ -17,9 +17,11 @@ import HomePage from './Cluzn-Eva/HomePage'
 import Categories from './Cluzn-Eva/Categories'
 import DoctorDescription from './Cluzn-Eva/DoctorDescription'
 import AppointmentDetails from './Cluzn-Eva/AppointmentDetails'
-import WorkShop from './Cluzn-Eva/WorkShop'
-import WorkShopDetails from './Cluzn-Eva/WorkShopDetails'
+import Webinar from './Cluzn-Eva/Webinar'
+import WebinarDetails from './Cluzn-Eva/WebinarDetails'
 import PackageDetails from './Cluzn-Eva/PackageDetails'
+import PurchaseForm from './Cluzn-Eva/PurchaseForm'
+import WebinarPurchaseForm from './Cluzn-Eva/WebinarPurchaseForm'
 
 const HomeStack = createStackNavigator();
 
@@ -45,9 +47,11 @@ export default function HomeStackScreen({ navigation }) {
         <HomeStack.Screen name="Categories" component={Categories}></HomeStack.Screen>
         <HomeStack.Screen name="DoctorDescription" component={DoctorDescription}></HomeStack.Screen>
         <HomeStack.Screen name="AppointmentDetails" component={AppointmentDetails}></HomeStack.Screen>
-        <HomeStack.Screen name="WorkShop" component={WorkShop}></HomeStack.Screen>
-        <HomeStack.Screen name="WorkShopDetails" component={WorkShopDetails}></HomeStack.Screen>
+        <HomeStack.Screen name="Webinar" component={Webinar}></HomeStack.Screen>
+        <HomeStack.Screen name="WebinarDetails" component={WebinarDetails}></HomeStack.Screen>
         <HomeStack.Screen name="PackageDetails" component={PackageDetails}></HomeStack.Screen>
+        <HomeStack.Screen name="PurchaseForm" component={PurchaseForm}></HomeStack.Screen>
+        <HomeStack.Screen name="WebinarPurchaseForm" component={WebinarPurchaseForm}></HomeStack.Screen>
       </HomeStack.Navigator>
     </NavigationContainer>
   )

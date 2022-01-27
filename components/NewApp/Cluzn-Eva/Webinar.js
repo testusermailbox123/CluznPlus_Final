@@ -5,7 +5,7 @@ GLOBAL = require('../globals');
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
-export default class WorkShop extends Component {
+export default class Webinar extends Component {
 
     constructor(props) {
         super(props)
@@ -18,7 +18,7 @@ export default class WorkShop extends Component {
     }
 
     _onPress(item) {
-        this.props.navigation.navigate('WorkShopDetails', {
+        this.props.navigation.navigate('WebinarDetails', {
             image: item.image,
             wookshopid: item.id,
             amount:item.amount,
@@ -93,7 +93,7 @@ export default class WorkShop extends Component {
                             fontWeight: 'bold',
                             fontSize: heighttoDP(number = '2.3%')
                         }}
-                        >Upcoming WorkShops and Classes for you</Text>
+                        >Upcoming Webinar and Classes for you</Text>
                     </View>
                     <View style={{
                         height: heighttoDP(number = '80%'),
