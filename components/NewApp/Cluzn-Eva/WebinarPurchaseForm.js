@@ -21,7 +21,7 @@ export default class WebinarPurchaseForm extends Component {
             wookshopid: '',
             amount: '',
             webname: '',
-            text: ''
+            text: '',
         }
 
     }
@@ -51,11 +51,12 @@ export default class WebinarPurchaseForm extends Component {
         this.backHandler.remove();
     }
 
-    doSubscribe() {
+    doSubscribe(payment_id) {
+
         const data = {
             plan_id: this.state.wookshopid,
+            payment_id: payment_id
         }
-        // formData.append('plan_id', this.state.wookshopid);
         axios.post('http://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
             headers: {
                 token: 'C6u6RImyV7mxUukg9e2sVCsDPXEkBkRO',
@@ -63,6 +64,10 @@ export default class WebinarPurchaseForm extends Component {
         })
             .then(response => {
                 console.log(response.data)
+                this.props.navigation.navigate('WebinarDetails', {
+                    plan_id: this.state.plan_id,
+                    amount: this.state.amount,
+                });
             })
             .catch((error) => {
                 console.log("doSubscribe error", error);
@@ -83,7 +88,6 @@ export default class WebinarPurchaseForm extends Component {
                 plan_id: this.state.plan_id,
                 amount: this.state.amount,
             });
-            // var path = 'https://cluznplus.com/cluzn_backend/assets/img/logo.png'
             var options = {
                 description: this.state.webname + ' Price',
                 image: 'https://i.imgur.com/3g7nmJC.png',
@@ -101,10 +105,7 @@ export default class WebinarPurchaseForm extends Component {
 
             RazorpayCheckout.open(options)
                 .then((data) => {
-                    // console.log("data" + data);
-                    // alert(`Success: ${data.razorpay_payment_id}`);
-                    // this.purchasePlanList();
-                    this.doSubscribe()
+                    this.doSubscribe(data.razorpay_payment_id)
                 })
                 .catch((error) => {
                     console.log(`Error : ${error} | ${error.description}`);
@@ -112,8 +113,6 @@ export default class WebinarPurchaseForm extends Component {
                         plan_id: this.state.plan_id,
                         amount: this.state.amount,
                     });
-                    // handle failure
-                    // Alert.alert(`Error: ${error.code} | ${error.description}`);
                 });
         }
     };

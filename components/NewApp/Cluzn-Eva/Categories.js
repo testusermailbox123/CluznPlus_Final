@@ -27,6 +27,7 @@ export default class Categories extends Component {
             bookAppointmentList: [],
             videoBufferFlag: true,
             videoLoadedLength: 0,
+            BlogList: []
         }
     }
 
@@ -49,6 +50,7 @@ export default class Categories extends Component {
     }
 
     pressblogButton() {
+        this.generateBlogList()
         this.setState({
             blogsFlag: true,
             videoFlag: false,
@@ -68,6 +70,28 @@ export default class Categories extends Component {
 
                 this.setState({
                     bookAppointmentList: [...this.state.bookAppointmentList, ...response.data],
+                });
+
+            })
+            .catch((error) => {
+                this.setState({ bookAppointmentList: [] })
+                console.log(error)
+            });
+
+    }
+
+    generateBlogList() {
+        let api = "https://cluznplus.com//wp-json/wp/v2/posts"
+
+        axios.get(api, {
+            headers: {
+                token: ""
+            }
+        })
+            .then(response => {
+
+                this.setState({
+                    BlogList: [...this.state.BlogList, ...response.data],
                 });
 
             })
@@ -109,7 +133,7 @@ export default class Categories extends Component {
 
     _onPressVideo(item) {
         this.props.navigation.navigate('Video1', {
-            video_url : item.video
+            video_url: item.video
         });
     }
 
@@ -215,14 +239,14 @@ export default class Categories extends Component {
                                                     fontSize: heighttoDP(number = '1.5%')
                                                 }}
                                                 >{item.title}</Text>
-                                                <TouchableOpacity 
-                                                onPress={() => this._onPressVideo(item)}
-                                                style={{
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    height: heighttoDP(number = '20%'),
-                                                    width: widthtoDP(number = '90%'),
-                                                }}>
+                                                <TouchableOpacity
+                                                    onPress={() => this._onPressVideo(item)}
+                                                    style={{
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        height: heighttoDP(number = '20%'),
+                                                        width: widthtoDP(number = '90%'),
+                                                    }}>
                                                     <Image
                                                         style={{
                                                             marginLeft: heighttoDP(number = '3%'),
@@ -457,8 +481,14 @@ export default class Categories extends Component {
                         <View style={{
                             height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
                         }}>
-
-                            <FlatList
+                            <WebView
+                                source={{ uri: this.state.blogsFlag.rendered }}
+                                javaScriptEnabled={true}
+                                // allowsFullscreenVideo={true}
+                                // injectedJavaScript=
+                                // {`document.getElementsByTagName("video")[0].pause();document.getElementsByTagName("video")[0].controlsList="nodownload";`}
+                            />
+                            {/* <FlatList
                                 showsVerticalScrollIndicator={false}
                                 style={{
                                     marginBottom: heighttoDP(number = '5%'),
@@ -511,7 +541,7 @@ export default class Categories extends Component {
                                 keyExtractor={(item, index) => item + index}
 
 
-                            />
+                            /> */}
                         </View>
                     </View>
                 </SafeAreaView>

@@ -14,7 +14,8 @@ export default class Webinar extends Component {
             workshoplist: [],
             image: '',
             wookshopid: '',
-            webname:''
+            webname: '',
+            bookstatus: false
         }
     }
 
@@ -22,9 +23,10 @@ export default class Webinar extends Component {
         this.props.navigation.navigate('WebinarDetails', {
             image: item.image,
             wookshopid: item.id,
-            amount:item.amount,
+            amount: item.amount,
             descript: item.description,
-            webname:this.state.webname
+            webname: this.state.webname,
+            bookstatus: item.bookstatus
         });
     }
 
@@ -126,7 +128,7 @@ export default class Webinar extends Component {
                                 >
                                     <View>
                                         <Text style={{
-                                            color: GLOBAL.eva_blue, 
+                                            color: GLOBAL.eva_blue,
                                             fontWeight: 'bold',
                                             fontSize: heighttoDP(number = '2.5%')
                                         }}

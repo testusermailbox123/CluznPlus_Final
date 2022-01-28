@@ -20,7 +20,6 @@ export default class PurchaseForm extends Component {
             plan_id: '',
             amount: ''
         }
-
     }
 
     UNSAFE_componentWillMount() {

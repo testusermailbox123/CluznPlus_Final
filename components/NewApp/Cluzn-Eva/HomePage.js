@@ -59,7 +59,6 @@ export default class HomePage extends Component {
             }
         })
             .then(response => {
-                // console.log("planlist - ", response.data.data[1]);
                 this.setState({
                     planlist: [...this.state.planlist, ...response.data.data],
                 });
