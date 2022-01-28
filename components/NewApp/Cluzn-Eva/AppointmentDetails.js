@@ -1,12 +1,13 @@
 import React, { Component, useState } from 'react'
 import {
-    Text, View, SafeAreaView, StatusBar, Alert, Button, KeyboardAvoidingView,
+    Text, View, SafeAreaView, StatusBar, Alert, Button, KeyboardAvoidingView, BackHandler,
     TextInput, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet
 } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
+import RazorpayCheckout from 'react-native-razorpay';
 
 export default class AppointmentDetails extends Component {
     constructor(props) {
@@ -17,10 +18,85 @@ export default class AppointmentDetails extends Component {
             selecttime: '',
             opentime: false,
             dd: new Date(),
-            format: ''
+            format: '',
+            docid: '',
+            amount: '',
+            EMail: '',
+            First_Name: '',
+            Last_Name: '',
+            Mobile_Number: '',
         }
 
     }
+
+    UNSAFE_componentWillMount() {
+        const { docid, amount } = this.props.route.params;
+        this.setState({
+            docid: docid,
+            amount: amount
+        })
+        this.backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            this.backAction
+        );
+    }
+
+    componentWillUnmount() {
+        this.backHandler.remove();
+    }
+
+    backAction = () => {
+        this.props.navigation.navigate('DoctorDescription', {
+
+        });
+        return true;
+    };
+
+    onPressButton() {
+
+        if (this.state.Mobile_Number == '' ||
+            this.state.Mobile_Number.length < 10
+            || this.state.First_Name == '' ||
+            this.state.Last_Name == '' ||
+            this.state.Email == '' ||
+            this.state.selectdate == '',
+            this.state.selecttime == ''
+        ) {
+            alert('Please enter all the details correctly')
+        } else {
+
+            this.props.navigation.navigate('DoctorDescription', {
+                plan_id: this.state.plan_id,
+                amount: this.state.amount,
+            });
+            var options = {
+                description: this.state.webname + ' Price',
+                image: 'https://i.imgur.com/3g7nmJC.png',
+                currency: 'INR',
+                amount: this.state.amount + '00',
+                key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
+                name: this.state.First_Name + " " + this.state.Last_Name,
+                prefill: {
+                    email: this.state.EMail,
+                    contact: this.state.Mobile_Number,
+                    name: 'ReactNativeForYou',
+                },
+                theme: { color: '#528FF0' },
+            };
+
+            RazorpayCheckout.open(options)
+                .then((data) => {
+                    // this.doSubscribe(data.razorpay_payment_id)
+                })
+                .catch((error) => {
+                    console.log(`Error : ${error} | ${error.description}`);
+                    this.props.navigation.navigate('PurchaseForm', {
+                        plan_id: this.state.plan_id,
+                        amount: this.state.amount,
+                    });
+                });
+        }
+    };
 
     tConvert(time) {
         // Check correct time format and split into components
@@ -120,6 +196,9 @@ export default class AppointmentDetails extends Component {
                                 marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
                             }}>First Name</Text>
                             <TextInput
+                                onChangeText={First_Name =>
+                                    this.setState({ First_Name })
+                                }
                                 maxLength={9}
                                 style={{
                                     paddingLeft: widthtoDP(number = '4%'),
@@ -133,15 +212,19 @@ export default class AppointmentDetails extends Component {
                         </View>
                         <View>
                             <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
-                            <TextInput style={{
-                                paddingLeft: widthtoDP(number = '4%'),
-                                fontSize: heighttoDP(number = '2.7%'),
-                                height: heighttoDP(number = '6%'),
-                                width: widthtoDP(number = "37%"),
-                                borderRadius: heighttoDP(number = '10%'),
-                                borderWidth: heighttoDP(number = '.25%'),
-                                borderColor: GLOBAL.eva_midpink
-                            }} />
+                            <TextInput
+                                onChangeText={Last_Name =>
+                                    this.setState({ Last_Name })
+                                }
+                                style={{
+                                    paddingLeft: widthtoDP(number = '4%'),
+                                    fontSize: heighttoDP(number = '2.7%'),
+                                    height: heighttoDP(number = '6%'),
+                                    width: widthtoDP(number = "37%"),
+                                    borderRadius: heighttoDP(number = '10%'),
+                                    borderWidth: heighttoDP(number = '.25%'),
+                                    borderColor: GLOBAL.eva_midpink
+                                }} />
                         </View>
                     </View>
                     <View style={{
@@ -191,7 +274,7 @@ export default class AppointmentDetails extends Component {
                             modal
                             open={this.state.opendate}
                             date={new Date()}
-                            minimumDate={new Date().getDate() + 1}
+                            minimumDate={new Date()}
                             title='Select Appointment Date'
                             textColor={GLOBAL.eva_darkpink}
                             onDateChange={(e) => {
@@ -293,6 +376,9 @@ export default class AppointmentDetails extends Component {
                             , fontWeight: 'bold'
                         }}>Mobile Number</Text>
                         <TextInput
+                            onChangeText={Mobile_Number =>
+                                this.setState({ Mobile_Number })
+                            }
                             maxLength={10}
                             style={{
                                 paddingLeft: widthtoDP(number = '4%'),
@@ -322,6 +408,9 @@ export default class AppointmentDetails extends Component {
                             , fontWeight: 'bold'
                         }}>E-Mail</Text>
                         <TextInput
+                            onChangeText={EMail =>
+                                this.setState({ EMail })
+                            }
                             maxLength={20}
                             style={{
                                 paddingLeft: widthtoDP(number = '4%'),
@@ -342,15 +431,17 @@ export default class AppointmentDetails extends Component {
                                 source={require('../../assets/icons/email.png')} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{
-                        backgroundColor: GLOBAL.eva_darkpink,
-                        height: heighttoDP(number = '6%'),
-                        width: widthtoDP(number = "65%"),
-                        alignSelf: 'center',
-                        alignItems: 'center', justifyContent: 'center',
-                        marginTop: heighttoDP(number = '5%'),
-                        borderRadius: heighttoDP(number = '5%')
-                    }}>
+                    <TouchableOpacity
+                        onPress={() => this.onPressButton()}
+                        style={{
+                            backgroundColor: GLOBAL.eva_darkpink,
+                            height: heighttoDP(number = '6%'),
+                            width: widthtoDP(number = "65%"),
+                            alignSelf: 'center',
+                            alignItems: 'center', justifyContent: 'center',
+                            marginTop: heighttoDP(number = '5%'),
+                            borderRadius: heighttoDP(number = '5%')
+                        }}>
                         <Text style={{
                             fontSize: heighttoDP(number = '2.5%'),
                             fontWeight: 'bold',

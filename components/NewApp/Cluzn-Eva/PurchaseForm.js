@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react'
 import {
     Text, View, SafeAreaView, StatusBar, Alert, Button, KeyboardAvoidingView,
     TextInput, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet
+    , BackHandler
 } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
@@ -22,13 +23,71 @@ export default class PurchaseForm extends Component {
         }
     }
 
+    backAction = () => {
+        this.props.navigation.navigate('PackageDetails', {
+
+        });
+        return true;
+    };
+
     UNSAFE_componentWillMount() {
         const { plan_id, amount } = this.props.route.params;
         this.setState({
             plan_id: plan_id,
             amount: amount
         })
+        this.backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            this.backAction
+        );
     }
+
+    componentWillUnmount() {
+        this.backHandler.remove();
+    }
+
+    onPressButton() {
+
+        if (this.state.Mobile_Number == '' || this.state.Mobile_Number.length < 10
+
+            || this.state.First_Name == '' || this.state.Last_Name == '' || this.state.Email == ''
+
+        ) {
+            alert('Please enter all the details correctly')
+        } else {
+
+            this.props.navigation.navigate('WebinarPurchaseForm', {
+                plan_id: this.state.plan_id,
+                amount: this.state.amount,
+            });
+            var options = {
+                description: this.state.webname + ' Price',
+                image: 'https://i.imgur.com/3g7nmJC.png',
+                currency: 'INR',
+                amount: this.state.amount + '00',
+                key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
+                name: this.state.First_Name + " " + this.state.Last_Name,
+                prefill: {
+                    email: this.state.EMail,
+                    contact: this.state.Mobile_Number,
+                    name: 'ReactNativeForYou',
+                },
+                theme: { color: '#528FF0' },
+            };
+
+            RazorpayCheckout.open(options)
+                .then((data) => {
+                    // this.doSubscribe(data.razorpay_payment_id)
+                })
+                .catch((error) => {
+                    console.log(`Error : ${error} | ${error.description}`);
+                    this.props.navigation.navigate('PackageDetails', {
+                        plan_id: this.state.plan_id,
+                        amount: this.state.amount,
+                    });
+                });
+        }
+    };
 
     render() {
         console.log(this.state.Mobile_Number)
@@ -52,7 +111,7 @@ export default class PurchaseForm extends Component {
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '4%'),
                         marginLeft: widthtoDP(number = "5%"), alignSelf: 'center'
-                    }}>Appointment Details</Text>
+                    }}>Purchase Details</Text>
                     <View style={{
                         flexDirection: 'row', justifyContent: 'center',
                         marginTop: heighttoDP(number = '2.5%')
@@ -159,15 +218,17 @@ export default class PurchaseForm extends Component {
                                 source={require('../../assets/icons/email.png')} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{
-                        backgroundColor: GLOBAL.eva_darkpink,
-                        height: heighttoDP(number = '6%'),
-                        width: widthtoDP(number = "50%"),
-                        alignSelf: 'center',
-                        alignItems: 'center', justifyContent: 'center',
-                        marginTop: heighttoDP(number = '10%'),
-                        borderRadius: heighttoDP(number = '5%')
-                    }}>
+                    <TouchableOpacity
+                        onPress={() => this.onPressButton()}
+                        style={{
+                            backgroundColor: GLOBAL.eva_darkpink,
+                            height: heighttoDP(number = '6%'),
+                            width: widthtoDP(number = "50%"),
+                            alignSelf: 'center',
+                            alignItems: 'center', justifyContent: 'center',
+                            marginTop: heighttoDP(number = '10%'),
+                            borderRadius: heighttoDP(number = '5%')
+                        }}>
                         <Text style={{
                             fontSize: heighttoDP(number = '2.5%'),
                             fontWeight: 'bold',

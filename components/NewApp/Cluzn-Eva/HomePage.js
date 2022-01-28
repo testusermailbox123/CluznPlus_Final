@@ -1,12 +1,35 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import {
     Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView,
-    FlatList, VirtualizedList, StyleSheet
+    FlatList, VirtualizedList, StyleSheet, Dimensions
 } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import axios from 'axios';
+let CurrentSlide = 0;
+let IntervalTime = 4000;
 import AsyncStorage from '@react-native-community/async-storage';
+
+const data = [
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
+    }
+]
 
 export default class HomePage extends Component {
 
@@ -18,6 +41,30 @@ export default class HomePage extends Component {
             videos: []
         }
     }
+
+    flatList = createRef();
+
+    // TODO _goToNextPage()
+    _goToNextPage = () => {
+        // console.log("this.state.link ===>>>> ", this.state.link)
+        if (CurrentSlide >= data.length - 1) CurrentSlide = 0;
+
+        this.flatList.current.scrollToIndex({
+            index: ++CurrentSlide,
+            animated: true,
+        });
+    };
+
+    _startAutoPlay = () => {
+        this._timerId = setInterval(this._goToNextPage, IntervalTime);
+    };
+
+    _stopAutoPlay = () => {
+        if (this._timerId) {
+            clearInterval(this._timerId);
+            this._timerId = null;
+        }
+    };
 
     _onPressPackages(item) {
         this.props.navigation.navigate('PackageDetails', {
@@ -40,7 +87,24 @@ export default class HomePage extends Component {
         const { navigation } = this.props;
         this.generateCategoryList();
         this.generatePlanList();
+        this._stopAutoPlay();
+        this._startAutoPlay();
+    }
 
+    componentWillUnmount() {
+        this._stopAutoPlay();
+    }
+
+    _renderItem({ item, index }) {
+        return <Image source={{ uri: item.image }}
+            // "https://www.pngkit.com/png/full/267-2678423_bacteria-video-thumbnail-default.png" }} 
+            style={styles.sliderItems} />;
+    }
+
+    // TODO _keyExtractor()
+    _keyExtractor(item, index) {
+        // console.log(item);
+        return index.toString();
     }
 
     _onPresscategories(myitem) {
@@ -101,14 +165,23 @@ export default class HomePage extends Component {
                     backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
-                    <Text style={{
+                    {/* <Text style={{
                         alignSelf: 'center', fontWeight: 'bold', marginTop: heighttoDP(number = '4%'),
                         fontSize: heighttoDP(number = '3%'),
-                    }}>Cluzn EVA</Text>
+                    }}>Cluzn EVA</Text> */}
+                    <Image
+                        style={{
+                            marginLeft: heighttoDP(number = '10%'),
+                            width: widthtoDP(number = '50%'),
+                            height: heighttoDP(number = '10%'),
+                            borderRadius: heighttoDP(number = '2%'),
+                        }}
+                        source={require('../../assets/icons/evahome.png')} />
                     <Text style={{
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '1%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '2.5%'),
-                        marginLeft: widthtoDP(number = "5%")
+                        fontWeight: 'bold', fontSize: heighttoDP(number = '5%'),
+                        marginLeft: widthtoDP(number = "5%"),
+                        fontFamily:"MrsSheppards-Regular"
                     }}>Hello Varun,</Text>
                     <Text style={{
                         color: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '1%'),
@@ -166,7 +239,28 @@ export default class HomePage extends Component {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    <View style={{
+                        // backgroundColor: 'red',
+                        height: heighttoDP(number = '18%'),
+                        width: widthtoDP(number = '90'),
+                        alignSelf: 'center',
+                        // borderRadius: heighttoDP(number = '15%'),
+                        marginTop: heighttoDP(number = '2%')
+                    }}>
+                        <FlatList
+                            style={{
+                                flex: 1,
+                            }}
+                            data={data}
+                            keyExtractor={this._keyExtractor.bind(this)}
+                            renderItem={this._renderItem.bind(this)}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            flatListRef={React.createRef()}
+                            ref={this.flatList}
+                        />
+                    </View>
+                    {/* <TouchableOpacity
                         style={{
                             backgroundColor: GLOBAL.eva_midpink,
                             marginTop: heighttoDP(number = '4%'),
@@ -183,7 +277,7 @@ export default class HomePage extends Component {
                                 borderRadius: heighttoDP(number = '2%'),
                             }}
                             source={require('../../assets/icons/banner.png')} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <View style={{
                         marginTop: widthtoDP(number = '4%'),
                         height: heighttoDP(number = '27%'),
@@ -268,7 +362,8 @@ export default class HomePage extends Component {
                                             marginLeft: widthtoDP(number = '7%'),
                                             width: widthtoDP(number = '30%'),
                                             height: heighttoDP(number = '20%'),
-                                            backgroundColor: 'white', borderRadius: widthtoDP(number = '4%')
+                                            backgroundColor: GLOBAL.eva_midpink,
+                                            borderRadius: widthtoDP(number = '4%')
                                         }}>
                                             <Image
                                                 style={{
@@ -329,5 +424,11 @@ const styles = StyleSheet.create({
     title: {
         alignSelf: 'center',
         fontSize: heighttoDP(number = '2%')
+    },
+    sliderItems: {
+        // height: "100%",
+        borderTopRightRadius:heighttoDP(number = '2%'),
+        borderRadius: heighttoDP(number = '2%'),
+        width: widthtoDP(number = '90%'),
     },
 });

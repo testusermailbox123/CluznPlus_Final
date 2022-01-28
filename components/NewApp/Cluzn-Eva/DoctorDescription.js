@@ -1,12 +1,35 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import {
-    Text, View, SafeAreaView, StatusBar, Image,
+    Text, View, SafeAreaView, StatusBar, Image, Dimensions,
     TouchableOpacity, ScrollView, FlatList, VirtualizedList,
     StyleSheet
 } from 'react-native'
 import Video from 'react-native-video';
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
+let CurrentSlide = 0;
+let IntervalTime = 4000;
+
+const data = [
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
+    },
+    {
+        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
+    }
+]
 
 export default class DoctorDescription extends Component {
 
@@ -21,7 +44,8 @@ export default class DoctorDescription extends Component {
             docdescription: '',
             docvideo: '',
             docimage: '',
-            isloading: true
+            isloading: true,
+            docid:'',amount:''
         }
     }
 
@@ -31,9 +55,41 @@ export default class DoctorDescription extends Component {
         });
     }
 
+    _onPress() {
+
+        this.props.navigation.navigate('AppointmentDetails', {
+            docid: this.state.docid,
+            amount:this.state.amount,
+        });
+    };
+
+    flatList = createRef();
+
+    // TODO _goToNextPage()
+    _goToNextPage = () => {
+        // console.log("this.state.link ===>>>> ", this.state.link)
+        if (CurrentSlide >= data.length - 1) CurrentSlide = 0;
+
+        this.flatList.current.scrollToIndex({
+            index: ++CurrentSlide,
+            animated: true,
+        });
+    };
+
+    _startAutoPlay = () => {
+        this._timerId = setInterval(this._goToNextPage, IntervalTime);
+    };
+
+    _stopAutoPlay = () => {
+        if (this._timerId) {
+            clearInterval(this._timerId);
+            this._timerId = null;
+        }
+    };
+
     UNSAFE_componentWillMount() {
         const { docfname, doclname, docfullimage, docspecialization, docdescription,
-            docvideo, docimage } = this.props.route.params;
+            docvideo, docimage,docid,amount } = this.props.route.params;
         this.setState({
             docfname: docfname,
             doclname: doclname,
@@ -41,13 +97,37 @@ export default class DoctorDescription extends Component {
             docspecialization: docspecialization,
             docdescription: docdescription,
             docvideo: docvideo,
-            docimage: docimage
+            docimage: docimage,
+            docid:docid,
+            amount:amount
         })
+        // console.log('before _stopAutoPlay')
+        this._stopAutoPlay();
+        // console.log('after _stopAutoPlay')
+        this._startAutoPlay();
+        // console.log('after _startAutoPlay')
+    }
+
+    componentWillUnmount() {
+        this._stopAutoPlay();
+    }
+
+    // TODO _renderItem()
+    _renderItem({ item, index }) {
+        return <Image source={{ uri: item.image }}
+            // "https://www.pngkit.com/png/full/267-2678423_bacteria-video-thumbnail-default.png" }} 
+            style={styles.sliderItems} />;
+    }
+
+    // TODO _keyExtractor()
+    _keyExtractor(item, index) {
+        // console.log(item);
+        return index.toString();
     }
 
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: GLOBAL.eva_lightpink }}>
                 <StatusBar barStyle="light-content" hidden={false}
                     backgroundColor='#FEE1DC'
                     translucent={true}>
@@ -141,24 +221,35 @@ export default class DoctorDescription extends Component {
                         }}>Image</Text>
                         <View style={{
                             backgroundColor: 'red',
-                            width: widthtoDP(number = '88%'),
+                            width: widthtoDP(number = '90%'),
                             height: heighttoDP(number = '20%'),
                             marginBottom: heighttoDP(number = '3%'),
                             marginTop: heighttoDP(number = '2%'),
                         }}>
-                            <Image
+                            <FlatList
                                 style={{
-                                    width: widthtoDP(number = '90%'),
-                                    height: heighttoDP(number = '20%')
+                                    flex: 1,
                                 }}
-                                source={{
-                                    uri: "http://cluznplus.com/cluzn_backend/images/" + this.state.docimage
-                                }} />
+                                data={data}
+                                keyExtractor={this._keyExtractor.bind(this)}
+                                renderItem={this._renderItem.bind(this)}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                flatListRef={React.createRef()}
+                                ref={this.flatList}
+                            />
                         </View>
-
                     </View>
                 </ScrollView>
             </SafeAreaView>
         )
     }
 }
+
+
+const styles = StyleSheet.create({
+    sliderItems: {
+        height: "100%",
+        width: Dimensions.get('window').width,
+    },
+});

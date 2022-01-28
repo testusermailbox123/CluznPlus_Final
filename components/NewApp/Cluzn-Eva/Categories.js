@@ -27,7 +27,9 @@ export default class Categories extends Component {
             bookAppointmentList: [],
             videoBufferFlag: true,
             videoLoadedLength: 0,
-            BlogList: []
+            BlogList: [],
+            docid:'',
+            amount:''
         }
     }
 
@@ -128,6 +130,8 @@ export default class Categories extends Component {
             docdescription: item.description,
             docvideo: item.video,
             docimage: item.image,
+            docid: item.id,
+            amount: item.consulation_fee,
         });
     }
 
@@ -249,13 +253,14 @@ export default class Categories extends Component {
                                                     }}>
                                                     <Image
                                                         style={{
-                                                            marginLeft: heighttoDP(number = '3%'),
-                                                            height: heighttoDP(number = '21%'),
-                                                            width: heighttoDP(number = '14%'),
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            height: heighttoDP(number = '20%'),
+                                                            width: widthtoDP(number = '90%'),
                                                             borderRadius: heighttoDP(number = '1%'),
 
                                                         }}
-                                                        source={{ uri: "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg" }} />
+                                                        source={{ uri: "https://www.pngkit.com/png/full/267-2678423_bacteria-video-thumbnail-default.png" }} />
 
                                                     {/* <Video
                                                         source={{
@@ -484,9 +489,9 @@ export default class Categories extends Component {
                             <WebView
                                 source={{ uri: this.state.blogsFlag.rendered }}
                                 javaScriptEnabled={true}
-                                // allowsFullscreenVideo={true}
-                                // injectedJavaScript=
-                                // {`document.getElementsByTagName("video")[0].pause();document.getElementsByTagName("video")[0].controlsList="nodownload";`}
+                            // allowsFullscreenVideo={true}
+                            // injectedJavaScript=
+                            // {`document.getElementsByTagName("video")[0].pause();document.getElementsByTagName("video")[0].controlsList="nodownload";`}
                             />
                             {/* <FlatList
                                 showsVerticalScrollIndicator={false}

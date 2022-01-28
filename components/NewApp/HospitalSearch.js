@@ -3,7 +3,7 @@ import React from 'react';
 import {
     Switch, Text, View, Image, Alert, FlatList, VirtualizedList, TouchableWithoutFeedback, ActivityIndicator, ImageBackground,
     Keyboard, KeyboardAvoidingView, Dimensions, BackHandler, TouchableOpacity, StatusBar, ScrollView,
-    TextInput, SafeAreaView, StyleSheet,Button
+    TextInput, SafeAreaView, StyleSheet, Button
 } from 'react-native';
 import { widthtoDP, heighttoDP } from './Responsive'
 import { COLORS } from './theme'
@@ -113,7 +113,7 @@ export default class HospitalSearch extends React.Component {
                 // console.log("res", response.data.data);
             })
             .catch((error) => {
-                 console.log('error ' + error);
+                console.log('error ' + error);
                 this.setState({ hospitalList: [] })
             });
     }
@@ -377,10 +377,11 @@ export default class HospitalSearch extends React.Component {
                                     <View style={{ flexDirection: 'row', marginLeft: w(2) }}>
                                         <Text allowFontScaling={false} style={{ fontSize: h(2.8), color: GLOBAL.primarylighttext1, fontWeight: "bold" }}>Cluzn </Text>
                                         <Text allowFontScaling={false} style={{ fontSize: h(2.8), color: 'red', fontWeight: "bold" }}>Plus</Text>
-                                        <Button
-                                        title="CluznPlus Eva"
-                                        onPress={() => {
-                                            this.props.navigation.navigate('HomePage')}}/>
+                                        {/* <Button
+                                            title="CluznPlus Eva"
+                                            onPress={() => {
+                                                this.props.navigation.navigate('HomePage')
+                                            }} /> */}
                                     </View>
                                     <Text allowFontScaling={false} style={{ fontSize: h(1.5), color: GLOBAL.primarylighttext1, marginLeft: w(2) }}>Your Caring Partner</Text>
                                 </View>
@@ -465,6 +466,40 @@ export default class HospitalSearch extends React.Component {
                                 borderWidth: 0.5, fontSize: h(2.5), borderRadius: 10, alignSelf: 'center', justifyContent: 'center'
                             }}
                         />
+                    </View>
+                    <View style={{ backgroundColor: 'black', }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate('HomePage')
+                            }}
+                            style={{
+                                marginVertical: heighttoDP(number = '1%'),
+                                backgroundColor: GLOBAL.eva_midpink,
+                                borderRadius: heighttoDP(number = '2%'),
+                                alignSelf: 'center',
+                                width: widthtoDP(number = '90%'),
+                                height: heighttoDP(number = '12%')
+                            }}
+                        >
+                            <Image
+                                style={{
+                                    // backgroundColor: 'red',
+                                    width: widthtoDP(number = '85%'),
+                                    height: heighttoDP(number = '7%'),
+                                    alignSelf:'center',
+                                    // borderRadius: heighttoDP(number = '2%'),
+                                    // marginLeft: heighttoDP(number = '2%'),
+                                     marginTop: heighttoDP(number = '2%')
+                                }}
+                                source={require('../assets/icons/evahome.png')} />
+                            <Text
+                                style={{
+                                    alignSelf: 'center', justifyContent: 'center',
+                                    // fontSize: heighttoDP(number = '2%'),
+                                    // fontWeight: 'bold', color: '#EB592A'
+                                }}
+                            >To enter Click here</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={{ height: h(21) }}>
                         <SliderBox
