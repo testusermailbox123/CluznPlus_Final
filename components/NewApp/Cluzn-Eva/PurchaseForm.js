@@ -21,10 +21,45 @@ export default class PurchaseForm extends Component {
             plan_id: '',
             amount: '',
             name: '',
-
+            authtoken: '',
             expire_in_month: '',
             plan_image: '',
             status: 0
+        }
+    }
+
+    async getLocalData() {
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    if (authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        }, () => {
+
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
+        }
+    }
+
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
         }
     }
 
@@ -36,7 +71,8 @@ export default class PurchaseForm extends Component {
     };
 
     UNSAFE_componentWillMount() {
-        const { plan_id, amount, expire_in_month, plan_image, status  } = this.props.route.params;
+        this.getLocalData();
+        const { plan_id, amount, expire_in_month, plan_image, status } = this.props.route.params;
         this.setState({
             plan_id: plan_id,
             amount: amount
@@ -55,27 +91,34 @@ export default class PurchaseForm extends Component {
         let formData = new FormData();
         formData.append('plan_id', this.state.plan_id);
         axios({
-            url    : 'https://cluznplus.com/cluzn_backend/api/doSubscribe',
-            method : 'POST',
-            data   : formData,
+            url: 'https://cluznplus.com/cluzn_backend/api/doSubscribe',
+            method: 'POST',
+            data: formData,
             headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'multipart/form-data',
-                            'Authorization':'Basic YnJva2VyOmJyb2tlcl8xMjM='
-                        }
-            })
+                token : this.state.authtoken,
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Basic YnJva2VyOmJyb2tlcl8xMjM='
+            }
+        })
             .then(function (response) {
-                this.props.navigation.navigate('PackageDetails', {
-                    plan_id: this.state.plan_id,
-                    amount: this.state.amount,
-                    plan_image: this.state.plan_image,
-                    status: 0,
-                    name: this.state.name,
-                    expire_in_month: this.state.expire_in_month
-                });
+                if (response.data.status == 'success') {
+                    this.props.navigation.navigate('PackageDetails', {
+                        plan_id: this.state.plan_id,
+                        amount: this.state.amount,
+                        plan_image: this.state.plan_image,
+                        status: 0,
+                        name: this.state.name,
+                        expire_in_month: this.state.expire_in_month
+                    });
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch(function (error) {
-                        console.log("error from image :");
+                console.log("error from image :");
             });
     }
 
@@ -110,7 +153,7 @@ export default class PurchaseForm extends Component {
 
             RazorpayCheckout.open(options)
                 .then((data) => {
-                       this.doSubscribe();
+                    this.doSubscribe();
                     console.log("Hello check");
                 })
                 .catch((error) => {

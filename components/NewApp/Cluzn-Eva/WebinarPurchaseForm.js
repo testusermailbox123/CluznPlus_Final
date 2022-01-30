@@ -25,7 +25,32 @@ export default class WebinarPurchaseForm extends Component {
             text: '',
             authtoken: '',
         }
+    }
 
+    async getLocalData() {
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    if (authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        }, () => {
+                           
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
+        }
     }
 
     backAction = () => {
@@ -35,7 +60,17 @@ export default class WebinarPurchaseForm extends Component {
         return true;
     };
 
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
+    }
+
     UNSAFE_componentWillMount() {
+        this.getLocalData();
         const { navigation } = this.props;
         const { wookshopid, amount, webname } = this.props.route.params;
         this.setState({
@@ -61,15 +96,20 @@ export default class WebinarPurchaseForm extends Component {
         }
         axios.post('https://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
             headers: {
-                token: '',
+                token: this.state.authtoken,
             },
         })
             .then(response => {
-                console.log(response.data)
-                this.props.navigation.navigate('WebinarDetails', {
-                    plan_id: this.state.plan_id,
-                    amount: this.state.amount,
-                });
+                if (response.data.status == 'success') {
+                    this.props.navigation.navigate('WebinarDetails', {
+                        plan_id: this.state.plan_id,
+                        amount: this.state.amount,
+                    });
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch((error) => {
                 console.log("doSubscribe error", error);

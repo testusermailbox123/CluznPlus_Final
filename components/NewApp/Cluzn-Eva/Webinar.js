@@ -15,7 +15,34 @@ export default class Webinar extends Component {
             image: '',
             wookshopid: '',
             webname: '',
-            bookstatus: false
+            bookstatus: false,
+            authtoken: '',
+        }
+    }
+
+    async getLocalData() {
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    if (authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        }, () => {
+
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
         }
     }
 
@@ -31,8 +58,18 @@ export default class Webinar extends Component {
     }
 
     UNSAFE_componentWillMount() {
+        this.getLocalData();
         const { navigation } = this.props;
         this.generateworkshoplist();
+    }
+
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
     }
 
     generateworkshoplist() {
@@ -40,16 +77,21 @@ export default class Webinar extends Component {
 
         axios.get('https://cluznplus.com/cluzn_backend/api/getWebbinar', {
             headers: {
-                token: ''
+                token: this.state.authtoken
             }
         })
             .then(response => {
-
-                console.log("workshoplist - ", response.data.data);
-                this.setState({
-                    workshoplist: [...this.state.workshoplist, ...response.data.data],
-                });
-                console.log(this.state.workshoplist)
+                if (response.data.status == 'success') {
+                    console.log("workshoplist - ", response.data.data);
+                    this.setState({
+                        workshoplist: [...this.state.workshoplist, ...response.data.data],
+                    });
+                    console.log(this.state.workshoplist)
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch((error) => {
                 this.setState({ workshoplist: [] })
