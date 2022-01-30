@@ -118,7 +118,7 @@ export default class HomePage extends Component {
         this.getLocalData();
         console.log("UNSAFE_componentWillMount - ");
         const { navigation } = this.props;
-        this.generateAds()
+        // this.generateAds()
     }
 
     async redirectToLogin() {
@@ -169,7 +169,7 @@ export default class HomePage extends Component {
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
-                    alert(response.data.message)
+                    alert("check1"+response.data.message)
                 }
             })
             .catch((error) => {
@@ -191,7 +191,7 @@ export default class HomePage extends Component {
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
-                    alert(response.data.message)
+                    alert("check3"+response.data.message)
                 }
             })
             .catch((error) => {
@@ -206,16 +206,16 @@ export default class HomePage extends Component {
             }
         })
             .then(response => {
-
+                console.log("response", response.data.data)
                 if (response.data.status == 'success') {
                     // console.log("planlist - ", response.data.data[1]);
                     this.setState({
-                        categorieslist: [...this.state.categorieslist, ...response.data],
+                        categorieslist: [...this.state.categorieslist, ...response.data.data],
                     });
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
-                    alert(response.data.message)
+                    alert("check2"+response.data.message)
                 }
             })
             .catch((error) => {
@@ -323,7 +323,7 @@ export default class HomePage extends Component {
                             style={{
                                 flex: 1,
                             }}
-                            data={this.state.adslist}
+                            data={data}
                             keyExtractor={this._keyExtractor.bind(this)}
                             renderItem={this._renderItem.bind(this)}
                             horizontal={true}
