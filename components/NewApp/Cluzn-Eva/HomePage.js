@@ -9,7 +9,6 @@ GLOBAL = require('../globals');
 import axios from 'axios';
 let CurrentSlide = 0;
 let IntervalTime = 4000;
-import AsyncStorage from '@react-native-community/async-storage';
 
 const data = [
     {
@@ -40,7 +39,8 @@ export default class HomePage extends Component {
             planlist: [],
             categorieslist: [],
             videos: [],
-            authtoken: ''
+            authtoken: '',
+            adslist: ''
         }
     }
 
@@ -118,7 +118,7 @@ export default class HomePage extends Component {
         this.getLocalData();
         console.log("UNSAFE_componentWillMount - ");
         const { navigation } = this.props;
-        
+        this.generateAds()
     }
 
     async redirectToLogin() {
@@ -177,11 +177,33 @@ export default class HomePage extends Component {
             });
     }
 
+    generateAds() {
+        axios.get('https://cluznplus.com/cluzn_backend/api/getAdvertismentEva', {
+            headers: {
+                token: this.state.authtoken
+            }
+        })
+            .then(response => {
+                if (response.data.status == 'success') {
+                    this.setState({
+                        adslist: [...this.state.adslist, ...response.data.data],
+                    });
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
+            })
+            .catch((error) => {
+                this.setState({ adslist: [] })
+            });
+    }
+
     generateCategoryList() {
         axios.get('https://cluznplus.com/cluzn_backend/api/categories', {
             headers: {
                 token: this.state.authtoken
-            } 
+            }
         })
             .then(response => {
 
@@ -301,7 +323,7 @@ export default class HomePage extends Component {
                             style={{
                                 flex: 1,
                             }}
-                            data={data}
+                            data={this.state.adslist}
                             keyExtractor={this._keyExtractor.bind(this)}
                             renderItem={this._renderItem.bind(this)}
                             horizontal={true}
