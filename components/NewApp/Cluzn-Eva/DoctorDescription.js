@@ -143,7 +143,7 @@ export default class DoctorDescription extends Component {
                                 height: heighttoDP(number = '35%'),
                             }}
                             source={{
-                                uri: "http://cluznplus.com/cluzn_backend/images/" + this.state.docfullimage,
+                                uri: "https://cluznplus.com/cluzn_backend/images/" + this.state.docfullimage,
                             }}
                         />
                     </View>
@@ -210,7 +210,7 @@ export default class DoctorDescription extends Component {
                                         width: widthtoDP(number = '90%')
                                     }}
                                     source={{
-                                        uri: "http://cluznplus.com/cluzn_backend/images/" + this.state.docimage
+                                        uri: "https://cluznplus.com/cluzn_backend/images/" + this.state.docimage
                                     }}
                                 />
                             </TouchableOpacity>

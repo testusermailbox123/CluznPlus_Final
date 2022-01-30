@@ -35,6 +35,7 @@ export default class Categories extends Component {
 
     UNSAFE_componentWillMount() {
         const { videos, packageId } = this.props.route.params;
+        console.log(videos)
         this.setState({
             videos: videos,
             packageId: packageId
@@ -61,7 +62,7 @@ export default class Categories extends Component {
     }
 
     generateBookAppointmentList() {
-        let api = "http://cluznplus.com/cluzn_backend/api/category-doctors/" + this.state.packageId
+        let api = "https://cluznplus.com/cluzn_backend/api/category-doctors/" + this.state.packageId
 
         axios.get(api, {
             headers: {
@@ -138,6 +139,14 @@ export default class Categories extends Component {
     _onPressVideo(item) {
         this.props.navigation.navigate('Video1', {
             video_url: item.video
+        });
+    }
+
+    _onPressImage(item) {
+        this.props.navigation.navigate('BlogDetail', {
+            title: item.title.rendered,
+            content: item.content.rendered,
+            link: item.link
         });
     }
 
@@ -260,7 +269,7 @@ export default class Categories extends Component {
                                                             borderRadius: heighttoDP(number = '1%'),
 
                                                         }}
-                                                        source={{ uri: "https://www.pngkit.com/png/full/267-2678423_bacteria-video-thumbnail-default.png" }} />
+                                                        source={{ uri: item.thumbnail ?? 'https://videopromotion.club/assets/images/default-video-thumbnail.jpg' }} />
 
                                                     {/* <Video
                                                         source={{
@@ -484,70 +493,65 @@ export default class Categories extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={{
-                            height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
-                        }}>
-                            <WebView
-                                source={{ uri: this.state.blogsFlag.rendered }}
-                                javaScriptEnabled={true}
-                            // allowsFullscreenVideo={true}
-                            // injectedJavaScript=
-                            // {`document.getElementsByTagName("video")[0].pause();document.getElementsByTagName("video")[0].controlsList="nodownload";`}
-                            />
-                            {/* <FlatList
-                                showsVerticalScrollIndicator={false}
-                                style={{
-                                    marginBottom: heighttoDP(number = '5%'),
-                                }}
-                                data={this.state.videos}
-                                renderItem={({ item }) =>
-
-                                    <TouchableOpacity style={{
-                                        height: heighttoDP(number = '25%'),
-                                        width: widthtoDP(number = '90%'),
-                                        marginVertical: heighttoDP(number = '3%'),
-                                        alignSelf: 'center', justifyContent: 'center',
-                                        backgroundColor: GLOBAL.eva_midpink,
-                                        borderRadius: heighttoDP(number = '2%')
+                                height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
+                            }}>
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    style={{
+                                        marginBottom: heighttoDP(number = '5%'),
                                     }}
-                                    >
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    data={this.state.BlogList}
+                                    renderItem={({ item }) =>
 
-                                            <Image
-                                                style={{
-                                                    marginLeft: heighttoDP(number = '3%'),
-                                                    height: heighttoDP(number = '21%'),
-                                                    width: heighttoDP(number = '14%'),
-                                                    borderRadius: heighttoDP(number = '1%'),
-
-                                                }}
-                                                source={{ uri: "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg" }} />
+                                        <View style={{
+                                            height: heighttoDP(number = '25%'),
+                                            width: widthtoDP(number = '90%'),
+                                            marginVertical: heighttoDP(number = '5%'),
+                                            alignSelf: 'center', 
+                                            justifyContent: 'center',
+                                            // backgroundColor:'red'
+                                            
+                                        }}
+                                        >
                                             <View style={{
-                                                marginLeft: heighttoDP(number = '2%'),
-                                                width: heighttoDP(number = '27%'),
+                                                marginTop: heighttoDP(number = '3%'),
+                                                marginBottom: heighttoDP(number = '12%')
                                             }}>
                                                 <Text style={{
-                                                    fontWeight: 'bold',
-                                                    color: GLOBAL.eva_blue,
-                                                    fontSize: heighttoDP(number = '3%'),
+                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                    fontSize: heighttoDP(number = '2.0%'),
+                                                    marginBottom: heighttoDP(number = '3.5%') 
+                                                }}
+                                                >{item.title.rendered}</Text>
+                                                <TouchableOpacity
+                                                    onPress={() => this._onPressImage(item)}
+                                                    style={{
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        height: heighttoDP(number = '20%'),
+                                                        width: widthtoDP(number = '90%'),
+                                                    }}>
+                                                    <Image
+                                                        style={{
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            height: heighttoDP(number = '25%'),
+                                                            width: widthtoDP(number = '90%'),
+                                                            borderRadius: heighttoDP(number = '1%'),
 
-                                                }}>Sahu</Text>
-                                                <Text numberOfLines={8}>
-                                                    Ive yet to meet women who enjoy being on their period or
-                                                    experience the lovely mood changes that often come with it.
-                                                    Many women simply deal with the irritability and bloating and
-                                                    get on with life. But sometimes even the toughest of us need
-                                                    a little relief from our premenstrual problems...
-                                                </Text>
+                                                        }}
+                                                        source={{ uri: (item.content.rendered.split('src="')[1]) != undefined ? (item.content.rendered.split('src="')[1]).split('"')[0] : 'https://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png' }} />
+
+                                                </TouchableOpacity>
                                             </View>
                                         </View>
-                                    </TouchableOpacity>
-
-                                }
-                                keyExtractor={(item, index) => item + index}
 
 
-                            /> */}
-                        </View>
+                                    }
+                                    keyExtractor={(item, index) => item + index}
+
+                                />
+                            </View>
                     </View>
                 </SafeAreaView>
             )
@@ -651,7 +655,7 @@ export default class Categories extends Component {
 
                                                 }}
                                                 source={{
-                                                    uri: "http://cluznplus.com/cluzn_backend/images/" + item.image
+                                                    uri: "https://cluznplus.com/cluzn_backend/images/" + item.image
                                                     // "https://i.pinimg.com/236x/d4/9e/4a/d49e4a1204be7530cbbb135da699beaf--medical-students-medical-school.jpg"
                                                 }} />
                                             <View style={{

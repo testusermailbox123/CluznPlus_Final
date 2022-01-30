@@ -4,7 +4,7 @@
 
 // export const getUserInfo = () => {
 
-//     const URL = `http://cluznplus.com/cluzn_backend/api/getPlan`;
+//     const URL = `https://cluznplus.com/cluzn_backend/api/getPlan`;
 
 //     axios({
 //         method: 'get',
@@ -25,12 +25,12 @@
 
 import axios from 'axios';
 
-const { URL } = "http://cluznplus.com/cluzn_backend/api/getPlan";
+const { URL } = "https://cluznplus.com/cluzn_backend/api/getPlan";
 
 const getPlan = number => {
     axios({
         method: 'get',
-        url: "http://cluznplus.com/cluzn_backend/api/getPlan",
+        url: "https://cluznplus.com/cluzn_backend/api/getPlan",
         headers: {
 
         },

@@ -19,7 +19,12 @@ export default class PurchaseForm extends Component {
             Last_Name: '',
             Mobile_Number: '',
             plan_id: '',
-            amount: ''
+            amount: '',
+            name: '',
+
+            expire_in_month: '',
+            plan_image: '',
+            status: 0
         }
     }
 
@@ -31,7 +36,7 @@ export default class PurchaseForm extends Component {
     };
 
     UNSAFE_componentWillMount() {
-        const { plan_id, amount } = this.props.route.params;
+        const { plan_id, amount, expire_in_month, plan_image, status  } = this.props.route.params;
         this.setState({
             plan_id: plan_id,
             amount: amount
@@ -46,6 +51,34 @@ export default class PurchaseForm extends Component {
         this.backHandler.remove();
     }
 
+    doSubscribe() {
+        let formData = new FormData();
+        formData.append('plan_id', this.state.plan_id);
+        axios({
+            url    : 'https://cluznplus.com/cluzn_backend/api/doSubscribe',
+            method : 'POST',
+            data   : formData,
+            headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization':'Basic YnJva2VyOmJyb2tlcl8xMjM='
+                        }
+            })
+            .then(function (response) {
+                this.props.navigation.navigate('PackageDetails', {
+                    plan_id: this.state.plan_id,
+                    amount: this.state.amount,
+                    plan_image: this.state.plan_image,
+                    status: 0,
+                    name: this.state.name,
+                    expire_in_month: this.state.expire_in_month
+                });
+            })
+            .catch(function (error) {
+                        console.log("error from image :");
+            });
+    }
+
     onPressButton() {
 
         if (this.state.Mobile_Number == '' || this.state.Mobile_Number.length < 10
@@ -56,15 +89,15 @@ export default class PurchaseForm extends Component {
             alert('Please enter all the details correctly')
         } else {
 
-            this.props.navigation.navigate('WebinarPurchaseForm', {
-                plan_id: this.state.plan_id,
-                amount: this.state.amount,
-            });
+            // this.props.navigation.navigate('WebinarPurchaseForm', {
+            //     plan_id: this.state.plan_id,
+            //     amount: this.state.amount,
+            // });
             var options = {
-                description: this.state.webname + ' Price',
+                description: this.state.name + ' Price',
                 image: 'https://i.imgur.com/3g7nmJC.png',
                 currency: 'INR',
-                amount: this.state.amount + '00',
+                amount: this.state.amount * 100,
                 key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
                 name: this.state.First_Name + " " + this.state.Last_Name,
                 prefill: {
@@ -77,13 +110,18 @@ export default class PurchaseForm extends Component {
 
             RazorpayCheckout.open(options)
                 .then((data) => {
-                    // this.doSubscribe(data.razorpay_payment_id)
+                       this.doSubscribe();
+                    console.log("Hello check");
                 })
                 .catch((error) => {
                     console.log(`Error : ${error} | ${error.description}`);
                     this.props.navigation.navigate('PackageDetails', {
                         plan_id: this.state.plan_id,
                         amount: this.state.amount,
+                        plan_image: this.state.plan_image,
+                        status: 0,
+                        name: this.state.name,
+                        expire_in_month: this.state.expire_in_month
                     });
                 });
         }

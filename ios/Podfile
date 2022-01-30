@@ -12,6 +12,10 @@ target 'CluznPlus' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-create-thumbnail', :path => '../node_modules/react-native-create-thumbnail'
+
+  pod 'RNThumbnail', :path => '../node_modules/react-native-thumbnail'
+
   target 'CluznPlusTests' do
     inherit! :complete
     # Pods for testing

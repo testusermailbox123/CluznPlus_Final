@@ -5,6 +5,7 @@ import {
     Keyboard, KeyboardAvoidingView, Dimensions, BackHandler, TouchableOpacity, StatusBar, ScrollView,
     TextInput, SafeAreaView, StyleSheet, Button
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { widthtoDP, heighttoDP } from './Responsive'
 import { COLORS } from './theme'
 import axios from 'axios';
@@ -21,6 +22,7 @@ export default class HospitalSearch extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            authtoken: '',
             hospitalList: [],
             alldata: [],
             isEnabled: false,
@@ -47,13 +49,41 @@ export default class HospitalSearch extends React.Component {
         }
         this.switchValueChnage = this.switchValueChnage.bind(this);
     }
+    async getLocalData () {
+        console.log("fine")
+        try {
+            console.log("fine 2");
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                console.log("fine 3");
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    console.log("fine 1");
+                    if(authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        }, () => {
+                            this.generateHospitalList();
+                            this.getCityList();
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
+        }
+    }
 
     componentDidMount() {
+        this.getLocalData();
         const { navigation } = this.props;
-        this.generateHospitalList();
-        this.getCityList()
         BackHandler.addEventListener('hardwareBackPress', function () {
-            // console.log(navigation.isFocused());
             if (navigation.isFocused()) {
                 Alert.alert(
                     'Exit App',
@@ -83,39 +113,51 @@ export default class HospitalSearch extends React.Component {
             this.setState({ isloading: true })
         }
         counter = counter + 1
-        const { authtokenfromEnterNameDetails } = this.props.route.params;
         const data = {
             search_value: search_value,
             limit: 15,
             page: counter,
             cityName: selectedItem
         }
-        console.log('token --- ', authtokenfromEnterNameDetails);
-        axios.post('http://cluznplus.com/cluzn_backend/api/hospital/', data, {
+        axios.post('https://cluznplus.com/cluzn_backend/api/hospital/', data, {
             headers: {
-                token: authtokenfromEnterNameDetails
+                token: this.state.authtoken
             }
         })
             .then(response => {
-                if (counter == 1) {
+                console.log(response)
+                if(response.data.status == 'success') {
+                    if (counter == 1) {
+                        this.setState({
+                            hospitalList: [],
+                        });
+                    }
                     this.setState({
-                        hospitalList: [],
+                        hospitalList: [...this.state.hospitalList, ...response.data.data],
+                        filterhospitalList: response.data.data,
+                        images: response.data.adsdata,
+                        allDepartment: this.state.hospitalList,
+                        isloading: false
                     });
+                } else if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
                 }
-                this.setState({
-                    hospitalList: [...this.state.hospitalList, ...response.data.data],
-                    filterhospitalList: response.data.data,
-                    images: response.data.adsdata,
-                    allDepartment: this.state.hospitalList,
-                    isloading: false
-                });
-                // console.log("hospitalList", this.state.hospitalList);
-                // console.log("res", response.data.data);
             })
             .catch((error) => {
                 console.log('error ' + error);
                 this.setState({ hospitalList: [] })
             });
+    }
+
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
     }
 
     switchValueChnage() {
@@ -163,27 +205,27 @@ export default class HospitalSearch extends React.Component {
 
     getCityList() {
 
-        const { authtokenfromEnterNameDetails } = this.props.route.params;
 
-        axios.get('http://cluznplus.com/cluzn_backend/api/getCity', {
+        axios.get('https://cluznplus.com/cluzn_backend/api/getCity', {
 
             headers: {
-                token: authtokenfromEnterNameDetails
+                token: this.state.authtoken
             }
         })
             .then(response => {
-                // console.log('all data   ', response.data);
-                this.setState({
-                    cityList: response.data.data,
-                    tagList: response.data.tagdata,
-                    isloading: false,
-                    // myCity1: ''
-                    // myCity1: this.state.cityList[0]
-                });
-
+                if(response.data.status == 'success') {
+                    this.setState({
+                        cityList: response.data.data,
+                        tagList: response.data.tagdata,
+                        isloading: false
+                    });
+                } else if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch((error) => {
-                // console.log('error ' + error);
                 this.setState({ cityList: [] })
             });
     }

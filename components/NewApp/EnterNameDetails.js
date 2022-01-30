@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, Image, Dimensions, TouchableOpacity, ScrollView, Modal,
     TextInput,Pressable, SafeAreaView, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { widthtoDP, heighttoDP } from './Responsive'
 import { COLORS } from './theme'
 import axios from 'axios';
@@ -26,8 +27,46 @@ export default class EnterNameDetails extends React.Component {
         this.setState({ modalVisible: visible });
     }
 
+    async getLocalData () {
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    console.log("authtoken", authtoken)
+                    if(authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        })
+                    }
+                } catch (error) {
+                    console.log("Error resetting data" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
+    }
+
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
+    }
+
+    componentDidMount () {
+        this.getLocalData();
+    }
+
     enterdetails() {
-        const { authtokenfromEnterGeneratedOTP } = this.props.route.params;
+        console.log("toke"+this.state.authtoken)
         if (this.state.Full_Name == '') {
             alert('Please enter Full name')
             // } else if (this.state.E_Mail.includes('com') == false || this.state.E_Mail.includes('@') == false) {
@@ -38,23 +77,41 @@ export default class EnterNameDetails extends React.Component {
                 name: this.state.Full_Name,
                 email: this.state.E_Mail
             };
-
-            axios.post('http://cluznplus.com/cluzn_backend/api/firstNameAndEmailSave', data, {
+            console.log(data)
+            axios.post('https://cluznplus.com/cluzn_backend/api/firstNameAndEmailSave', data, {
                 headers: {
-                    token: authtokenfromEnterGeneratedOTP
+                    token: this.state.authtoken
                 }
             }
             ).then(response => {
-                this.setState({
-                    users: response.data.data
-                })
-                this.props.navigation.navigate('HospitalSearch', {
-                    authtokenfromEnterNameDetails: authtokenfromEnterGeneratedOTP
-                })
+                
+                if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                    this.redirectToLogin()
+                } else if(response.data.status == 'success') {
+                    this.setState({
+                        users: response.data.data
+                    })
+                    this.updateLocalData(response.data.data[0].is_name, response.data.data[0].is_email)
+                } else {
+                    alert(response.data.message)
+                }
             })
                 .catch((error) => {
-                    // console.log('error ' + error);
+                    console.log('error ' + error);
+                    
                 });
+        }
+    }
+
+    async updateLocalData (is_name, ) {
+        try {
+            await AsyncStorage.setItem('userName', this.state.Full_Name)
+            await AsyncStorage.setItem('userEmail', this.state.E_Mail)
+            await AsyncStorage.setItem('is_name', is_name)
+            await AsyncStorage.setItem('is_email', is_email);
+            this.props.navigation.navigate('HospitalSearch');
+        } catch (error) {
+            this.redirectToLogin()
         }
     }
 

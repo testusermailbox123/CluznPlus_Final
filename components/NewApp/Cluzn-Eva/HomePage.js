@@ -73,6 +73,7 @@ export default class HomePage extends Component {
             expire_in_month: item.expire_in_month,
             plan_id: item.id,
             plan_image: item.full_image,
+            status: item.status
         });
     }
 
@@ -117,7 +118,7 @@ export default class HomePage extends Component {
     }
 
     generatePlanList() {
-        axios.get('http://cluznplus.com/cluzn_backend/api/getPlan', {
+        axios.get('https://cluznplus.com/cluzn_backend/api/getPlan', {
             headers: {
                 token: ""
             }
@@ -126,7 +127,6 @@ export default class HomePage extends Component {
                 this.setState({
                     planlist: [...this.state.planlist, ...response.data.data],
                 });
-
             })
             .catch((error) => {
                 this.setState({ planlist: [] })
@@ -134,7 +134,7 @@ export default class HomePage extends Component {
     }
 
     generateCategoryList() {
-        axios.get('http://cluznplus.com/cluzn_backend/api/categories', {
+        axios.get('https://cluznplus.com/cluzn_backend/api/categories', {
             headers: {
                 token: ""
             }

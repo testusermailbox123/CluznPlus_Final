@@ -14,17 +14,18 @@ const SplashScreen = ({ navigation }) => {
     setTimeout(async () => {
       //await AsyncStorage.setItem('LoggedIn','No')
       const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
-      //console.log('loggedInSTatus', loggedInSTatus)
+      console.log('loggedInSTatus', loggedInSTatus)
       if (loggedInSTatus === 'Yes') {
         const authtoken = await AsyncStorage.getItem('auth_token');
-        // console.log('token key ', authtoken)
-        navigation.navigate('HospitalSearch', {
-          authtokenfromEnterNameDetails: authtoken
-        })
+        const is_name = await AsyncStorage.getItem('is_name');
+        if(is_name) {
+          navigation.navigate('HospitalSearch')
+        } else {
+          navigation.navigate('EnterNameDetails')
+        }
       } else {
-
-        //console.log('inside else')
-        navigation.navigate('GenerateOtpforLoginScreen')
+        await AsyncStorage.clear();
+        navigation.navigate('GenerateOtpforLoginScreen');
       }
     }
       , 2000);

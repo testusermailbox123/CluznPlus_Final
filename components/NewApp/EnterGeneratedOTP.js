@@ -53,10 +53,14 @@ export default class EnterGeneratedOTP extends React.Component {
     }
 
     dataget() {
-        const { authtokenfromgenerateotpscreen, confirmationdata, phonenumberfromgenerateotpscreen } = this.props.route.params;
+        const { is_name, is_email, userName, userEmail, authtokenfromgenerateotpscreen, confirmationdata, phonenumberfromgenerateotpscreen } = this.props.route.params;
         // console.log(phonenumberfromgenerateotpscreen)
         this.signInWithPhoneNumber(phonenumberfromgenerateotpscreen)
         this.setState({
+            is_name: is_name,
+            is_email: is_email,
+            userName: userName,
+            userEmail: userEmail,
             confirmationdata_fromgenerateotp: confirmationdata,
             authtokenfrom_EnterGeneratedOTP: authtokenfromgenerateotpscreen,
             phonenumberfrom_GeneratedOTP: phonenumberfromgenerateotpscreen
@@ -112,23 +116,27 @@ export default class EnterGeneratedOTP extends React.Component {
                     axios.post('https://2factor.in/API/V1/' + apikey + '/SMS/VERIFY/' + this.state.details + '/' + this.state.userotp1 + this.state.userotp2 + this.state.userotp3 + this.state.userotp4 + this.state.userotp5 + this.state.userotp6).then(response => {
                         // console.log(response.data.Status)
                         // console.log(response.data.Details)
-                        // console.log('Login successfull');
-                        AsyncStorage.setItem('LoggedIn', 'Yes')
+                        console.log('Login successfull');
+                        AsyncStorage.setItem('LoggedIn', 'Yes');
                         AsyncStorage.setItem('auth_token', this.state.authtokenfrom_EnterGeneratedOTP)
+                        AsyncStorage.setItem('userName', this.state.userName)
+                        AsyncStorage.setItem('userEmail', this.state.userEmail)
+                        AsyncStorage.setItem('is_name', this.state.is_name)
+                        AsyncStorage.setItem('is_email', this.state.is_email)
                         // console.log('Auth toke value is = ', this.state.authtokenfrom_EnterGeneratedOTP);
                         //response.data.Details == "OTP Matched" && 
                         // console.log('this.state.confirmationdata_fromgenerateotp', response.data.Details)
                         // console.log('this.state.confirmationdata_fromgenerateotp', this.state.confirmationdata_fromgenerateotp)
-                        if (this.state.confirmationdata_fromgenerateotp.toString() == "false") {
+                        // if (this.state.confirmationdata_fromgenerateotp.toString() == "false") {
+                        if (!this.state.is_name) {
                             // console.log('this.state.confirmationdata_fromgenerateotp', this.state.confirmationdata_fromgenerateotp)
-                            this.props.navigation.navigate('EnterNameDetails', {
-                                authtokenfromEnterGeneratedOTP: this.state.authtokenfrom_EnterGeneratedOTP
-                            })
+                            // this.props.navigation.navigate('EnterNameDetails', {
+                            //     authtokenfromEnterGeneratedOTP: this.state.authtokenfrom_EnterGeneratedOTP
+                            // })
+                            this.props.navigation.navigate('EnterNameDetails')
                         } else {
                             // console.log(this.state.confirmationdata_fromgenerateotp)
-                            this.props.navigation.navigate('HospitalSearch', {
-                                authtokenfromEnterNameDetails: this.state.authtokenfrom_EnterGeneratedOTP
-                            })
+                            this.props.navigation.navigate('HospitalSearch')
 
                         }
                         return response

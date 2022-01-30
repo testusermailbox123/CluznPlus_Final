@@ -57,7 +57,7 @@ export default class WebinarPurchaseForm extends Component {
             plan_id: this.state.wookshopid,
             payment_id: payment_id
         }
-        axios.post('http://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
+        axios.post('https://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
             headers: {
                 token: 'C6u6RImyV7mxUukg9e2sVCsDPXEkBkRO',
             },

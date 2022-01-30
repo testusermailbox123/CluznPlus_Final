@@ -19,17 +19,19 @@ export default class PackageDetails extends Component {
             expire_in_month: '',
             plan_id: '',
             authtoken: '',
-            plan_image: ''
+            plan_image: '',
+            status: 0
         }
     }
     UNSAFE_componentWillMount() {
-        const { amount, name, expire_in_month, plan_id, plan_image } = this.props.route.params;
+        const { amount, name, expire_in_month, plan_id, plan_image, status } = this.props.route.params;
         this.setState({
             amount: amount,
             name: name,
             expire_in_month: expire_in_month,
             plan_id: plan_id,
-            plan_image: plan_image
+            plan_image: plan_image,
+            status: status
         })
     }
 
@@ -38,6 +40,11 @@ export default class PackageDetails extends Component {
         this.props.navigation.navigate('PurchaseForm', {
             plan_id: this.state.plan_id,
             amount: this.state.amount,
+            plan_image: this.state.plan_image,
+            status: this.state.status,
+            name: this.state.name,
+            expire_in_month: this.state.expire_in_month,
+
         });
     };
 
@@ -84,9 +91,9 @@ export default class PackageDetails extends Component {
                     }}>
 
                         <TouchableOpacity
-                            onPress={() => this.onPressButton()}
+                            onPress={() => this.state.status == 0 ? this.onPressButton() : console.log('Hello')}
                             style={{
-                                backgroundColor: GLOBAL.eva_darkpink,
+                                backgroundColor: this.state.status == 0 ? GLOBAL.eva_darkpink : 'green',
                                 width: widthtoDP(number = '90%'),
                                 height: heighttoDP(number = '6%'),
                                 borderRadius: heighttoDP(number = '5%'),
@@ -97,10 +104,10 @@ export default class PackageDetails extends Component {
                         >
 
                             <Text style={{
-                                color: 'white', fontWeight: 'bold',
+                                color:  'white', fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '3%')
                             }}
-                            >Purchase Now</Text>
+                            >{ this.state.status == 0 ? 'Purchase Now' : 'Purchased' }</Text>
                         </TouchableOpacity>
 
                     </View>

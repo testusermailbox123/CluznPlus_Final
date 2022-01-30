@@ -38,7 +38,7 @@ export default class Webinar extends Component {
     generateworkshoplist() {
         // const authtoken = AsyncStorage.getItem('auth_token')
 
-        axios.get('http://cluznplus.com/cluzn_backend/api/getWebbinar', {
+        axios.get('https://cluznplus.com/cluzn_backend/api/getWebbinar', {
             headers: {
                 token: ''
             }
