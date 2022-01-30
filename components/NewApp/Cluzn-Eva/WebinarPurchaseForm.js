@@ -9,6 +9,7 @@ import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
 import RazorpayCheckout from 'react-native-razorpay';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class WebinarPurchaseForm extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ export default class WebinarPurchaseForm extends Component {
             amount: '',
             webname: '',
             text: '',
+            authtoken: '',
         }
 
     }
@@ -59,7 +61,7 @@ export default class WebinarPurchaseForm extends Component {
         }
         axios.post('https://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
             headers: {
-                token: 'C6u6RImyV7mxUukg9e2sVCsDPXEkBkRO',
+                token: '',
             },
         })
             .then(response => {

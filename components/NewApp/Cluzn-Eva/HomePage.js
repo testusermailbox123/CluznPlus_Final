@@ -3,6 +3,7 @@ import {
     Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView,
     FlatList, VirtualizedList, StyleSheet, Dimensions
 } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
 import axios from 'axios';
@@ -38,7 +39,8 @@ export default class HomePage extends Component {
         this.state = {
             planlist: [],
             categorieslist: [],
-            videos: []
+            videos: [],
+            authtoken: ''
         }
     }
 
@@ -54,6 +56,35 @@ export default class HomePage extends Component {
             animated: true,
         });
     };
+
+    async getLocalData() {
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    if (authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        }, () => {
+                            this.generateCategoryList();
+                            this.generatePlanList();
+                            this._stopAutoPlay();
+                            this._startAutoPlay();
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
+        }
+    }
 
     _startAutoPlay = () => {
         this._timerId = setInterval(this._goToNextPage, IntervalTime);
@@ -84,12 +115,19 @@ export default class HomePage extends Component {
     }
 
     UNSAFE_componentWillMount() {
+        this.getLocalData();
         console.log("UNSAFE_componentWillMount - ");
         const { navigation } = this.props;
-        this.generateCategoryList();
-        this.generatePlanList();
-        this._stopAutoPlay();
-        this._startAutoPlay();
+        
+    }
+
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
     }
 
     componentWillUnmount() {
@@ -120,13 +158,19 @@ export default class HomePage extends Component {
     generatePlanList() {
         axios.get('https://cluznplus.com/cluzn_backend/api/getPlan', {
             headers: {
-                token: ""
+                token: this.state.authtoken
             }
         })
             .then(response => {
-                this.setState({
-                    planlist: [...this.state.planlist, ...response.data.data],
-                });
+                if (response.data.status == 'success') {
+                    this.setState({
+                        planlist: [...this.state.planlist, ...response.data.data],
+                    });
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch((error) => {
                 this.setState({ planlist: [] })
@@ -136,15 +180,21 @@ export default class HomePage extends Component {
     generateCategoryList() {
         axios.get('https://cluznplus.com/cluzn_backend/api/categories', {
             headers: {
-                token: ""
-            }
+                token: this.state.authtoken
+            } 
         })
             .then(response => {
-                // console.log("planlist - ", response.data.data[1]);
-                this.setState({
-                    categorieslist: [...this.state.categorieslist, ...response.data],
-                });
 
+                if (response.data.status == 'success') {
+                    // console.log("planlist - ", response.data.data[1]);
+                    this.setState({
+                        categorieslist: [...this.state.categorieslist, ...response.data],
+                    });
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch((error) => {
                 this.setState({ categorieslist: [] })
@@ -181,7 +231,7 @@ export default class HomePage extends Component {
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '1%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '5%'),
                         marginLeft: widthtoDP(number = "5%"),
-                        fontFamily:"MrsSheppards-Regular"
+                        fontFamily: "MrsSheppards-Regular"
                     }}>Hello Varun,</Text>
                     <Text style={{
                         color: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '1%'),
@@ -427,7 +477,7 @@ const styles = StyleSheet.create({
     },
     sliderItems: {
         // height: "100%",
-        borderTopRightRadius:heighttoDP(number = '2%'),
+        borderTopRightRadius: heighttoDP(number = '2%'),
         borderRadius: heighttoDP(number = '2%'),
         width: widthtoDP(number = '90%'),
     },

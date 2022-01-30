@@ -18,7 +18,7 @@ const SplashScreen = ({ navigation }) => {
       if (loggedInSTatus === 'Yes') {
         const authtoken = await AsyncStorage.getItem('auth_token');
         const is_name = await AsyncStorage.getItem('is_name');
-        if(is_name) {
+        if(is_name == true || is_name == 'true') {
           navigation.navigate('HospitalSearch')
         } else {
           navigation.navigate('EnterNameDetails')

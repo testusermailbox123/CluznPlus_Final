@@ -50,15 +50,11 @@ export default class HospitalSearch extends React.Component {
         this.switchValueChnage = this.switchValueChnage.bind(this);
     }
     async getLocalData () {
-        console.log("fine")
         try {
-            console.log("fine 2");
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
             if (loggedInSTatus === 'Yes') {
-                console.log("fine 3");
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
-                    console.log("fine 1");
                     if(authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {

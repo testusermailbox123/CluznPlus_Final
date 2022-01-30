@@ -107,8 +107,8 @@ export default class EnterNameDetails extends React.Component {
         try {
             await AsyncStorage.setItem('userName', this.state.Full_Name)
             await AsyncStorage.setItem('userEmail', this.state.E_Mail)
-            await AsyncStorage.setItem('is_name', is_name)
-            await AsyncStorage.setItem('is_email', is_email);
+            await AsyncStorage.setItem('is_name', Boolean(is_name)?'true':'false')
+            await AsyncStorage.setItem('is_email', Boolean(is_email)?'true':'false');
             this.props.navigation.navigate('HospitalSearch');
         } catch (error) {
             this.redirectToLogin()

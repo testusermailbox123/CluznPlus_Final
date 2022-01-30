@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, ActivityIndicator, StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
+import { createThumbnail } from "react-native-create-thumbnail";
 import { widthtoDP, heighttoDP } from '../Responsive';
 import { WebView } from 'react-native-webview';
 import Video from 'react-native-video';
@@ -18,6 +20,7 @@ export default class Categories extends Component {
         super(props)
 
         this.state = {
+            authtoken: '',
             videoFlag: true,
             blogsFlag: false,
             BookAppointmentFlag: false,
@@ -33,13 +36,69 @@ export default class Categories extends Component {
         }
     }
 
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
+    }
+
+    async getLocalData () {
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    if(authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
+        }
+    }
+
     UNSAFE_componentWillMount() {
+        this.getLocalData();
         const { videos, packageId } = this.props.route.params;
-        console.log(videos)
+        this.updateVideoThumbnail(videos);
         this.setState({
-            videos: videos,
+            // videos: videos,
             packageId: packageId
         })
+    }
+
+    async updateVideoThumbnail(videos) {
+        console.log("all video")
+        console.log(videos)
+        let videoAll = [];
+        for(let item of videos) {
+            await createThumbnail({
+                url: item.video,
+                timeStamp: 10000,
+              })
+                .then((response) => {
+                    console.log("item", item)
+                    item.thumbnail = response.path;
+                    videoAll.push(item);
+                })
+                .catch(err => console.log({ err }));
+        }
+        this.setState({
+            videos: videoAll
+        })
+        
     }
 
     updateFlag() {
@@ -66,15 +125,19 @@ export default class Categories extends Component {
 
         axios.get(api, {
             headers: {
-                token: ""
+                token: this.state.authtoken
             }
         })
             .then(response => {
-
-                this.setState({
-                    bookAppointmentList: [...this.state.bookAppointmentList, ...response.data],
-                });
-
+                if(response.data.status == 'success') {
+                    this.setState({
+                        bookAppointmentList: [...this.state.bookAppointmentList, ...response.data],
+                    });
+                } else if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
             })
             .catch((error) => {
                 this.setState({ bookAppointmentList: [] })
