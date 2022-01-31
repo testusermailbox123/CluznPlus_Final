@@ -55,7 +55,7 @@ export default class EnterNameDetails extends React.Component {
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
         }

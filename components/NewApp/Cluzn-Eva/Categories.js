@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, SafeAreaView, StatusBar, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, ActivityIndicator, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
-import { createThumbnail } from "react-native-create-thumbnail";
+// import { createThumbnail } from "react-native-create-thumbnail";
 import { widthtoDP, heighttoDP } from '../Responsive';
 import { WebView } from 'react-native-webview';
 import Video from 'react-native-video';
@@ -31,27 +31,29 @@ export default class Categories extends Component {
             videoBufferFlag: true,
             videoLoadedLength: 0,
             BlogList: [],
-            docid:'',
-            amount:''
+            docid: '',
+            amount: ''
         }
     }
 
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
         }
     }
 
-    async getLocalData () {
+    async getLocalData() {
+
         try {
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            console.log('getLocalData token ' + loggedInSTatus)
             if (loggedInSTatus === 'Yes') {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
-                    if(authtoken == "" || authtoken == null) {
+                    if (authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
                         this.setState({
@@ -72,34 +74,34 @@ export default class Categories extends Component {
     UNSAFE_componentWillMount() {
         this.getLocalData();
         const { videos, packageId } = this.props.route.params;
-        this.updateVideoThumbnail(videos);
+        // this.updateVideoThumbnail(videos);
         this.setState({
-            // videos: videos,
+            videos: videos,
             packageId: packageId
         })
     }
 
-    async updateVideoThumbnail(videos) {
-        console.log("all video")
-        console.log(videos)
-        let videoAll = [];
-        for(let item of videos) {
-            await createThumbnail({
-                url: item.video,
-                timeStamp: 10000,
-              })
-                .then((response) => {
-                    console.log("item", item)
-                    item.thumbnail = response.path;
-                    videoAll.push(item);
-                })
-                .catch(err => console.log({ err }));
-        }
-        this.setState({
-            videos: videoAll
-        })
-        
-    }
+    // async updateVideoThumbnail(videos) {
+    //     console.log("all video")
+    //     console.log(videos)
+    //     let videoAll = [];
+    //     for(let item of videos) {
+    //         await createThumbnail({
+    //             url: item.video,
+    //             timeStamp: 10000,
+    //           })
+    //             .then((response) => {
+    //                 console.log("item", item)
+    //                 item.thumbnail = response.path;
+    //                 videoAll.push(item);
+    //             })
+    //             .catch(err => console.log({ err }));
+    //     }
+    //     this.setState({
+    //         videos: videoAll
+    //     })
+
+    // }
 
     updateFlag() {
         if (this.state.videoLoadedLength >= this.state.videos.length - 1) {
@@ -129,11 +131,12 @@ export default class Categories extends Component {
             }
         })
             .then(response => {
-                if(response.data.status == 'success') {
+                console.log(response.data)
+                if (response.data.status == 'success') {
                     this.setState({
-                        bookAppointmentList: [...this.state.bookAppointmentList, ...response.data],
+                        bookAppointmentList: [...this.state.bookAppointmentList, ...response.data.data],
                     });
-                } else if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
                     alert(response.data.message)
@@ -296,7 +299,7 @@ export default class Categories extends Component {
                                 <FlatList
                                     showsVerticalScrollIndicator={false}
                                     style={{
-                                        marginBottom: heighttoDP(number = '5%'),
+                                        marginBottom: heighttoDP(number = '10%'),
                                     }}
                                     data={this.state.videos}
                                     renderItem={({ item }) =>
@@ -304,64 +307,44 @@ export default class Categories extends Component {
                                         <View style={{
                                             height: heighttoDP(number = '25%'),
                                             width: widthtoDP(number = '90%'),
-                                            marginVertical: heighttoDP(number = '3%'),
+                                            marginVertical: heighttoDP(number = '7%'),
                                             alignSelf: 'center', justifyContent: 'center',
-                                            // backgroundColor:'red'
+                                            // backgroundColor: 'red'
                                         }}
                                         >
-                                            <View>
+                                            <View style={{
+                                                    // backgroundColor: 'red',
+                                                    height: heighttoDP(number = '10%')}}>
                                                 <Text style={{
-                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                    fontSize: heighttoDP(number = '1.5%')
+                                                    color: GLOBAL.eva_blue,
+                                                    fontWeight: 'bold',
+                                                    fontSize: heighttoDP(number = '2%')
                                                 }}
                                                 >{item.title}</Text>
-                                                <TouchableOpacity
-                                                    onPress={() => this._onPressVideo(item)}
+                                            </View>
+                                            <TouchableOpacity
+                                                onPress={() => this._onPressVideo(item)}
+                                                style={{
+                                                    // backgroundColor: 'red',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    height: heighttoDP(number = '20%'),
+                                                    width: widthtoDP(number = '90%'),
+                                                    marginTop: -heighttoDP(number = '2%'),
+                                                }}>
+                                                <Image
                                                     style={{
                                                         alignItems: 'center',
                                                         justifyContent: 'center',
-                                                        height: heighttoDP(number = '20%'),
+                                                        height: heighttoDP(number = '25%'),
                                                         width: widthtoDP(number = '90%'),
-                                                    }}>
-                                                    <Image
-                                                        style={{
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            height: heighttoDP(number = '20%'),
-                                                            width: widthtoDP(number = '90%'),
-                                                            borderRadius: heighttoDP(number = '1%'),
+                                                        borderRadius: heighttoDP(number = '1%'),
+                                                        marginTop: heighttoDP(number = '2%'),
 
-                                                        }}
-                                                        source={{ uri: item.thumbnail ?? 'https://videopromotion.club/assets/images/default-video-thumbnail.jpg' }} />
-
-                                                    {/* <Video
-                                                        source={{
-                                                            uri: 'http://techslides.com/demos/sample-videos/small.mp4'
-                                                        }}   // Can be a URL or a local file.
-                                                        ref={(ref) => { this.player = ref }}
-                                                        paused={true}
-                                                        controls={true}
-                                                        onBuffer={() => {
-                                                            
-                                                        }}
-                                                        onLoad={() => {
-                                                            console.log("videoLoadedLength", this.state.videoLoadedLength);
-                                                            this.setState({
-                                                                videoLoadedLength: this.state.videoLoadedLength + 1
-                                                            })
-                                                            this.updateFlag();
-                                                        }}
-                                                        style={{
-                                                            backgroundColor: 'red',
-                                                            width: '100%',
-                                                            height: '30%'
-                                                        }}
-                                                    /> */}
-                                                </TouchableOpacity>
-                                            </View>
+                                                    }}
+                                                    source={{ uri: item.thumbnail ?? 'https://videopromotion.club/assets/images/default-video-thumbnail.jpg' }} />
+                                            </TouchableOpacity>
                                         </View>
-
-
                                     }
                                     keyExtractor={(item, index) => item + index}
 
@@ -556,65 +539,65 @@ export default class Categories extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={{
-                                height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
-                            }}>
-                                <FlatList
-                                    showsVerticalScrollIndicator={false}
-                                    style={{
-                                        marginBottom: heighttoDP(number = '5%'),
-                                    }}
-                                    data={this.state.BlogList}
-                                    renderItem={({ item }) =>
+                            height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
+                        }}>
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                style={{
+                                    marginBottom: heighttoDP(number = '5%'),
+                                }}
+                                data={this.state.BlogList}
+                                renderItem={({ item }) =>
 
+                                    <View style={{
+                                        height: heighttoDP(number = '25%'),
+                                        width: widthtoDP(number = '90%'),
+                                        marginVertical: heighttoDP(number = '5%'),
+                                        alignSelf: 'center',
+                                        justifyContent: 'center',
+                                        // backgroundColor:'red'
+
+                                    }}
+                                    >
                                         <View style={{
-                                            height: heighttoDP(number = '25%'),
-                                            width: widthtoDP(number = '90%'),
-                                            marginVertical: heighttoDP(number = '5%'),
-                                            alignSelf: 'center', 
-                                            justifyContent: 'center',
-                                            // backgroundColor:'red'
-                                            
-                                        }}
-                                        >
-                                            <View style={{
-                                                marginTop: heighttoDP(number = '3%'),
-                                                marginBottom: heighttoDP(number = '12%')
-                                            }}>
-                                                <Text style={{
-                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                    fontSize: heighttoDP(number = '2.0%'),
-                                                    marginBottom: heighttoDP(number = '3.5%') 
-                                                }}
-                                                >{item.title.rendered}</Text>
-                                                <TouchableOpacity
-                                                    onPress={() => this._onPressImage(item)}
+                                            marginTop: heighttoDP(number = '3%'),
+                                            marginBottom: heighttoDP(number = '12%')
+                                        }}>
+                                            <Text style={{
+                                                color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                fontSize: heighttoDP(number = '2.0%'),
+                                                marginBottom: heighttoDP(number = '3.5%')
+                                            }}
+                                            >{item.title.rendered}</Text>
+                                            <TouchableOpacity
+                                                onPress={() => this._onPressImage(item)}
+                                                style={{
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    height: heighttoDP(number = '20%'),
+                                                    width: widthtoDP(number = '90%'),
+                                                }}>
+                                                <Image
                                                     style={{
                                                         alignItems: 'center',
                                                         justifyContent: 'center',
-                                                        height: heighttoDP(number = '20%'),
+                                                        height: heighttoDP(number = '25%'),
                                                         width: widthtoDP(number = '90%'),
-                                                    }}>
-                                                    <Image
-                                                        style={{
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            height: heighttoDP(number = '25%'),
-                                                            width: widthtoDP(number = '90%'),
-                                                            borderRadius: heighttoDP(number = '1%'),
+                                                        borderRadius: heighttoDP(number = '1%'),
 
-                                                        }}
-                                                        source={{ uri: (item.content.rendered.split('src="')[1]) != undefined ? (item.content.rendered.split('src="')[1]).split('"')[0] : 'https://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png' }} />
+                                                    }}
+                                                    source={{ uri: (item.content.rendered.split('src="')[1]) != undefined ? (item.content.rendered.split('src="')[1]).split('"')[0] : 'https://www.staticwhich.co.uk/static/images/products/no-image/no-image-available.png' }} />
 
-                                                </TouchableOpacity>
-                                            </View>
+                                            </TouchableOpacity>
                                         </View>
+                                    </View>
 
 
-                                    }
-                                    keyExtractor={(item, index) => item + index}
+                                }
+                                keyExtractor={(item, index) => item + index}
 
-                                />
-                            </View>
+                            />
+                        </View>
                     </View>
                 </SafeAreaView>
             )

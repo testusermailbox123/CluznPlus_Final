@@ -23,17 +23,20 @@ export default class Webinar extends Component {
     async getLocalData() {
         try {
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            console.log("loggedInSTatus " + loggedInSTatus)
             if (loggedInSTatus === 'Yes') {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
+                    console.log("authtoken  30" + authtoken)
                     if (authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
                         this.setState({
                             authtoken: authtoken
                         }, () => {
-
+                            this.generateworkshoplist();
                         });
+                        console.log("authtoken from webinar api " + authtoken)
                     }
                 } catch (error) {
                     console.log("Error resetting data 12" + error);
@@ -58,15 +61,15 @@ export default class Webinar extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        this.getLocalData();
         const { navigation } = this.props;
-        this.generateworkshoplist();
+        this.getLocalData();
+
     }
 
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
         }
@@ -74,7 +77,7 @@ export default class Webinar extends Component {
 
     generateworkshoplist() {
         // const authtoken = AsyncStorage.getItem('auth_token')
-
+        console.log("getWebbinar token " + this.state.authtoken)
         axios.get('https://cluznplus.com/cluzn_backend/api/getWebbinar', {
             headers: {
                 token: this.state.authtoken
@@ -108,7 +111,7 @@ export default class Webinar extends Component {
                 </StatusBar>
                 <View style={{
                     flex: 1,
-                    backgroundColor: GLOBAL.eva_lightpink,
+                    backgroundColor: GLOBAL.eva_midpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
 
@@ -161,15 +164,17 @@ export default class Webinar extends Component {
                                 <TouchableOpacity
                                     onPress={() => this._onPress(item)}
                                     style={{
-                                        height: heighttoDP(number = '25%'),
+                                        height: heighttoDP(number = '45%'),
                                         width: widthtoDP(number = '90%'),
-                                        marginVertical: heighttoDP(number = '3%'),
+                                        marginVertical: heighttoDP(number = '5%'),
                                         alignSelf: 'center', justifyContent: 'center',
                                         // backgroundColor:'red'
                                     }}
                                 >
                                     <View>
-                                        <Text style={{
+                                        <Text 
+                                        
+                                        style={{
                                             color: GLOBAL.eva_blue,
                                             fontWeight: 'bold',
                                             fontSize: heighttoDP(number = '2.5%')
@@ -177,9 +182,9 @@ export default class Webinar extends Component {
                                         >{item.name}</Text>
                                         <Image
                                             style={{
-                                                height: heighttoDP(number = '20%'),
+                                                height: heighttoDP(number = '45%'),
                                                 width: widthtoDP(number = '90%'),
-                                                borderRadius: heighttoDP(number = '4%'),
+                                                borderRadius: heighttoDP(number = '2%'),
                                                 marginTop: heighttoDP(number = '2%'),
                                             }}
                                             source={{ uri: item.image }}

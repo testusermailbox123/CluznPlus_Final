@@ -64,37 +64,37 @@ export default class AppointmentDetails extends Component {
         ) {
             alert('Please enter all the details correctly')
         } else {
-
+             
             this.props.navigation.navigate('DoctorDescription', {
                 plan_id: this.state.plan_id,
                 amount: this.state.amount,
             });
-            var options = {
-                description: this.state.webname + ' Price',
-                image: 'https://i.imgur.com/3g7nmJC.png',
-                currency: 'INR',
-                amount: this.state.amount + '00',
-                key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
-                name: this.state.First_Name + " " + this.state.Last_Name,
-                prefill: {
-                    email: this.state.EMail,
-                    contact: this.state.Mobile_Number,
-                    name: 'ReactNativeForYou',
-                },
-                theme: { color: '#528FF0' },
-            };
+            // var options = {
+            //     description: this.state.webname + ' Price',
+            //     image: 'https://i.imgur.com/3g7nmJC.png',
+            //     currency: 'INR',
+            //     amount: this.state.amount + '00',
+            //     key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
+            //     name: this.state.First_Name + " " + this.state.Last_Name,
+            //     prefill: {
+            //         email: this.state.EMail,
+            //         contact: this.state.Mobile_Number,
+            //         name: 'ReactNativeForYou',
+            //     },
+            //     theme: { color: '#528FF0' },
+            // };
 
-            RazorpayCheckout.open(options)
-                .then((data) => {
-                    // this.doSubscribe(data.razorpay_payment_id)
-                })
-                .catch((error) => {
-                    console.log(`Error : ${error} | ${error.description}`);
-                    this.props.navigation.navigate('PurchaseForm', {
-                        plan_id: this.state.plan_id,
-                        amount: this.state.amount,
-                    });
-                });
+            // RazorpayCheckout.open(options)
+            //     .then((data) => {
+            //         // this.doSubscribe(data.razorpay_payment_id)
+            //     })
+            //     .catch((error) => {
+            //         console.log(`Error : ${error} | ${error.description}`);
+            //         this.props.navigation.navigate('PurchaseForm', {
+            //             plan_id: this.state.plan_id,
+            //             amount: this.state.amount,
+            //         });
+            //     });
         }
     };
 

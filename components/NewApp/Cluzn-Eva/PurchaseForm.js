@@ -57,7 +57,7 @@ export default class PurchaseForm extends Component {
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
         }
@@ -95,7 +95,7 @@ export default class PurchaseForm extends Component {
             method: 'POST',
             data: formData,
             headers: {
-                token : this.state.authtoken,
+                token: this.state.authtoken,
                 Accept: 'application/json',
                 'Content-Type': 'multipart/form-data',
                 'Authorization': 'Basic YnJva2VyOmJyb2tlcl8xMjM='
@@ -103,6 +103,7 @@ export default class PurchaseForm extends Component {
         })
             .then(function (response) {
                 if (response.data.status == 'success') {
+                    alert('Booked successfully')
                     this.props.navigation.navigate('PackageDetails', {
                         plan_id: this.state.plan_id,
                         amount: this.state.amount,

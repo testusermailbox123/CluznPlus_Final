@@ -63,7 +63,7 @@ export default class WebinarPurchaseForm extends Component {
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
         }
@@ -101,6 +101,7 @@ export default class WebinarPurchaseForm extends Component {
         })
             .then(response => {
                 if (response.data.status == 'success') {
+                    alert('Booked successfully')
                     this.props.navigation.navigate('WebinarDetails', {
                         plan_id: this.state.plan_id,
                         amount: this.state.amount,

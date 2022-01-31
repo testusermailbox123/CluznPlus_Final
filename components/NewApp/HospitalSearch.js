@@ -52,9 +52,11 @@ export default class HospitalSearch extends React.Component {
     async getLocalData () {
         try {
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            console.log('loggedInSTatus in hospital search'+loggedInSTatus)
             if (loggedInSTatus === 'Yes') {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
+                    console.log('authtoken'+authtoken)
                     if(authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
@@ -77,8 +79,9 @@ export default class HospitalSearch extends React.Component {
     }
 
     componentDidMount() {
-        this.getLocalData();
+        
         const { navigation } = this.props;
+        this.getLocalData();
         BackHandler.addEventListener('hardwareBackPress', function () {
             if (navigation.isFocused()) {
                 Alert.alert(
@@ -121,7 +124,7 @@ export default class HospitalSearch extends React.Component {
             }
         })
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 if(response.data.status == 'success') {
                     if (counter == 1) {
                         this.setState({
@@ -150,7 +153,8 @@ export default class HospitalSearch extends React.Component {
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            console.log('at line 153')
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
         }
@@ -245,6 +249,7 @@ export default class HospitalSearch extends React.Component {
     // }
 
     _onPress(item) {
+        
         this.props.navigation.navigate('HospitalDepartments', {
             alldata: item.allDepartments,
             hospitalname: item.name,
@@ -505,7 +510,7 @@ export default class HospitalSearch extends React.Component {
                             }}
                         />
                     </View>
-                    <View style={{ backgroundColor: 'black', }}>
+                    <View style={{ backgroundColor: 'black' }}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.navigation.navigate('HomePage')
@@ -516,18 +521,18 @@ export default class HospitalSearch extends React.Component {
                                 borderRadius: heighttoDP(number = '2%'),
                                 alignSelf: 'center',
                                 width: widthtoDP(number = '90%'),
-                                height: heighttoDP(number = '12%')
+                                height: heighttoDP(number = '20%')
                             }}
                         >
                             <Image
                                 style={{
                                     // backgroundColor: 'red',
                                     width: widthtoDP(number = '85%'),
-                                    height: heighttoDP(number = '7%'),
+                                    height: heighttoDP(number = '10%'),
                                     alignSelf:'center',
                                     // borderRadius: heighttoDP(number = '2%'),
                                     // marginLeft: heighttoDP(number = '2%'),
-                                     marginTop: heighttoDP(number = '2%')
+                                     marginTop: heighttoDP(number = '5%')
                                 }}
                                 source={require('../assets/icons/evahome.png')} />
                             <Text

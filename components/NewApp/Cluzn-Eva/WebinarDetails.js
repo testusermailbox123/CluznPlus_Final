@@ -80,28 +80,15 @@ export default class WebinarDetails extends Component {
                         }}
                         >Description</Text>
                         <Text
-                            numberOfLines={5}
+                            numberOfLines={6}
                             style={{
                                 height: heighttoDP(number = '35%'),
                                 width: widthtoDP(number = '90%'),
                                 marginTop: heighttoDP(number = '2%'),
-                                // fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '2%')
                             }}
                         >{this.state.descript}</Text>
-                        {/* <WebView
-                            style={{
-                                resizeMode: 'cover', 
-                                flex: 1,
-                                backgroundColor: GLOBAL.primaryBackGroundColor
-                            }}
-                            injectedJavaScript={`const meta = document.createElement('meta'); meta.setAttribute('content', 'width=width, initial-scale=0.5, maximum-scale=0.5, user-scalable=2.0'); meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta); `}
-                            scalesPageToFit={false}
-                            source={{ html: '<div style="color:' + GLOBAL.primarylighttext2 + ';">' + (this.state.descript.replace(/background: rgb(238, 238, 238);/g, '')).replace(/border: 1px solid rgb(204, 204, 204);/g, '') + '</div>' }}
-                        // source={{ html: '<div style="color:'+GLOBAL.primarylighttext2+';">'+(doctordescription.replaceAll('background: rgb(238, 238, 238);', '')).replaceAll('border: 1px solid rgb(204, 204, 204);', '')+'</div>' }}
-                        /> */}
                         <Text style={{
-                            // marginTop: heighttoDP(number = '10%'),
                             fontWeight: 'bold',
                             fontSize: heighttoDP(number = '3%')
                         }}

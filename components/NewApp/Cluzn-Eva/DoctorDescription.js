@@ -220,7 +220,7 @@ export default class DoctorDescription extends Component {
                             fontSize: heighttoDP(number = '2.5%')
                         }}>Image</Text>
                         <View style={{
-                            backgroundColor: 'red',
+                            backgroundColor: GLOBAL.eva_lightpink,
                             width: widthtoDP(number = '90%'),
                             height: heighttoDP(number = '20%'),
                             marginBottom: heighttoDP(number = '3%'),

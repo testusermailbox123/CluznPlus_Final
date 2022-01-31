@@ -123,6 +123,7 @@ export default class EnterGeneratedOTP extends React.Component {
                         AsyncStorage.setItem('userEmail', this.state.userEmail)
                         AsyncStorage.setItem('is_name', Boolean(this.state.is_name)?'true':'false')
                         AsyncStorage.setItem('is_email', Boolean(this.state.is_email)?'true':'false')
+                        console.log('auth_token'+this.state.authtokenfrom_EnterGeneratedOTP);
                         // console.log('Auth toke value is = ', this.state.authtokenfrom_EnterGeneratedOTP);
                         //response.data.Details == "OTP Matched" && 
                         // console.log('this.state.confirmationdata_fromgenerateotp', response.data.Details)

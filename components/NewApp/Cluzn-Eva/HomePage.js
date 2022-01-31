@@ -12,22 +12,13 @@ let IntervalTime = 4000;
 
 const data = [
     {
-        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
+        "image": "https://st1.photogallery.ind.sh/wp-content/uploads/indiacom/health-is-wealth-201711-1510898180.jpg"
     },
     {
-        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
+        "image": "https://st1.photogallery.ind.sh/wp-content/uploads/indiacom/health-is-wealth-201711-1510898180.jpg"
     },
     {
-        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
+        "image": "https://st1.photogallery.ind.sh/wp-content/uploads/indiacom/health-is-wealth-201711-1510898180.jpg"
     }
 ]
 
@@ -49,41 +40,58 @@ export default class HomePage extends Component {
     // TODO _goToNextPage()
     _goToNextPage = () => {
         // console.log("this.state.link ===>>>> ", this.state.link)
-        if (CurrentSlide >= data.length - 1) CurrentSlide = 0;
+        if (this.state.adslist.length > 0) {
+            if (CurrentSlide >= this.state.adslist.length - 1) CurrentSlide = 0;
 
-        this.flatList.current.scrollToIndex({
-            index: ++CurrentSlide,
-            animated: true,
-        });
+            this.flatList.current.scrollToIndex({
+                index: ++CurrentSlide,
+                animated: true,
+            });
+        }
     };
 
     async getLocalData() {
+        console.log('getLocalData called')
         try {
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
-            if (loggedInSTatus === 'Yes') {
+            // console.log('loggedInSTatus in homepage' + loggedInSTatus)
+
+            if (loggedInSTatus === "Yes") {
+                // console.log('at 66')
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
+                    // console.log('at 69' + authtoken)
                     if (authtoken == "" || authtoken == null) {
+                        // console.log('71')
                         this.redirectToLogin()
                     } else {
                         this.setState({
                             authtoken: authtoken
                         }, () => {
+
                             this.generateCategoryList();
+                            // console.log('token at 79 ' + this.state.authtoken)
                             this.generatePlanList();
+                            // console.log('token at 81 ' + this.state.authtoken)
                             this._stopAutoPlay();
+                            // console.log('token at 83 ' + this.state.authtoken)
                             this._startAutoPlay();
+                            // console.log('token at 85 ' + this.state.authtoken)
+                            this.generateAds()
+                            // console.log('token at 88 ' + this.state.authtoken)
                         });
                     }
                 } catch (error) {
-                    console.log("Error resetting data 12" + error);
+                    // console.log("Error resetting data 12" + error);
                 }
             } else {
+                // console.log('88')
                 this.redirectToLogin()
             }
         } catch (error) {
             console.log("Error resetting data 34" + error);
         }
+        // console.log('token at 98 ' + this.state.authtoken)
     }
 
     _startAutoPlay = () => {
@@ -109,22 +117,29 @@ export default class HomePage extends Component {
     }
 
     _onPress_WorkShop() {
+        // console.log('at 124', this.state.authtoken)
         this.props.navigation.navigate('Webinar', {
 
         });
     }
 
     UNSAFE_componentWillMount() {
+        // console.log("UNSAFE_componentWillMount starts hermes_enabled - ");
         this.getLocalData();
-        console.log("UNSAFE_componentWillMount - ");
+        this.setState({
+            adslist: data
+        });
+        // console.log('at 131 ' + this.state.authtoken)
         const { navigation } = this.props;
-        // this.generateAds()
+
     }
 
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            navigation.navigate('GenerateOtpforLoginScreen')
+            // console.log('at  AsyncStorage.clear')
+            // this.props.navigation.navigate('GenerateOtpforLoginScreen')
+            // console.log('133')
         } catch (error) {
             console.log("Error resetting data" + error);
         }
@@ -147,8 +162,8 @@ export default class HomePage extends Component {
     }
 
     _onPresscategories(myitem) {
-        console.log("myitem.videos" + myitem.videos)
-        console.log("myitem.videos " + myitem.id)
+        // console.log("myitem.videos" + myitem.videos)
+        // console.log("myitem.videos " + myitem.id)
         this.props.navigation.navigate('Categories', {
             videos: myitem.videos,
             packageId: myitem.id,
@@ -156,6 +171,8 @@ export default class HomePage extends Component {
     }
 
     generatePlanList() {
+        // console.log("generatePlanList api call")
+        // console.log("generatePlanList api toekn" + this.state.authtoken)
         axios.get('https://cluznplus.com/cluzn_backend/api/getPlan', {
             headers: {
                 token: this.state.authtoken
@@ -167,9 +184,10 @@ export default class HomePage extends Component {
                         planlist: [...this.state.planlist, ...response.data.data],
                     });
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    // console.log('180')
                     this.redirectToLogin();
                 } else {
-                    alert("check1"+response.data.message)
+                    alert("check1" + response.data.message)
                 }
             })
             .catch((error) => {
@@ -178,20 +196,24 @@ export default class HomePage extends Component {
     }
 
     generateAds() {
-        axios.get('https://cluznplus.com/cluzn_backend/api/getAdvertismentEva', {
+        // console.log("generateAds api call")
+        // console.log("generateAds api call token " + this.state.authtoken)
+        axios.get('http://cluznplus.com/cluzn_backend/api/getAdvertismentEva', {
             headers: {
                 token: this.state.authtoken
             }
         })
             .then(response => {
                 if (response.data.status == 'success') {
+                    // console.log(response.data)
                     this.setState({
                         adslist: [...this.state.adslist, ...response.data.data],
                     });
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    // console.log('203')
                     this.redirectToLogin();
                 } else {
-                    alert("check3"+response.data.message)
+                    alert("check3" + response.data.message)
                 }
             })
             .catch((error) => {
@@ -200,22 +222,25 @@ export default class HomePage extends Component {
     }
 
     generateCategoryList() {
+        // console.log("generateCategoryList")
+        // console.log("generateCategoryList api toekn" + this.state.authtoken)
         axios.get('https://cluznplus.com/cluzn_backend/api/categories', {
             headers: {
                 token: this.state.authtoken
             }
         })
             .then(response => {
-                console.log("response", response.data.data)
+                // console.log("response", response.data.data)
                 if (response.data.status == 'success') {
                     // console.log("planlist - ", response.data.data[1]);
                     this.setState({
                         categorieslist: [...this.state.categorieslist, ...response.data.data],
                     });
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    // console.log('225')
                     this.redirectToLogin();
                 } else {
-                    alert("check2"+response.data.message)
+                    alert("check2" + response.data.message)
                 }
             })
             .catch((error) => {
@@ -237,27 +262,36 @@ export default class HomePage extends Component {
                     backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
-                    {/* <Text style={{
-                        alignSelf: 'center', fontWeight: 'bold', marginTop: heighttoDP(number = '4%'),
-                        fontSize: heighttoDP(number = '3%'),
-                    }}>Cluzn EVA</Text> */}
-                    <Image
+                    <Text style={{
+                        color: GLOBAL.eva_darkpink,
+                        marginTop: heighttoDP(number = '3%'),
+                        fontWeight: 'bold',
+                        alignSelf: 'center',
+                        fontSize: heighttoDP(number = '4%'),
+                        marginLeft: widthtoDP(number = "5%"),
+                        fontFamily: "MrsSheppards-Regular"
+                    }}>Cluzn Eva</Text>
+                    {/* <Image
                         style={{
                             marginLeft: heighttoDP(number = '10%'),
                             width: widthtoDP(number = '50%'),
                             height: heighttoDP(number = '10%'),
                             borderRadius: heighttoDP(number = '2%'),
                         }}
-                        source={require('../../assets/icons/evahome.png')} />
+                        source={require('../../assets/icons/evahome.png')} /> */}
                     <Text style={{
-                        color: GLOBAL.eva_black, marginTop: heighttoDP(number = '1%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '5%'),
+                        color: GLOBAL.eva_black,
+                        marginTop: heighttoDP(number = '0.5%'),
+                        fontWeight: 'bold',
+                        fontSize: heighttoDP(number = '3%'),
                         marginLeft: widthtoDP(number = "5%"),
                         fontFamily: "MrsSheppards-Regular"
                     }}>Hello Varun,</Text>
                     <Text style={{
-                        color: GLOBAL.eva_midpink, marginTop: heighttoDP(number = '1%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
+                        color: GLOBAL.eva_midpink,
+                        marginTop: heighttoDP(number = '1%'),
+                        fontWeight: 'bold',
+                        fontSize: heighttoDP(number = '2.5%'),
                         marginLeft: widthtoDP(number = "5%")
                     }}>Find Your Desired Health Solution</Text>
                     <TouchableOpacity
@@ -268,7 +302,7 @@ export default class HomePage extends Component {
                             borderRadius: heighttoDP(number = '2%'),
                             alignSelf: 'center',
                             width: widthtoDP(number = '90%'),
-                            height: heighttoDP(number = '12%')
+                            height: heighttoDP(number = '20%')
                         }}
                     >
                         <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -279,8 +313,8 @@ export default class HomePage extends Component {
                             }}>
                                 <Image
                                     style={{
-                                        height: heighttoDP(number = '11%'),
-                                        width: heighttoDP(number = '13%'),
+                                        height: heighttoDP(number = '15%'),
+                                        width: heighttoDP(number = '15%'),
                                         borderRadius: heighttoDP(number = '2%'),
                                         marginLeft: heighttoDP(number = '2%'),
                                         marginTop: -heighttoDP(number = '2%')
@@ -289,23 +323,23 @@ export default class HomePage extends Component {
                             </View>
                             <View style={{
                                 // backgroundColor: 'red',
-                                width: widthtoDP(number = '55%'),
+                                width: widthtoDP(number = '60%'),
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
                                 <Text
                                     style={{
-                                        fontSize: heighttoDP(number = '2%'),
+                                        fontSize: heighttoDP(number = '2.5%'),
                                         fontWeight: 'bold', color: '#EB592A'
                                     }}
                                 >Upcoming Webinar / Class</Text>
 
                                 <Text
                                     style={{
-                                        marginTop: heighttoDP(number = '1%'),
+                                        marginTop: heighttoDP(number = '2%'),
                                         marginLeft: -heighttoDP(number = '5.5%'),
-                                        fontSize: heighttoDP(number = '1.5%'),
-                                        // fontWeight: 'bold'
+                                        fontSize: heighttoDP(number = '2%'),
+                                        fontWeight: 'bold'
                                     }}
                                 >Click here to know more</Text>
                             </View>
@@ -313,7 +347,7 @@ export default class HomePage extends Component {
                     </TouchableOpacity>
                     <View style={{
                         // backgroundColor: 'red',
-                        height: heighttoDP(number = '18%'),
+                        height: heighttoDP(number = '20%'),
                         width: widthtoDP(number = '90'),
                         alignSelf: 'center',
                         // borderRadius: heighttoDP(number = '15%'),
@@ -323,7 +357,8 @@ export default class HomePage extends Component {
                             style={{
                                 flex: 1,
                             }}
-                            data={data}
+                            data={this.state.adslist}
+                            // data={data}
                             keyExtractor={this._keyExtractor.bind(this)}
                             renderItem={this._renderItem.bind(this)}
                             horizontal={true}
@@ -332,24 +367,6 @@ export default class HomePage extends Component {
                             ref={this.flatList}
                         />
                     </View>
-                    {/* <TouchableOpacity
-                        style={{
-                            backgroundColor: GLOBAL.eva_midpink,
-                            marginTop: heighttoDP(number = '4%'),
-                            borderRadius: heighttoDP(number = '2%'),
-                            alignItems: 'center', justifyContent: 'center',
-                            alignSelf: 'center',
-                            width: widthtoDP(number = '85%'),
-                            height: heighttoDP(number = '20%')
-                        }}
-                    >
-                        <Image
-                            style={{
-                                width: widthtoDP(number = '85%'), height: heighttoDP(number = '20%'),
-                                borderRadius: heighttoDP(number = '2%'),
-                            }}
-                            source={require('../../assets/icons/banner.png')} />
-                    </TouchableOpacity> */}
                     <View style={{
                         marginTop: widthtoDP(number = '4%'),
                         height: heighttoDP(number = '27%'),
@@ -370,7 +387,9 @@ export default class HomePage extends Component {
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                             renderItem={({ item }) =>
-                                <View style={styles.item}>
+                                <TouchableOpacity style={styles.item}
+                                    onPress={() => this._onPressPackages(item)}
+                                >
                                     <Image
                                         style={{
                                             height: heighttoDP(number = '12%'),
@@ -384,8 +403,8 @@ export default class HomePage extends Component {
                                     />
 
                                     <Text style={styles.title}>{item.name}</Text>
-                                    <TouchableOpacity
-                                        onPress={() => this._onPressPackages(item)}
+                                    <View
+                                        // onPress={() => this._onPressPackages(item)}
                                         style={{
                                             alignSelf: 'center', justifyContent: 'center',
                                             backgroundColor: GLOBAL.eva_midpink,
@@ -397,9 +416,12 @@ export default class HomePage extends Component {
                                         <Text style={{
                                             alignSelf: 'center', justifyContent: 'center', color: 'white'
                                         }}
-                                        >Book Now</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                        >Book Now
+                                        </Text>
+                                    </View>
+
+                                </TouchableOpacity>
+
                             }
                         />
                     </View>
@@ -412,72 +434,74 @@ export default class HomePage extends Component {
                         }}>Categories</Text>
                     </View>
 
-                    {this.state.categorieslist.map((myitem) => {
-                        return (
-                            <TouchableOpacity
-                                key={myitem.id}
-                                style={{
-                                    height: heighttoDP(number = '25%'),
-                                    width: widthtoDP(number = '90%'),
+                    {
+                        this.state.categorieslist.map((myitem) => {
+                            return (
+                                <TouchableOpacity
+                                    key={myitem.id}
+                                    style={{
+                                        height: heighttoDP(number = '25%'),
+                                        width: widthtoDP(number = '90%'),
 
-                                    marginVertical: heighttoDP(number = '3%'),
-                                    alignSelf: 'center', justifyContent: 'center'
-                                }}
-                                onPress={() => this._onPresscategories(myitem)}
-                            >
-                                <View style={{ flex: 1, flexDirection: 'row' }}>
-                                    <View style={{
-                                        width: widthtoDP(number = '30%'),
-                                        alignItems: 'center', justifyContent: 'center'
-                                    }}>
+                                        marginVertical: heighttoDP(number = '3%'),
+                                        alignSelf: 'center', justifyContent: 'center'
+                                    }}
+                                    onPress={() => this._onPresscategories(myitem)}
+                                >
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <View style={{
-                                            marginLeft: widthtoDP(number = '7%'),
                                             width: widthtoDP(number = '30%'),
-                                            height: heighttoDP(number = '20%'),
-                                            backgroundColor: GLOBAL.eva_midpink,
-                                            borderRadius: widthtoDP(number = '4%')
+                                            alignItems: 'center', justifyContent: 'center'
+                                        }}>
+                                            <View style={{
+                                                marginLeft: widthtoDP(number = '7%'),
+                                                width: widthtoDP(number = '30%'),
+                                                height: heighttoDP(number = '20%'),
+                                                backgroundColor: GLOBAL.eva_midpink,
+                                                borderRadius: widthtoDP(number = '4%')
+                                            }}>
+                                                <Image
+                                                    style={{
+                                                        height: heighttoDP(number = '13%'),
+                                                        width: heighttoDP(number = '13%'),
+                                                        borderRadius: heighttoDP(number = '2%'),
+                                                        marginLeft: heighttoDP(number = '6%'),
+                                                        marginTop: -heighttoDP(number = '2%')
+                                                    }}
+                                                    source={require('../../assets/icons/1.png')} />
+                                                <Text
+                                                    style={{
+                                                        color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                        fontSize: heighttoDP(number = '2%'),
+                                                        marginTop: heighttoDP(number = '3%'),
+                                                        alignSelf: 'center'
+                                                    }}
+                                                >{myitem.title}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{
+                                            width: widthtoDP(number = '55%'),
+                                            alignItems: 'center', justifyContent: 'space-evenly'
                                         }}>
                                             <Image
                                                 style={{
-                                                    height: heighttoDP(number = '13%'),
-                                                    width: heighttoDP(number = '13%'),
+                                                    height: heighttoDP(number = '18%'),
+                                                    width: widthtoDP(number = '45%'),
                                                     borderRadius: heighttoDP(number = '2%'),
-                                                    marginLeft: heighttoDP(number = '6%'),
-                                                    marginTop: -heighttoDP(number = '2%')
+                                                    marginLeft: widthtoDP(number = '12%'),
+                                                    // marginTop: heighttoDP(number = '6%')
                                                 }}
-                                                source={require('../../assets/icons/1.png')} />
-                                            <Text
-                                                style={{
-                                                    color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                    fontSize: heighttoDP(number = '2%'),
-                                                    marginTop: heighttoDP(number = '3%'),
-                                                    alignSelf: 'center'
-                                                }}
-                                            >{myitem.title}</Text>
+                                                source={{ uri: myitem.image }}
+                                            // source={require('../../assets/icons/Home.png')} 
+                                            />
                                         </View>
                                     </View>
-                                    <View style={{
-                                        width: widthtoDP(number = '55%'),
-                                        alignItems: 'center', justifyContent: 'space-evenly'
-                                    }}>
-                                        <Image
-                                            style={{
-                                                height: heighttoDP(number = '13%'),
-                                                width: widthtoDP(number = '45%'),
-                                                borderRadius: heighttoDP(number = '2%'),
-                                                marginLeft: widthtoDP(number = '12%'),
-                                                marginTop: heighttoDP(number = '6%')
-                                            }}
-                                            source={{ uri: myitem.image }}
-                                        // source={require('../../assets/icons/Home.png')} 
-                                        />
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    })}
-                </ScrollView>
-            </SafeAreaView>
+                                </TouchableOpacity>
+                            )
+                        })
+                    }
+                </ScrollView >
+            </SafeAreaView >
         )
     }
 }
@@ -498,7 +522,7 @@ const styles = StyleSheet.create({
         fontSize: heighttoDP(number = '2%')
     },
     sliderItems: {
-        // height: "100%",
+        height: heighttoDP(number = '20%'),
         borderTopRightRadius: heighttoDP(number = '2%'),
         borderRadius: heighttoDP(number = '2%'),
         width: widthtoDP(number = '90%'),

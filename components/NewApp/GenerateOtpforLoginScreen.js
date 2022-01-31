@@ -29,16 +29,11 @@ export default class GenerateOtpforLoginScreen extends React.Component {
         }
     }
 
-    // setModalVisible = (visible) => {
-    //     this.setState({ modalVisible: visible });
-    // }
-
     componentDidMount() {
 
         const { navigation } = this.props;
 
         BackHandler.addEventListener('hardwareBackPress', function () {
-            // console.log(navigation.isFocused());
             if (navigation.isFocused()) {
                 Alert.alert(
                     'Exit App',
@@ -64,7 +59,6 @@ export default class GenerateOtpforLoginScreen extends React.Component {
     }
 
     handleSendCode() {
-        //console.log(this.state.isChecked)
         if (!this.state.isChecked) {
             alert('Please accept the Terms and Conditions to proceed..')
         } else {
@@ -79,15 +73,15 @@ export default class GenerateOtpforLoginScreen extends React.Component {
                 };
 
                 axios.post('https://cluznplus.com/cluzn_backend/api/sendOtp', data).then(response => {
-                    //console.log('All data', response.data);
+
                     this.setState({
                         users: response.data.data
                     })
-                    // console.log('user  - ', this.state.users[0].is_name)
+
                     this.props.navigation.navigate('EnterGeneratedOTP', {
                         authtokenfromgenerateotpscreen: this.state.users[0].auth_token,
                         confirmationdata: this.state.users[0].is_name,
-                        //otpfromfromgenerateotpscreen: this.state.users[0].otp,
+
                         phonenumberfromgenerateotpscreen: '+91' + this.state.phonenumber,
                         userName: this.state.users[0].name,
                         userEmail: this.state.users[0].email,
