@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react'
 import {
-    Text, View, SafeAreaView, StatusBar, Alert, Button, KeyboardAvoidingView, BackHandler,
-    TextInput, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet
+    Text, View, SafeAreaView, StatusBar, Alert, Button, KeyboardAvoidingView, BackHandler, Platform, Keyboard,
+    TextInput, Image, TouchableOpacity, ScrollView, FlatList, VirtualizedList, StyleSheet, TouchableWithoutFeedback
 } from 'react-native'
 import { widthtoDP, heighttoDP } from '../Responsive';
 GLOBAL = require('../globals');
@@ -9,6 +9,23 @@ import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
 import RazorpayCheckout from 'react-native-razorpay';
 import AsyncStorage from '@react-native-community/async-storage';
+import SelectDropdown from 'react-native-select-dropdown'
+
+const timeList =
+    [
+        "10:00 - 10:15 AM",
+        "10:15 - 10:30 AM",
+        "10:30 - 10:45 AM",
+        "10:45 - 11:00 AM",
+        "11:00 - 11:15 AM",
+        "11:15 - 11:30 AM",
+        "11:30 - 11:45 AM",
+        "11:45 - 12:00 PM",
+        "12:00 - 12:15 PM",
+        "12:15 - 12:30 PM",
+        "12:30 - 12:45 PM",
+        "12:45 - 01:00 PM",
+    ]
 
 export default class AppointmentDetails extends Component {
     constructor(props) {
@@ -199,7 +216,7 @@ export default class AppointmentDetails extends Component {
 
         axios.post(api, {
             headers: {
-                token: this.state.authtoken, 
+                token: this.state.authtoken,
             },
             data: {
                 doctor_id: this.state.docid,
@@ -244,61 +261,80 @@ export default class AppointmentDetails extends Component {
                     backgroundColor='#FEE1DC'
                     translucent={true}>
                 </StatusBar>
-                <KeyboardAvoidingView style={{
-                    flex: 1,
-                    backgroundColor: 'white',
-                    height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
-                }}>
+                <ScrollView 
+                behavior="padding"
+                    // behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={{
+                        flex: 1,
+                        backgroundColor: 'white',
+                        // height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
+                    }}>
+                    {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
                     <Text style={{
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                         marginLeft: widthtoDP(number = "5%")
                     }}>Hello Varun,</Text>
                     <Text style={{
-                        color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
-                        fontWeight: 'bold', fontSize: heighttoDP(number = '4%'),
-                        marginLeft: widthtoDP(number = "5%"), alignSelf: 'center'
+                        color: GLOBAL.eva_black,
+                        marginTop: heighttoDP(number = '2%'),
+                        fontWeight: 'bold',
+                        fontSize: heighttoDP(number = '4%'),
+                        marginLeft: widthtoDP(number = "5%"),
+                        alignSelf: 'center'
                     }}>Appointment Details</Text>
-                    <View style={{
+                    {/* <View style={{
                         flexDirection: 'row', justifyContent: 'center',
                         marginTop: heighttoDP(number = '2.5%')
+                    }}> */}
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        // backgroundColor: 'red',
+                        alignItems: 'center', justifyContent: 'center',
+                        marginTop: -heighttoDP(number = '0.5%'),
                     }}>
-                        <View style={{ marginRight: heighttoDP(number = '5%') }}>
-                            <Text style={{
-                                marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
-                            }}>First Name</Text>
-                            <TextInput
-                                onChangeText={First_Name =>
-                                    this.setState({ First_Name })
-                                }
-                                maxLength={9}
-                                style={{
-                                    paddingLeft: widthtoDP(number = '4%'),
-                                    fontSize: heighttoDP(number = '2.7%'),
-                                    height: heighttoDP(number = '6%'),
-                                    width: widthtoDP(number = "37%"),
-                                    borderRadius: heighttoDP(number = '10%'),
-                                    borderWidth: heighttoDP(number = '.25%'),
-                                    borderColor: GLOBAL.eva_midpink
-                                }} />
-                        </View>
-                        <View>
-                            <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
-                            <TextInput
-                                onChangeText={Last_Name =>
-                                    this.setState({ Last_Name })
-                                }
-                                style={{
-                                    paddingLeft: widthtoDP(number = '4%'),
-                                    fontSize: heighttoDP(number = '2.7%'),
-                                    height: heighttoDP(number = '6%'),
-                                    width: widthtoDP(number = "37%"),
-                                    borderRadius: heighttoDP(number = '10%'),
-                                    borderWidth: heighttoDP(number = '.25%'),
-                                    borderColor: GLOBAL.eva_midpink
-                                }} />
-                        </View>
+                        <Text style={{
+                            marginBottom: heighttoDP(number = '1%'),
+                            fontWeight: 'bold',
+                        }}>First Name</Text>
+                        <TextInput
+                            onChangeText={First_Name =>
+                                this.setState({ First_Name })
+                            }
+                            // maxLength={9}
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink,
+
+                            }} />
                     </View>
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        // backgroundColor: 'red',
+                        alignItems: 'center', justifyContent: 'center',
+                        // marginTop: -heighttoDP(number = '0%'),
+                    }}>
+                        <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
+                        <TextInput
+                            onChangeText={Last_Name =>
+                                this.setState({ Last_Name })
+                            }
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
+                    </View>
+                    {/* </View> */}
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
                         alignItems: 'center', justifyContent: 'center'
@@ -375,7 +411,47 @@ export default class AppointmentDetails extends Component {
                             marginBottom: heighttoDP(number = '1%')
                             , fontWeight: 'bold'
                         }}>Appointment Time</Text>
-                        <TextInput
+                        <SelectDropdown
+                            defaultValue="Select Slot"
+                            dropdownStyle={{
+                                width: h(4), backgroundColor: GLOBAL.eva_lightpink,
+                                fontSize: h(5), height: h(25)
+                            }}
+                            rowStyle={{ height: h(5) }}
+                            defaultButtonText="Select Slot"
+                            buttonStyle={{
+                                backgroundColor: GLOBAL.eva_lightpink,
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '5%'),
+                                // borderWidth: heighttoDP(number = '0.25%'),
+                                // borderColor: GLOBAL.eva_midpink
+                            }}
+                            data={timeList}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                                this.setState({
+                                    selecttime: selectedItem
+                                })
+                                // this.citynameset(selectedItem)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array 
+                                // console.log('selectedItem  ', selectedItem)
+                                // this.setState({ myCity1: selectedItem })
+                                // console.log('myCity1 in drop down  ', this.state.myCity1)
+                                return selectedItem
+
+                            }}
+                            //buttonTextAfterSelection={this.state.cityname}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                        />
+                        {/* <TextInput
                             value={this.state.selecttime}
                             onFocus={() => {
                                 console.log('is focused')
@@ -400,7 +476,7 @@ export default class AppointmentDetails extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/time.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <DatePicker
                             mode='time'
                             modal
@@ -483,6 +559,7 @@ export default class AppointmentDetails extends Component {
                             onChangeText={EMail =>
                                 this.setState({ EMail })
                             }
+                            // onFocus={this._scrollToInput.bind(this)}
                             maxLength={20}
                             style={{
                                 paddingLeft: widthtoDP(number = '4%'),
@@ -520,7 +597,8 @@ export default class AppointmentDetails extends Component {
                             color: 'white'
                         }}>PAY NOW</Text>
                     </TouchableOpacity>
-                </KeyboardAvoidingView>
+                    {/* </TouchableWithoutFeedback> */}
+                </ScrollView>
             </SafeAreaView>
         )
     }
