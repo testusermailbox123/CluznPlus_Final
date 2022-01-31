@@ -9,6 +9,8 @@ GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
 import RazorpayCheckout from 'react-native-razorpay';
+import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class PurchaseForm extends Component {
     constructor(props) {
@@ -24,7 +26,8 @@ export default class PurchaseForm extends Component {
             authtoken: '',
             expire_in_month: '',
             plan_image: '',
-            status: 0
+            status: 0,
+            authtoken: '',
         }
     }
 
@@ -88,20 +91,19 @@ export default class PurchaseForm extends Component {
     }
 
     doSubscribe() {
-        let formData = new FormData();
-        formData.append('plan_id', this.state.plan_id);
-        axios({
-            url: 'https://cluznplus.com/cluzn_backend/api/doSubscribe',
-            method: 'POST',
-            data: formData,
+        const data = {
+            plan_id: this.state.plan_id,
+            first_name: this.state.First_Name,
+            last_name: this.state.Last_Name,
+            mobile: this.state.Mobile_Number,
+            email: this.state.EMail
+        }
+        axios.post('https://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
             headers: {
                 token: this.state.authtoken,
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
-                'Authorization': 'Basic YnJva2VyOmJyb2tlcl8xMjM='
-            }
+            },
         })
-            .then(function (response) {
+            .then(response => {
                 if (response.data.status == 'success') {
                     alert('Booked successfully')
                     this.props.navigation.navigate('PackageDetails', {
@@ -118,8 +120,8 @@ export default class PurchaseForm extends Component {
                     alert(response.data.message)
                 }
             })
-            .catch(function (error) {
-                console.log("error from image :");
+            .catch((error) => {
+                console.log("doSubscribe error", error);
             });
     }
 

@@ -116,14 +116,14 @@ export default class EnterGeneratedOTP extends React.Component {
                     axios.post('https://2factor.in/API/V1/' + apikey + '/SMS/VERIFY/' + this.state.details + '/' + this.state.userotp1 + this.state.userotp2 + this.state.userotp3 + this.state.userotp4 + this.state.userotp5 + this.state.userotp6).then(response => {
                         // console.log(response.data.Status)
                         // console.log(response.data.Details)
-                        console.log('Login successfull');
+                        // console.log('Login successfull');
                         AsyncStorage.setItem('LoggedIn', 'Yes');
                         AsyncStorage.setItem('auth_token', this.state.authtokenfrom_EnterGeneratedOTP)
                         AsyncStorage.setItem('userName', this.state.userName)
                         AsyncStorage.setItem('userEmail', this.state.userEmail)
                         AsyncStorage.setItem('is_name', Boolean(this.state.is_name)?'true':'false')
                         AsyncStorage.setItem('is_email', Boolean(this.state.is_email)?'true':'false')
-                        console.log('auth_token'+this.state.authtokenfrom_EnterGeneratedOTP);
+                        // console.log('auth_token'+this.state.authtokenfrom_EnterGeneratedOTP);
                         // console.log('Auth toke value is = ', this.state.authtokenfrom_EnterGeneratedOTP);
                         //response.data.Details == "OTP Matched" && 
                         // console.log('this.state.confirmationdata_fromgenerateotp', response.data.Details)

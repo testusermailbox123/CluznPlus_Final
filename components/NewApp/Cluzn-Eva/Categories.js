@@ -160,7 +160,7 @@ export default class Categories extends Component {
             .then(response => {
 
                 this.setState({
-                    BlogList: [...this.state.BlogList, ...response.data],
+                    BlogList: response.data,
                 });
 
             })
@@ -189,6 +189,7 @@ export default class Categories extends Component {
         })
     }
     _onPressBookAppointment(item) {
+        console.log('doctor_image'+item.doctor_image)
         this.props.navigation.navigate('DoctorDescription', {
             docfname: item.first_name,
             doclname: item.last_name,
@@ -199,6 +200,7 @@ export default class Categories extends Component {
             docimage: item.image,
             docid: item.id,
             amount: item.consulation_fee,
+            doctor_image:item.doctor_image
         });
     }
 
@@ -209,6 +211,7 @@ export default class Categories extends Component {
     }
 
     _onPressImage(item) {
+        console.log(item.link)
         this.props.navigation.navigate('BlogDetail', {
             title: item.title.rendered,
             content: item.content.rendered,
@@ -283,16 +286,6 @@ export default class Categories extends Component {
                                     >Book Appointment</Text>
                                 </TouchableOpacity>
                             </View>
-
-                            {/* {this.state.videoBufferFlag ?
-                                <View style={{ flex: 1, alignItems: "center", justifyContent: "center", zIndex: 2000 }}>
-
-                                    <ActivityIndicator style={{
-                                        height: '100%',
-                                        width: '100%'
-                                    }} animating={true} size="large" color="red" /></View>
-                                : <Text></Text>} */}
-
                             <View style={{
                                 height: heighttoDP(number = '80%'), width: widthtoDP(number = '100%')
                             }}>

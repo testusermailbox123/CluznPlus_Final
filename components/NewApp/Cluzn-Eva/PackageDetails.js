@@ -91,9 +91,9 @@ export default class PackageDetails extends Component {
                     }}>
 
                         <TouchableOpacity
-                            onPress={() => this.state.status == 0 ? this.onPressButton() : console.log('Hello')}
+                            onPress={() => this.onPressButton()}
                             style={{
-                                backgroundColor: this.state.status == 0 ? GLOBAL.eva_darkpink : 'green',
+                                backgroundColor: GLOBAL.eva_darkpink ,
                                 width: widthtoDP(number = '90%'),
                                 height: heighttoDP(number = '6%'),
                                 borderRadius: heighttoDP(number = '5%'),
@@ -104,10 +104,10 @@ export default class PackageDetails extends Component {
                         >
 
                             <Text style={{
-                                color:  'white', fontWeight: 'bold',
+                                color: 'white', fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '3%')
                             }}
-                            >{ this.state.status == 0 ? 'Purchase Now' : 'Purchased' }</Text>
+                            >Purchase Now</Text>
                         </TouchableOpacity>
 
                     </View>

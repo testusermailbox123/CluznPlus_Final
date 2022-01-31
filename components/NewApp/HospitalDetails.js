@@ -65,7 +65,7 @@ export default class HospitalDetails extends Component {
     render() {
         // console.log("checking", this.props.route.params);
         const { hospitalname2, hospitallocation2, hospitaldesc2, hospitalmultimg1, hospitalvideo1 } = this.props.route.params;
-        console.log("hospitalmultimg1 -  "+hospitalmultimg1)
+        // console.log("hospitalmultimg1 -  "+hospitalmultimg1)
         return (
             <View style={{ flex: 1, backgroundColor: "white" }}>
                 <View style={{ height: h(2.5), alignItems: 'center', justifyContent: 'center', backgroundColor: GLOBAL.primaryBackGroundColorforBlue }}>

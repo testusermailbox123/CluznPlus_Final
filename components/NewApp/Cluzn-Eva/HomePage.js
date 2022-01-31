@@ -466,7 +466,7 @@ export default class HomePage extends Component {
                                                         width: heighttoDP(number = '13%'),
                                                         borderRadius: heighttoDP(number = '2%'),
                                                         marginLeft: heighttoDP(number = '6%'),
-                                                        marginTop: -heighttoDP(number = '2%')
+                                                        marginTop: -heighttoDP(number = '3%')
                                                     }}
                                                     source={require('../../assets/icons/1.png')} />
                                                 <Text

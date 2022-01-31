@@ -14,7 +14,7 @@ const SplashScreen = ({ navigation }) => {
     setTimeout(async () => {
       //await AsyncStorage.setItem('LoggedIn','No')
       const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
-      console.log('loggedInSTatus', loggedInSTatus)
+      // console.log('loggedInSTatus', loggedInSTatus)
       if (loggedInSTatus === 'Yes') {
         const authtoken = await AsyncStorage.getItem('auth_token');
         const is_name = await AsyncStorage.getItem('is_name');

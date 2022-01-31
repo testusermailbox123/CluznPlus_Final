@@ -8,11 +8,13 @@ GLOBAL = require('../globals');
 import { h, w } from '../../utils/Dimensions'
 import DatePicker from 'react-native-date-picker'
 import RazorpayCheckout from 'react-native-razorpay';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class AppointmentDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            authtoken: '',
             selectdate: '',
             opendate: false,
             selecttime: '',
@@ -29,8 +31,35 @@ export default class AppointmentDetails extends Component {
 
     }
 
+    async getLocalData() {
+
+        try {
+            const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
+            // console.log('getLocalData token ' + loggedInSTatus)
+            if (loggedInSTatus === 'Yes') {
+                try {
+                    const authtoken = await AsyncStorage.getItem('auth_token');
+                    if (authtoken == "" || authtoken == null) {
+                        this.redirectToLogin()
+                    } else {
+                        this.setState({
+                            authtoken: authtoken
+                        });
+                    }
+                } catch (error) {
+                    console.log("Error resetting data 12" + error);
+                }
+            } else {
+                this.redirectToLogin()
+            }
+        } catch (error) {
+            console.log("Error resetting data 34" + error);
+        }
+    }
+
     UNSAFE_componentWillMount() {
         const { docid, amount } = this.props.route.params;
+        this.getLocalData();
         this.setState({
             docid: docid,
             amount: amount
@@ -64,7 +93,7 @@ export default class AppointmentDetails extends Component {
         ) {
             alert('Please enter all the details correctly')
         } else {
-             
+            alert('Appointment Booked successfully')
             this.props.navigation.navigate('DoctorDescription', {
                 plan_id: this.state.plan_id,
                 amount: this.state.amount,
@@ -164,6 +193,49 @@ export default class AppointmentDetails extends Component {
             // Alert.alert("NUMBER NOT FOUND");
         }
     }
+
+    doAppointment() {
+        let api = "https://cluznplus.com/cluzn_backend/api/doAppointment"
+
+        axios.post(api, {
+            headers: {
+                token: this.state.authtoken, 
+            },
+            data: {
+                doctor_id: this.state.docid,
+                first_name: this.state.First_Name,
+                last_name: this.state.Last_Name,
+                date: this.state.selectdate + " " + this.state.selecttime,
+                mobile: this.state.Mobile_Number,
+                email: this.state.EMail,
+            }
+        })
+            .then(response => {
+                if (response.data.status == 'success') {
+                    alert("Appointment Booked")
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
+                    this.redirectToLogin();
+                } else {
+                    alert(response.data.message)
+                }
+
+            })
+            .catch((error) => {
+                this.setState({ bookAppointmentList: [] })
+                console.log(error)
+            });
+
+    }
+
+    async redirectToLogin() {
+        try {
+            await AsyncStorage.clear();
+            this.props.navigation.navigate('GenerateOtpforLoginScreen')
+        } catch (error) {
+            console.log("Error resetting data" + error);
+        }
+    }
+
     render() {
 
         return (
@@ -238,7 +310,7 @@ export default class AppointmentDetails extends Component {
                         <TextInput
                             value={this.state.selectdate}
                             onFocus={() => {
-                                console.log('is focused')
+                                // console.log('is focused')
                                 this.setState({
                                     opendate: true,
                                     opentime: false
@@ -273,8 +345,8 @@ export default class AppointmentDetails extends Component {
                             mode='date'
                             modal
                             open={this.state.opendate}
-                            date={new Date()}
-                            minimumDate={new Date()}
+                            date={new Date(new Date().getTime() + 86400000)}
+                            minimumDate={new Date(new Date().getTime() + 86400000)}
                             title='Select Appointment Date'
                             textColor={GLOBAL.eva_darkpink}
                             onDateChange={(e) => {
@@ -335,7 +407,7 @@ export default class AppointmentDetails extends Component {
                             open={this.state.opentime}
                             date={this.state.dd}
                             is24hourSource='locale'
-                            minuteInterval={30}
+                            minuteInterval={15}
                             minimumDate={new Date()}
                             title='Select Appointment Time'
                             textColor={GLOBAL.eva_darkpink}

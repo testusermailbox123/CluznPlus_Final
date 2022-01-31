@@ -52,11 +52,11 @@ export default class HospitalSearch extends React.Component {
     async getLocalData () {
         try {
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
-            console.log('loggedInSTatus in hospital search'+loggedInSTatus)
+            // console.log('loggedInSTatus in hospital search'+loggedInSTatus)
             if (loggedInSTatus === 'Yes') {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
-                    console.log('authtoken'+authtoken)
+                    // console.log('authtoken'+authtoken)
                     if(authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
@@ -153,7 +153,7 @@ export default class HospitalSearch extends React.Component {
     async redirectToLogin() {
         try {
             await AsyncStorage.clear();
-            console.log('at line 153')
+            // console.log('at line 153')
             this.props.navigation.navigate('GenerateOtpforLoginScreen')
         } catch (error) {
             console.log("Error resetting data" + error);
@@ -315,7 +315,7 @@ export default class HospitalSearch extends React.Component {
                                     buttonStyle={{ width: h(20), height: h(4.5), color: GLOBAL.primarylighttext2, backgroundColor: 'white', borderRadius: h(1), alignSelf: 'flex-end', marginTop: -w(7) }}
                                     data={this.state.cityList}
                                     onSelect={(selectedItem, index) => {
-                                        console.log(selectedItem, index)
+                                        // console.log(selectedItem, index)
                                         this.setState({
                                             cityname1: selectedItem
                                         })

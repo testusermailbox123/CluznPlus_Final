@@ -27,7 +27,7 @@ export default class Webinar extends Component {
             if (loggedInSTatus === 'Yes') {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
-                    console.log("authtoken  30" + authtoken)
+                    // console.log("authtoken  30" + authtoken)
                     if (authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
@@ -77,7 +77,7 @@ export default class Webinar extends Component {
 
     generateworkshoplist() {
         // const authtoken = AsyncStorage.getItem('auth_token')
-        console.log("getWebbinar token " + this.state.authtoken)
+        // console.log("getWebbinar token " + this.state.authtoken)
         axios.get('https://cluznplus.com/cluzn_backend/api/getWebbinar', {
             headers: {
                 token: this.state.authtoken

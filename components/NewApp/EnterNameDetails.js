@@ -33,7 +33,7 @@ export default class EnterNameDetails extends React.Component {
             if (loggedInSTatus === 'Yes') {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
-                    console.log("authtoken", authtoken)
+                    // console.log("authtoken", authtoken)
                     if(authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
@@ -66,7 +66,7 @@ export default class EnterNameDetails extends React.Component {
     }
 
     enterdetails() {
-        console.log("toke"+this.state.authtoken)
+        // console.log("toke"+this.state.authtoken)
         if (this.state.Full_Name == '') {
             alert('Please enter Full name')
             // } else if (this.state.E_Mail.includes('com') == false || this.state.E_Mail.includes('@') == false) {
@@ -77,7 +77,7 @@ export default class EnterNameDetails extends React.Component {
                 name: this.state.Full_Name,
                 email: this.state.E_Mail
             };
-            console.log(data)
+            // console.log(data)
             axios.post('https://cluznplus.com/cluzn_backend/api/firstNameAndEmailSave', data, {
                 headers: {
                     token: this.state.authtoken

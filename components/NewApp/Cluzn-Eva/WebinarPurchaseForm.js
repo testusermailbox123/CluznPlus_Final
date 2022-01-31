@@ -39,7 +39,7 @@ export default class WebinarPurchaseForm extends Component {
                         this.setState({
                             authtoken: authtoken
                         }, () => {
-                           
+
                         });
                     }
                 } catch (error) {
@@ -88,13 +88,15 @@ export default class WebinarPurchaseForm extends Component {
         this.backHandler.remove();
     }
 
-    doSubscribe(payment_id) {
-
+    purchaseWebbinar() {
         const data = {
-            plan_id: this.state.wookshopid,
-            payment_id: payment_id
+            webinnar_id: this.state.wookshopid,
+            first_name: this.state.First_Name,
+            last_name: this.state.Last_Name,
+            mobile: this.state.Mobile_Number,
+            email: this.state.EMail,
         }
-        axios.post('https://cluznplus.com/cluzn_backend/api/doSubscribe', data, {
+        axios.post('https://cluznplus.com/cluzn_backend/api/purchaseWebbinar', data, {
             headers: {
                 token: this.state.authtoken,
             },
@@ -148,7 +150,7 @@ export default class WebinarPurchaseForm extends Component {
 
             RazorpayCheckout.open(options)
                 .then((data) => {
-                    this.doSubscribe(data.razorpay_payment_id)
+                    this.purchaseWebbinar()
                 })
                 .catch((error) => {
                     console.log(`Error : ${error} | ${error.description}`);

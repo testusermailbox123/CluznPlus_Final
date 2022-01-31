@@ -16,18 +16,6 @@ const data = [
     },
     {
         "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190611/original/pngtree-foreign-female-doctor-png-image_2983361.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-flat-green-doctor-image-of-male-nurses-png-image_4170593.jpg"
-    },
-    {
-        "image": "https://png.pngtree.com/png-clipart/20190516/original/pngtree-cartoon-doctor-image-element-doctorfemale-doctorcare-workershospitalelement-png-image_4078657.jpg"
     }
 ]
 
@@ -37,6 +25,7 @@ export default class DoctorDescription extends Component {
         super(props)
 
         this.state = {
+            doctor_image:'',
             docfname: '',
             doclname: '',
             docfullimage: '',
@@ -68,7 +57,7 @@ export default class DoctorDescription extends Component {
     // TODO _goToNextPage()
     _goToNextPage = () => {
         // console.log("this.state.link ===>>>> ", this.state.link)
-        if (CurrentSlide >= data.length - 1) CurrentSlide = 0;
+        if (CurrentSlide >= this.state.doctor_image.length - 1) CurrentSlide = 0;
 
         this.flatList.current.scrollToIndex({
             index: ++CurrentSlide,
@@ -89,7 +78,7 @@ export default class DoctorDescription extends Component {
 
     UNSAFE_componentWillMount() {
         const { docfname, doclname, docfullimage, docspecialization, docdescription,
-            docvideo, docimage,docid,amount } = this.props.route.params;
+            docvideo, docimage,docid,amount ,doctor_image} = this.props.route.params;
         this.setState({
             docfname: docfname,
             doclname: doclname,
@@ -99,9 +88,12 @@ export default class DoctorDescription extends Component {
             docvideo: docvideo,
             docimage: docimage,
             docid:docid,
-            amount:amount
+            amount:amount,
+            doctor_image:doctor_image
         })
-        // console.log('before _stopAutoPlay')
+        console.log('this.state.doctor_image - '+this.state.doctor_image)
+        
+        
         this._stopAutoPlay();
         // console.log('after _stopAutoPlay')
         this._startAutoPlay();
@@ -230,7 +222,7 @@ export default class DoctorDescription extends Component {
                                 style={{
                                     flex: 1,
                                 }}
-                                data={data}
+                                data={this.state.doctor_image.length > 0 ? this.state.doctor_image : data}
                                 keyExtractor={this._keyExtractor.bind(this)}
                                 renderItem={this._renderItem.bind(this)}
                                 horizontal={true}

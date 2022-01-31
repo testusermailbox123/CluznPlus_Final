@@ -17,19 +17,19 @@ export default class WebinarDetails extends Component {
             amount: '',
             descript: '',
             webname: '',
-            bookstatus:''
+            bookstatus: ''
         }
     }
 
     UNSAFE_componentWillMount() {
-        const { image, wookshopid, amount, descript, webname,   bookstatus } = this.props.route.params;
+        const { image, wookshopid, amount, descript, webname, bookstatus } = this.props.route.params;
         this.setState({
             image: image,
             wookshopid: wookshopid,
             amount: amount,
             descript: descript,
             webname: webname,
-            bookstatus:bookstatus
+            bookstatus: bookstatus
         });
     }
 
@@ -110,7 +110,7 @@ export default class WebinarDetails extends Component {
                                 color: 'white', fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '3%')
                             }}
-                            >{this.state.bookstatus ? "Book Seat" : "Booked" }</Text>
+                            >Book Seat</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
