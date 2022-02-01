@@ -38,13 +38,15 @@ export default class WebinarDetails extends Component {
         this.props.navigation.navigate('WebinarPurchaseForm', {
             wookshopid: this.state.wookshopid,
             amount: this.state.amount,
-            webname: this.state.webname
+            webname: this.state.webname,
+            image:this.state.image,
+            descript: this.state.descript,
         });
     }
 
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor:GLOBAL.eva_lightpink }}>
                 <StatusBar barStyle="light-content" hidden={false}
                     backgroundColor='#FEE1DC'
                     translucent={true}>
@@ -52,14 +54,14 @@ export default class WebinarDetails extends Component {
                 <View>
                     <View style={{
 
-                        height: heighttoDP(number = '40%'),
+                        height: heighttoDP(number = '55%'),
                         alignSelf: 'center', justifyContent: 'center',
                         width: widthtoDP(number = '97%'),
 
                     }}>
                         <Image
                             style={{
-                                height: heighttoDP(number = '40%'),
+                                height: heighttoDP(number = '55%'),
                                 width: widthtoDP(number = '97%'),
                             }}
                             source={{
@@ -82,7 +84,7 @@ export default class WebinarDetails extends Component {
                         <Text
                             numberOfLines={6}
                             style={{
-                                height: heighttoDP(number = '35%'),
+                                height: heighttoDP(number = '20%'),
                                 width: widthtoDP(number = '90%'),
                                 marginTop: heighttoDP(number = '2%'),
                                 fontSize: heighttoDP(number = '2%')

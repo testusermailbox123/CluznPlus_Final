@@ -189,7 +189,7 @@ export default class Categories extends Component {
         })
     }
     _onPressBookAppointment(item) {
-        console.log('doctor_image'+item.doctor_image)
+        console.log('doctor_image' + item.doctor_image)
         this.props.navigation.navigate('DoctorDescription', {
             docfname: item.first_name,
             doclname: item.last_name,
@@ -200,7 +200,7 @@ export default class Categories extends Component {
             docimage: item.image,
             docid: item.id,
             amount: item.consulation_fee,
-            doctor_image:item.doctor_image
+            doctor_image: item.doctor_image
         });
     }
 
@@ -255,7 +255,7 @@ export default class Categories extends Component {
                                         marginRight: heighttoDP(number = '1%'),
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                     >Videos</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -269,7 +269,7 @@ export default class Categories extends Component {
                                         marginRight: heighttoDP(number = '1%')
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                     >Blogs</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -282,8 +282,8 @@ export default class Categories extends Component {
                                         alignItems: 'center', justifyContent: 'center'
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                    >Book Appointment</Text>
+                                    <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Doctors</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{
@@ -306,8 +306,9 @@ export default class Categories extends Component {
                                         }}
                                         >
                                             <View style={{
-                                                    // backgroundColor: 'red',
-                                                    height: heighttoDP(number = '10%')}}>
+                                                // backgroundColor: 'red',
+                                                height: heighttoDP(number = '10%')
+                                            }}>
                                                 <Text style={{
                                                     color: GLOBAL.eva_blue,
                                                     fontWeight: 'bold',
@@ -381,7 +382,7 @@ export default class Categories extends Component {
                                         marginRight: heighttoDP(number = '1%'),
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                     >Videos</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -395,7 +396,7 @@ export default class Categories extends Component {
                                         marginRight: heighttoDP(number = '1%')
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                     >Blogs</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -408,8 +409,8 @@ export default class Categories extends Component {
                                         alignItems: 'center', justifyContent: 'center'
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                    >Book Appointment</Text>
+                                    <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                    >Doctor</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{
@@ -500,7 +501,7 @@ export default class Categories extends Component {
                                     marginRight: heighttoDP(number = '1%'),
                                 }}
                             >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                 >Videos</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -514,7 +515,7 @@ export default class Categories extends Component {
                                     marginRight: heighttoDP(number = '1%')
                                 }}
                             >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                 >Blogs</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -527,8 +528,11 @@ export default class Categories extends Component {
                                     alignItems: 'center', justifyContent: 'center'
                                 }}
                             >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                >Book Appointment</Text>
+                                <Text style={{
+                                    fontWeight: 'bold', alignSelf: 'center',
+                                    fontSize: heighttoDP(number = '2.2%')
+                                }}
+                                >Doctors</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{
@@ -630,7 +634,7 @@ export default class Categories extends Component {
                                     marginRight: heighttoDP(number = '1%'),
                                 }}
                             >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                 >Videos</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -644,7 +648,7 @@ export default class Categories extends Component {
                                     marginRight: heighttoDP(number = '1%')
                                 }}
                             >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
                                 >Blogs</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -657,8 +661,8 @@ export default class Categories extends Component {
                                     alignItems: 'center', justifyContent: 'center'
                                 }}
                             >
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
-                                >Book Appointment</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: heighttoDP(number = '2.2%') }}
+                                >Doctors</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{
@@ -674,7 +678,7 @@ export default class Categories extends Component {
                                 renderItem={({ item }) =>
 
                                     <TouchableOpacity style={{
-                                        height: heighttoDP(number = '25%'),
+                                        height: heighttoDP(number = '35%'),
                                         width: widthtoDP(number = '90%'),
                                         marginVertical: heighttoDP(number = '3%'),
                                         alignSelf: 'center', justifyContent: 'center',
@@ -688,8 +692,8 @@ export default class Categories extends Component {
                                             <Image
                                                 style={{
                                                     marginLeft: heighttoDP(number = '3%'),
-                                                    height: heighttoDP(number = '21%'),
-                                                    width: heighttoDP(number = '14%'),
+                                                    height: heighttoDP(number = '27%'),
+                                                    width: heighttoDP(number = '18%'),
                                                     borderRadius: heighttoDP(number = '1%'),
 
                                                 }}
@@ -708,16 +712,30 @@ export default class Categories extends Component {
                                                     fontSize: heighttoDP(number = '3%'),
                                                     // marginTop: -heighttoDP(number = '5%')
                                                 }}>{item.first_name} {item.last_name}</Text>
+
                                                 <Text style={{
                                                     fontWeight: 'bold',
                                                     color: GLOBAL.eva_green,
                                                     fontSize: heighttoDP(number = '2.3%'),
-                                                    marginBottom: heighttoDP(number = '1%')
-                                                }}>{item.specialization}</Text>
-                                                <Text numberOfLines={6}>
-                                                    {item.description}
-                                                </Text>
+                                                    marginBottom: heighttoDP(number = '1%'),
 
+                                                }}>{item.specialization}</Text>
+                                                <View style={{
+                                                    height: heighttoDP(number = '16%'),
+
+                                                }}>
+                                                    <Text numberOfLines={4}>
+                                                        {item.description}
+                                                    </Text>
+                                                </View>
+                                                {/* <TouchableOpacity style={{borderwidth:heighttoDP(number = '1%'),
+                                                height:heighttoDP(number = '2%'),width:heighttoDP(number = '5%'),
+                                            }}> */}
+                                                    <Text style={{
+                                                        marginLeft: heighttoDP(number = '3%'),
+                                                        fontWeight: 'bold', fontSize: heighttoDP(number = '2%'),
+                                                    }}>Book Appointment</Text>
+                                                {/* </TouchableOpacity> */}
                                             </View>
                                         </View>
                                     </TouchableOpacity>

@@ -24,6 +24,8 @@ export default class WebinarPurchaseForm extends Component {
             webname: '',
             text: '',
             authtoken: '',
+            image: '',
+            descript: ''
         }
     }
 
@@ -72,11 +74,13 @@ export default class WebinarPurchaseForm extends Component {
     UNSAFE_componentWillMount() {
         this.getLocalData();
         const { navigation } = this.props;
-        const { wookshopid, amount, webname } = this.props.route.params;
+        const { wookshopid, amount, webname, image, descript } = this.props.route.params;
         this.setState({
             wookshopid: wookshopid,
             amount: amount,
-            webname: webname
+            webname: webname,
+            image: image,
+            descript: descript
         })
         this.backHandler = BackHandler.addEventListener(
             "hardwareBackPress",
@@ -105,8 +109,12 @@ export default class WebinarPurchaseForm extends Component {
                 if (response.data.status == 'success') {
                     alert('Booked successfully')
                     this.props.navigation.navigate('WebinarDetails', {
-                        plan_id: this.state.plan_id,
-                        amount: this.state.amount,
+                        image : this.state.image, 
+                        wookshopid : this.state.wookshopid, 
+                        amount:this.state.amount, 
+                        descript:this.state.descript ,
+                        webname:this.state.webname, 
+                        bookstatus : ''
                     });
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
@@ -129,10 +137,10 @@ export default class WebinarPurchaseForm extends Component {
             alert('Please enter all the details correctly')
         } else {
 
-            this.props.navigation.navigate('WebinarPurchaseForm', {
-                plan_id: this.state.plan_id,
-                amount: this.state.amount,
-            });
+            // this.props.navigation.navigate('WebinarPurchaseForm', {
+            //     plan_id: this.state.plan_id,
+            //     amount: this.state.amount,
+            // });
             var options = {
                 description: this.state.webname + ' Price',
                 image: 'https://i.imgur.com/3g7nmJC.png',
@@ -154,9 +162,13 @@ export default class WebinarPurchaseForm extends Component {
                 })
                 .catch((error) => {
                     console.log(`Error : ${error} | ${error.description}`);
-                    this.props.navigation.navigate('PurchaseForm', {
-                        plan_id: this.state.plan_id,
-                        amount: this.state.amount,
+                    this.props.navigation.navigate('WebinarDetails', {
+                        image : this.state.image, 
+                        wookshopid : this.state.wookshopid, 
+                        amount:this.state.amount, 
+                        descript:this.state.descript ,
+                        webname:this.state.webname, 
+                        bookstatus : ''
                     });
                 });
         }
@@ -165,14 +177,14 @@ export default class WebinarPurchaseForm extends Component {
     render() {
 
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: GLOBAL.eva_lightpink }}>
                 <StatusBar barStyle="light-content" hidden={false}
                     backgroundColor='#FEE1DC'
                     translucent={true}>
                 </StatusBar>
-                <KeyboardAvoidingView style={{
+                <ScrollView style={{
                     flex: 1,
-                    backgroundColor: 'white',
+                    backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
                     <Text style={{
@@ -184,49 +196,55 @@ export default class WebinarPurchaseForm extends Component {
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '4%'),
                         marginLeft: widthtoDP(number = "5%"), alignSelf: 'center'
-                    }}>Details</Text>
-                    <View style={{
+                    }}>Enter your details</Text>
+                    {/* <View style={{
                         flexDirection: 'row', justifyContent: 'center',
                         marginTop: heighttoDP(number = '2.5%')
+                    }}> */}
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        alignItems: 'center', justifyContent: 'center'
                     }}>
-                        <View style={{ marginRight: heighttoDP(number = '5%') }}>
-                            <Text style={{
-                                marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
-                            }}>First Name</Text>
-                            <TextInput
-                                clearButtonMode='always'
-                                onChangeText={First_Name =>
-                                    this.setState({ First_Name })
-                                }
-                                maxLength={9}
-                                style={{
-                                    paddingLeft: widthtoDP(number = '4%'),
-                                    fontSize: heighttoDP(number = '2.7%'),
-                                    height: heighttoDP(number = '6%'),
-                                    width: widthtoDP(number = "37%"),
-                                    borderRadius: heighttoDP(number = '10%'),
-                                    borderWidth: heighttoDP(number = '.25%'),
-                                    borderColor: GLOBAL.eva_midpink
-                                }} />
-                        </View>
-                        <View>
-                            <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
-                            <TextInput
-                                clearButtonMode='always'
-                                onChangeText={Last_Name =>
-                                    this.setState({ Last_Name })
-                                }
-                                style={{
-                                    paddingLeft: widthtoDP(number = '4%'),
-                                    fontSize: heighttoDP(number = '2.7%'),
-                                    height: heighttoDP(number = '6%'),
-                                    width: widthtoDP(number = "37%"),
-                                    borderRadius: heighttoDP(number = '10%'),
-                                    borderWidth: heighttoDP(number = '.25%'),
-                                    borderColor: GLOBAL.eva_midpink
-                                }} />
-                        </View>
+                        <Text style={{
+                            marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
+                        }}>First Name</Text>
+                        <TextInput
+                            clearButtonMode='always'
+                            onChangeText={First_Name =>
+                                this.setState({ First_Name })
+                            }
+                            // maxLength={9}
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
                     </View>
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
+                        <TextInput
+                            clearButtonMode='always'
+                            onChangeText={Last_Name =>
+                                this.setState({ Last_Name })
+                            }
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
+                    </View>
+                    {/* </View> */}
 
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -251,7 +269,7 @@ export default class WebinarPurchaseForm extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
-                        <TouchableOpacity >
+                        {/* <TouchableOpacity >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
@@ -259,7 +277,7 @@ export default class WebinarPurchaseForm extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/phone.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -274,7 +292,7 @@ export default class WebinarPurchaseForm extends Component {
                             onChangeText={EMail =>
                                 this.setState({ EMail })
                             }
-                            maxLength={20}
+                            // maxLength={20}
                             style={{
                                 paddingLeft: widthtoDP(number = '4%'),
                                 fontSize: heighttoDP(number = '2.7%'),
@@ -284,7 +302,7 @@ export default class WebinarPurchaseForm extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
-                        <TouchableOpacity >
+                        {/* <TouchableOpacity >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
@@ -292,7 +310,7 @@ export default class WebinarPurchaseForm extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/email.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <TouchableOpacity
                         onPress={() => this.onPressButton()}
@@ -311,7 +329,7 @@ export default class WebinarPurchaseForm extends Component {
                             color: 'white'
                         }}>PAY NOW</Text>
                     </TouchableOpacity>
-                </KeyboardAvoidingView>
+                </ScrollView>
             </SafeAreaView>
         )
     }

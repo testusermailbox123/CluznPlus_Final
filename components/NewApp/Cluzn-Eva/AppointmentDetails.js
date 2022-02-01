@@ -256,7 +256,7 @@ export default class AppointmentDetails extends Component {
     render() {
 
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: GLOBAL.eva_lightpink }}>
                 <StatusBar barStyle="light-content" hidden={false}
                     backgroundColor='#FEE1DC'
                     translucent={true}>
@@ -266,7 +266,7 @@ export default class AppointmentDetails extends Component {
                     // behavior={Platform.OS === "ios" ? "padding" : "height"}
                     style={{
                         flex: 1,
-                        backgroundColor: 'white',
+                        backgroundColor: GLOBAL.eva_lightpink,
                         // height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                     }}>
                     {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
@@ -414,13 +414,13 @@ export default class AppointmentDetails extends Component {
                         <SelectDropdown
                             defaultValue="Select Slot"
                             dropdownStyle={{
-                                width: h(4), backgroundColor: GLOBAL.eva_lightpink,
+                                width: h(4), backgroundColor: GLOBAL.eva_darkpink,
                                 fontSize: h(5), height: h(25)
                             }}
                             rowStyle={{ height: h(5) }}
                             defaultButtonText="Select Slot"
                             buttonStyle={{
-                                backgroundColor: GLOBAL.eva_lightpink,
+                                backgroundColor: GLOBAL.eva_midpink,
                                 height: heighttoDP(number = '6%'),
                                 width: widthtoDP(number = "83%"),
                                 borderRadius: heighttoDP(number = '5%'),
@@ -537,7 +537,7 @@ export default class AppointmentDetails extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
-                        <TouchableOpacity >
+                        {/* <TouchableOpacity >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
@@ -545,7 +545,7 @@ export default class AppointmentDetails extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/phone.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -570,7 +570,7 @@ export default class AppointmentDetails extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
-                        <TouchableOpacity >
+                        {/* <TouchableOpacity >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
@@ -578,7 +578,7 @@ export default class AppointmentDetails extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/email.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <TouchableOpacity
                         onPress={() => this.onPressButton()}
@@ -595,7 +595,7 @@ export default class AppointmentDetails extends Component {
                             fontSize: heighttoDP(number = '2.5%'),
                             fontWeight: 'bold',
                             color: 'white'
-                        }}>PAY NOW</Text>
+                        }}>Book Now</Text>
                     </TouchableOpacity>
                     {/* </TouchableWithoutFeedback> */}
                 </ScrollView>

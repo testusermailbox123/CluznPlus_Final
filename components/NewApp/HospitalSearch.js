@@ -49,7 +49,7 @@ export default class HospitalSearch extends React.Component {
         }
         this.switchValueChnage = this.switchValueChnage.bind(this);
     }
-    async getLocalData () {
+    async getLocalData() {
         try {
             const loggedInSTatus = await AsyncStorage.getItem('LoggedIn');
             // console.log('loggedInSTatus in hospital search'+loggedInSTatus)
@@ -57,7 +57,7 @@ export default class HospitalSearch extends React.Component {
                 try {
                     const authtoken = await AsyncStorage.getItem('auth_token');
                     // console.log('authtoken'+authtoken)
-                    if(authtoken == "" || authtoken == null) {
+                    if (authtoken == "" || authtoken == null) {
                         this.redirectToLogin()
                     } else {
                         this.setState({
@@ -79,7 +79,7 @@ export default class HospitalSearch extends React.Component {
     }
 
     componentDidMount() {
-        
+
         const { navigation } = this.props;
         this.getLocalData();
         BackHandler.addEventListener('hardwareBackPress', function () {
@@ -125,7 +125,7 @@ export default class HospitalSearch extends React.Component {
         })
             .then(response => {
                 // console.log(response)
-                if(response.data.status == 'success') {
+                if (response.data.status == 'success') {
                     if (counter == 1) {
                         this.setState({
                             hospitalList: [],
@@ -138,7 +138,7 @@ export default class HospitalSearch extends React.Component {
                         allDepartment: this.state.hospitalList,
                         isloading: false
                     });
-                } else if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
                     alert(response.data.message)
@@ -213,13 +213,13 @@ export default class HospitalSearch extends React.Component {
             }
         })
             .then(response => {
-                if(response.data.status == 'success') {
+                if (response.data.status == 'success') {
                     this.setState({
                         cityList: response.data.data,
                         tagList: response.data.tagdata,
                         isloading: false
                     });
-                } else if(response.data.status == 'fail' && ( response.data.message == 'token blanked' || response.data.message == 'token mis matched' )) {
+                } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
                     alert(response.data.message)
@@ -249,7 +249,7 @@ export default class HospitalSearch extends React.Component {
     // }
 
     _onPress(item) {
-        
+
         this.props.navigation.navigate('HospitalDepartments', {
             alldata: item.allDepartments,
             hospitalname: item.name,
@@ -510,7 +510,7 @@ export default class HospitalSearch extends React.Component {
                             }}
                         />
                     </View>
-                    <View style={{ backgroundColor: 'black' }}>
+                    <View style={{}}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.navigation.navigate('HomePage')
@@ -518,30 +518,38 @@ export default class HospitalSearch extends React.Component {
                             style={{
                                 marginVertical: heighttoDP(number = '1%'),
                                 backgroundColor: GLOBAL.eva_midpink,
-                                borderRadius: heighttoDP(number = '2%'),
+                                // borderRadius: heighttoDP(number = '2%'),
                                 alignSelf: 'center',
-                                width: widthtoDP(number = '90%'),
+                                width: widthtoDP(number = '100%'),
                                 height: heighttoDP(number = '20%')
                             }}
                         >
+                            <Text style={{
+                                alignSelf: 'center', fontSize: heighttoDP(number = '2%'),
+                                marginTop: heighttoDP(number = '1%')
+                            }}>Click here</Text>
+                            <Text style={{
+                                alignSelf: 'center', fontSize: heighttoDP(number = '2.5%'),
+                                marginTop: heighttoDP(number = '1%')
+                            }}>Join</Text>
                             <Image
                                 style={{
                                     // backgroundColor: 'red',
                                     width: widthtoDP(number = '85%'),
                                     height: heighttoDP(number = '10%'),
-                                    alignSelf:'center',
+                                    alignSelf: 'center',
                                     // borderRadius: heighttoDP(number = '2%'),
                                     // marginLeft: heighttoDP(number = '2%'),
-                                     marginTop: heighttoDP(number = '5%')
+                                    marginTop: heighttoDP(number = '2%')
                                 }}
                                 source={require('../assets/icons/evahome.png')} />
-                            <Text
+                            {/* <Text
                                 style={{
                                     alignSelf: 'center', justifyContent: 'center',
                                     // fontSize: heighttoDP(number = '2%'),
                                     // fontWeight: 'bold', color: '#EB592A'
                                 }}
-                            >To enter Click here</Text>
+                            >To enter Click here</Text> */}
                         </TouchableOpacity>
                     </View>
                     <View style={{ height: h(21) }}>

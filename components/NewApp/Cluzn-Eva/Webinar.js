@@ -36,7 +36,7 @@ export default class Webinar extends Component {
                         }, () => {
                             this.generateworkshoplist();
                         });
-                        console.log("authtoken from webinar api " + authtoken)
+                        // console.log("authtoken from webinar api " + authtoken)
                     }
                 } catch (error) {
                     console.log("Error resetting data 12" + error);
@@ -85,11 +85,11 @@ export default class Webinar extends Component {
         })
             .then(response => {
                 if (response.data.status == 'success') {
-                    console.log("workshoplist - ", response.data.data);
+                    // console.log("workshoplist - ", response.data.data);
                     this.setState({
                         workshoplist: [...this.state.workshoplist, ...response.data.data],
                     });
-                    console.log(this.state.workshoplist)
+                    // console.log(this.state.workshoplist)
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
                 } else {
@@ -121,7 +121,7 @@ export default class Webinar extends Component {
                         width: widthtoDP(number = '100%'),
                         marginTop: widthtoDP(number = '5%'),
                         // justifyContent: 'center',
-                        height: heighttoDP(number = '20%'),
+                        height: heighttoDP(number = '15%'),
                         // borderRadius: heighttoDP(number = '3%'),
                         borderBottomLeftRadius: heighttoDP(number = '3%'),
                         borderBottomRightRadius: heighttoDP(number = '3%'),
@@ -130,7 +130,7 @@ export default class Webinar extends Component {
                     }}>
                         <Text style={{
                             color: GLOBAL.eva_black,
-                            marginTop: heighttoDP(number = '5%'),
+                            marginTop: heighttoDP(number = '3%'),
                             fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                             marginLeft: widthtoDP(number = "5%")
                         }}>Hello Varun,</Text>
@@ -142,7 +142,7 @@ export default class Webinar extends Component {
                             fontWeight: 'bold',
                             fontSize: heighttoDP(number = '2.3%')
                         }}
-                        >Upcoming Webinar and Classes for you</Text>
+                        >Eva Workshop and Eva Classes</Text>
                     </View>
                     <View style={{
                         height: heighttoDP(number = '80%'),
@@ -152,7 +152,7 @@ export default class Webinar extends Component {
                         <FlatList
                             style={{
                                 height: heighttoDP(number = '1%'),
-                                marginBottom: heighttoDP(number = '7%'),
+                                // marginBottom: heighttoDP(number = '3%'),
                             }}
                             data={this.state.workshoplist}
 
@@ -172,13 +172,13 @@ export default class Webinar extends Component {
                                     }}
                                 >
                                     <View>
-                                        <Text 
-                                        
-                                        style={{
-                                            color: GLOBAL.eva_blue,
-                                            fontWeight: 'bold',
-                                            fontSize: heighttoDP(number = '2.5%')
-                                        }}
+                                        <Text
+
+                                            style={{
+                                                color: GLOBAL.eva_blue,
+                                                fontWeight: 'bold',
+                                                fontSize: heighttoDP(number = '2.5%')
+                                            }}
                                         >{item.name}</Text>
                                         <Image
                                             style={{

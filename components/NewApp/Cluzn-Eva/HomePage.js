@@ -270,7 +270,10 @@ export default class HomePage extends Component {
                         fontSize: heighttoDP(number = '4%'),
                         marginLeft: widthtoDP(number = "5%"),
                         fontFamily: "MrsSheppards-Regular"
-                    }}>Cluzn Eva</Text>
+                    }}>Cluzn Eva Club</Text>
+                    <Text style={{ marginLeft: heighttoDP(number = '17%') }}>
+                        The world of woman's health
+                    </Text>
                     {/* <Image
                         style={{
                             marginLeft: heighttoDP(number = '10%'),
@@ -330,24 +333,38 @@ export default class HomePage extends Component {
                                 <Text
                                     style={{
                                         fontSize: heighttoDP(number = '2.5%'),
-                                        fontWeight: 'bold', color: '#EB592A'
+                                        fontWeight: 'bold',
                                     }}
-                                >Upcoming Webinar / Class</Text>
+                                >Upcoming</Text>
 
                                 <Text
                                     style={{
-                                        marginTop: heighttoDP(number = '2%'),
-                                        marginLeft: -heighttoDP(number = '5.5%'),
                                         fontSize: heighttoDP(number = '2%'),
-                                        fontWeight: 'bold'
+                                        fontWeight: 'bold',
                                     }}
-                                >Click here to know more</Text>
+                                >Eva Workshop / Eva Classes</Text>
+                                <View style={{
+                                    width: widthtoDP(number = '30%'),
+                                    height: heighttoDP(number = '4%'),
+                                    borderWidth: widthtoDP(number = '0.25%'),
+                                    borderRadius: widthtoDP(number = '10%'),
+                                    alignItems: 'center', justifyContent: 'center',
+                                    marginTop: heighttoDP(number = '2%'),
+                                    backgroundColor: GLOBAL.eva_darkpink
+                                }}>
+                                    <Text
+                                        style={{
+                                            fontSize: heighttoDP(number = '2%'),
+                                            fontWeight: 'bold'
+                                        }}
+                                    >Book Now</Text>
+                                </View>
                             </View>
                         </View>
                     </TouchableOpacity>
                     <View style={{
                         // backgroundColor: 'red',
-                        height: heighttoDP(number = '20%'),
+                        height: heighttoDP(number = '25%'),
                         width: widthtoDP(number = '90'),
                         alignSelf: 'center',
                         // borderRadius: heighttoDP(number = '15%'),
@@ -369,17 +386,17 @@ export default class HomePage extends Component {
                     </View>
                     <View style={{
                         marginTop: widthtoDP(number = '4%'),
-                        height: heighttoDP(number = '27%'),
+                        height: heighttoDP(number = '31%'),
                         width: widthtoDP(number = '100%')
                     }}>
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
                             fontWeight: 'bold', marginLeft: widthtoDP(number = "6%")
-                        }}>Exclusive Packages</Text>
+                        }}>Eva Programs</Text>
 
                         <FlatList
                             style={{
-                                height: heighttoDP(number = '1%')
+                                height: heighttoDP(number = '2%')
                             }}
                             data={this.state.planlist}
 
@@ -401,20 +418,23 @@ export default class HomePage extends Component {
 
                                         source={{ uri: item.image }}
                                     />
-
-                                    <Text style={styles.title}>{item.name}</Text>
+                                    <View style={{ height: heighttoDP(number = '5%'), marginTop: heighttoDP(number = '0.5%'), }}>
+                                        <Text style={styles.title}>{item.name}</Text>
+                                    </View>
                                     <View
                                         // onPress={() => this._onPressPackages(item)}
                                         style={{
                                             alignSelf: 'center', justifyContent: 'center',
-                                            backgroundColor: GLOBAL.eva_midpink,
+                                            backgroundColor: GLOBAL.eva_darkpink,
                                             width: heighttoDP(number = '12%'),
                                             borderRadius: heighttoDP(number = '10%'),
-                                            height: heighttoDP(number = '4%')
+                                            height: heighttoDP(number = '4%'),
+                                            marginTop: heighttoDP(number = '2%')
                                         }}
                                     >
                                         <Text style={{
-                                            alignSelf: 'center', justifyContent: 'center', color: 'white'
+                                            alignSelf: 'center', justifyContent: 'center',
+
                                         }}
                                         >Book Now
                                         </Text>
@@ -431,7 +451,7 @@ export default class HomePage extends Component {
                         <Text style={{
                             color: '#1E1C61', fontSize: widthtoDP(number = '5%'),
                             fontWeight: 'bold', marginLeft: widthtoDP(number = "6%")
-                        }}>Categories</Text>
+                        }}>Eva Gallery</Text>
                     </View>
 
                     {
@@ -454,7 +474,7 @@ export default class HomePage extends Component {
                                             alignItems: 'center', justifyContent: 'center'
                                         }}>
                                             <View style={{
-                                                marginLeft: widthtoDP(number = '7%'),
+                                                // marginLeft: widthtoDP(number = '7%'),
                                                 width: widthtoDP(number = '30%'),
                                                 height: heighttoDP(number = '20%'),
                                                 backgroundColor: GLOBAL.eva_midpink,
@@ -469,14 +489,22 @@ export default class HomePage extends Component {
                                                         marginTop: -heighttoDP(number = '3%')
                                                     }}
                                                     source={require('../../assets/icons/1.png')} />
-                                                <Text
-                                                    style={{
-                                                        color: GLOBAL.eva_blue, fontWeight: 'bold',
-                                                        fontSize: heighttoDP(number = '2%'),
-                                                        marginTop: heighttoDP(number = '3%'),
-                                                        alignSelf: 'center'
-                                                    }}
-                                                >{myitem.title}</Text>
+                                                <View style={{
+                                                    // backgroundColor: 'red',
+                                                    width: heighttoDP(number = '18%'),
+                                                    marginTop: -heighttoDP(number = '2%'),
+                                                    height: heighttoDP(number = '11%'),
+
+                                                }}>
+                                                    <Text
+                                                        style={{
+                                                            color: GLOBAL.eva_blue, fontWeight: 'bold',
+                                                            fontSize: heighttoDP(number = '2%'),
+                                                            marginTop: heighttoDP(number = '3%'),
+                                                            marginLeft: heighttoDP(number = '1%'),
+                                                        }}
+                                                    >{myitem.title}</Text>
+                                                </View>
                                             </View>
                                         </View>
                                         <View style={{
@@ -486,7 +514,7 @@ export default class HomePage extends Component {
                                             <Image
                                                 style={{
                                                     height: heighttoDP(number = '18%'),
-                                                    width: widthtoDP(number = '45%'),
+                                                    width: widthtoDP(number = '52%'),
                                                     borderRadius: heighttoDP(number = '2%'),
                                                     marginLeft: widthtoDP(number = '12%'),
                                                     // marginTop: heighttoDP(number = '6%')
@@ -509,8 +537,8 @@ export default class HomePage extends Component {
 const styles = StyleSheet.create({
 
     item: {
-        backgroundColor: 'white',
-        height: heighttoDP(number = '18%'),
+        backgroundColor: GLOBAL.eva_midpink,
+        height: heighttoDP(number = '21%'),
         width: heighttoDP(number = '15%'),
         marginHorizontal: widthtoDP(number = '4%'),
         // padding: 20,
@@ -522,7 +550,7 @@ const styles = StyleSheet.create({
         fontSize: heighttoDP(number = '2%')
     },
     sliderItems: {
-        height: heighttoDP(number = '20%'),
+        height: heighttoDP(number = '25%'),
         borderTopRightRadius: heighttoDP(number = '2%'),
         borderRadius: heighttoDP(number = '2%'),
         width: widthtoDP(number = '90%'),

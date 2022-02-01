@@ -124,15 +124,15 @@ export default class DoctorDescription extends Component {
                     backgroundColor='#FEE1DC'
                     translucent={true}>
                 </StatusBar>
-                <ScrollView >
+                <ScrollView style={{ backgroundColor: GLOBAL.eva_lightpink }}>
                     <View style={{
-                        height: heighttoDP(number = '35%'),
+                        height: heighttoDP(number = '50%'),
 
                     }}>
                         <Image
                             style={{
                                 backgroundColor: 'red',
-                                height: heighttoDP(number = '35%'),
+                                height: heighttoDP(number = '50%'),
                             }}
                             source={{
                                 uri: "https://cluznplus.com/cluzn_backend/images/" + this.state.docfullimage,
@@ -164,7 +164,8 @@ export default class DoctorDescription extends Component {
                                 marginTop: heighttoDP(number = '3%')
                             }}>
                             <Text style={{
-                                color: 'white', alignSelf: 'center',
+                                color: 'black', 
+                                alignSelf: 'center',fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '2%')
                             }}>Book Appointment</Text>
                         </TouchableOpacity>
@@ -187,18 +188,19 @@ export default class DoctorDescription extends Component {
                             alignItems: 'center',
                             justifyContent: 'center',
                             height: heighttoDP(number = '20%'),
-                            width: widthtoDP(number = '90%')
+                            width: widthtoDP(number = '90%'),
+                            // marginTop:heighttoDP(number = '2%'),
                         }}>
                             <TouchableOpacity
                                 onPress={() => this._onPressVideo()}
                                 style={{
-                                    height: heighttoDP(number = '20%'),
+                                    height: heighttoDP(number = '25%'),
                                     width: widthtoDP(number = '90%')
                                 }}>
                                 <Image
                                     style={{
                                         marginTop: heighttoDP(number = '2%'),
-                                        height: heighttoDP(number = '20%'),
+                                        height: heighttoDP(number = '25%'),
                                         width: widthtoDP(number = '90%')
                                     }}
                                     source={{
@@ -208,13 +210,13 @@ export default class DoctorDescription extends Component {
                             </TouchableOpacity>
                         </View>
                         <Text style={{
-                            fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
+                            fontWeight: 'bold', marginTop: heighttoDP(number = '%'),
                             fontSize: heighttoDP(number = '2.5%')
                         }}>Image</Text>
                         <View style={{
                             backgroundColor: GLOBAL.eva_lightpink,
                             width: widthtoDP(number = '90%'),
-                            height: heighttoDP(number = '20%'),
+                            height: heighttoDP(number = '25%'),
                             marginBottom: heighttoDP(number = '3%'),
                             marginTop: heighttoDP(number = '2%'),
                         }}>

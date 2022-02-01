@@ -157,10 +157,13 @@ export default class PurchaseForm extends Component {
             RazorpayCheckout.open(options)
                 .then((data) => {
                     this.doSubscribe();
-                    console.log("Hello check");
+                    // console.log("Hello check");
                 })
                 .catch((error) => {
                     console.log(`Error : ${error} | ${error.description}`);
+                    console.log(this.state.plan_id + " " + this.state.amount + " " + this.state.plan_image
+                        + " " + this.state.name + " " + this.state.expire_in_month
+                    )
                     this.props.navigation.navigate('PackageDetails', {
                         plan_id: this.state.plan_id,
                         amount: this.state.amount,
@@ -174,16 +177,16 @@ export default class PurchaseForm extends Component {
     };
 
     render() {
-        console.log(this.state.Mobile_Number)
+        // console.log(this.state.Mobile_Number)
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: GLOBAL.eva_lightpink }}>
                 <StatusBar barStyle="light-content" hidden={false}
                     backgroundColor='#FEE1DC'
                     translucent={true}>
                 </StatusBar>
-                <KeyboardAvoidingView style={{
+                <ScrollView style={{
                     flex: 1,
-                    backgroundColor: 'white',
+                    backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
                     <Text style={{
@@ -195,48 +198,54 @@ export default class PurchaseForm extends Component {
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '4%'),
                         marginLeft: widthtoDP(number = "5%"), alignSelf: 'center'
-                    }}>Purchase Details</Text>
-                    <View style={{
+                    }}>Enter your details</Text>
+                    {/* <View style={{
                         flexDirection: 'row', justifyContent: 'center',
                         marginTop: heighttoDP(number = '2.5%')
+                    }}> */}
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        alignItems: 'center', justifyContent: 'center'
                     }}>
-                        <View style={{ marginRight: heighttoDP(number = '5%') }}>
-                            <Text style={{
-                                marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
-                            }}>First Name</Text>
-                            <TextInput
+                        <Text style={{
+                            marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold',
+                        }}>First Name</Text>
+                        <TextInput
 
-                                onChangeText={First_Name =>
-                                    this.setState({ First_Name })
-                                }
-                                maxLength={9}
-                                style={{
-                                    paddingLeft: widthtoDP(number = '4%'),
-                                    fontSize: heighttoDP(number = '2.7%'),
-                                    height: heighttoDP(number = '6%'),
-                                    width: widthtoDP(number = "37%"),
-                                    borderRadius: heighttoDP(number = '10%'),
-                                    borderWidth: heighttoDP(number = '.25%'),
-                                    borderColor: GLOBAL.eva_midpink
-                                }} />
-                        </View>
-                        <View>
-                            <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
-                            <TextInput
-                                onChangeText={Last_Name =>
-                                    this.setState({ Last_Name })
-                                }
-                                style={{
-                                    paddingLeft: widthtoDP(number = '4%'),
-                                    fontSize: heighttoDP(number = '2.7%'),
-                                    height: heighttoDP(number = '6%'),
-                                    width: widthtoDP(number = "37%"),
-                                    borderRadius: heighttoDP(number = '10%'),
-                                    borderWidth: heighttoDP(number = '.25%'),
-                                    borderColor: GLOBAL.eva_midpink
-                                }} />
-                        </View>
+                            onChangeText={First_Name =>
+                                this.setState({ First_Name })
+                            }
+                            // maxLength={9}
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
                     </View>
+                    <View style={{
+                        marginTop: widthtoDP(number = "5%"),
+                        alignItems: 'center', justifyContent: 'center'
+                    }}>
+                        <Text style={{ marginBottom: heighttoDP(number = '1%'), fontWeight: 'bold' }}>Last Name</Text>
+                        <TextInput
+                            onChangeText={Last_Name =>
+                                this.setState({ Last_Name })
+                            }
+                            style={{
+                                paddingLeft: widthtoDP(number = '4%'),
+                                fontSize: heighttoDP(number = '2.7%'),
+                                height: heighttoDP(number = '6%'),
+                                width: widthtoDP(number = "83%"),
+                                borderRadius: heighttoDP(number = '10%'),
+                                borderWidth: heighttoDP(number = '.25%'),
+                                borderColor: GLOBAL.eva_midpink
+                            }} />
+                    </View>
+                    {/* </View> */}
 
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -260,7 +269,7 @@ export default class PurchaseForm extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
-                        <TouchableOpacity >
+                        {/* <TouchableOpacity >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
@@ -268,7 +277,7 @@ export default class PurchaseForm extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/phone.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <View style={{
                         marginTop: widthtoDP(number = "5%"),
@@ -282,7 +291,7 @@ export default class PurchaseForm extends Component {
                             onChangeText={EMail =>
                                 this.setState({ EMail })
                             }
-                            maxLength={20}
+                            // maxLength={20}
                             style={{
                                 paddingLeft: widthtoDP(number = '4%'),
                                 fontSize: heighttoDP(number = '2.7%'),
@@ -292,7 +301,7 @@ export default class PurchaseForm extends Component {
                                 borderWidth: heighttoDP(number = '.25%'),
                                 borderColor: GLOBAL.eva_midpink
                             }} />
-                        <TouchableOpacity >
+                        {/* <TouchableOpacity >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
@@ -300,7 +309,7 @@ export default class PurchaseForm extends Component {
                                 marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/email.png')} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                     <TouchableOpacity
                         onPress={() => this.onPressButton()}
@@ -319,7 +328,7 @@ export default class PurchaseForm extends Component {
                             color: 'white'
                         }}>PAY NOW</Text>
                     </TouchableOpacity>
-                </KeyboardAvoidingView>
+                </ScrollView>
             </SafeAreaView>
         )
     }
