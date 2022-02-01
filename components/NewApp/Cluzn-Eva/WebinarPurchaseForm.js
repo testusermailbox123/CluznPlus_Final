@@ -192,7 +192,7 @@ export default class WebinarPurchaseForm extends Component {
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                         marginLeft: widthtoDP(number = "5%")
-                    }}>Hello Varun,</Text>
+                    }}>Hello Evi,</Text>
                     <Text style={{
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '4%'),

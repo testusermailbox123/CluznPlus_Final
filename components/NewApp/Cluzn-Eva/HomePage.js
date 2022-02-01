@@ -262,18 +262,30 @@ export default class HomePage extends Component {
                     backgroundColor: GLOBAL.eva_lightpink,
                     height: heighttoDP(number = '100%'), width: widthtoDP(number = '100%')
                 }}>
-                    <Text style={{
-                        color: GLOBAL.eva_darkpink,
-                        marginTop: heighttoDP(number = '3%'),
-                        fontWeight: 'bold',
-                        alignSelf: 'center',
-                        fontSize: heighttoDP(number = '4%'),
-                        marginLeft: widthtoDP(number = "5%"),
-                        fontFamily: "MrsSheppards-Regular"
-                    }}>Cluzn Eva Club</Text>
-                    <Text style={{ marginLeft: heighttoDP(number = '17%') }}>
-                        The world of woman's health
-                    </Text>
+                    <View style={{
+                        backgroundColor: GLOBAL.eva_darkpink,
+                        borderBottomLeftRadius: heighttoDP(number = '3%'),
+                        borderBottomRightRadius: heighttoDP(number = '3%'),
+                        height: heighttoDP(number = '17%'), 
+                        width: widthtoDP(number = '100%'),
+                        alignItems:'center'
+                    }}>
+                        <Text style={{
+                            // color: GLOBAL.eva_darkpink,
+                            marginTop: heighttoDP(number = '6%'),
+                            fontWeight: 'bold',
+                            alignSelf: 'center',
+                            fontSize: heighttoDP(number = '4%'),
+                            // marginLeft: widthtoDP(number = "5%"),
+                            // fontFamily: "MrsSheppards-Regular"
+                        }}>Cluzn Eva Club</Text>
+                        <Text style={{ 
+                            // marginLeft: heighttoDP(number = '17%'), 
+                            fontWeight: 'bold', 
+                            }}>
+                            The world of woman's health
+                        </Text>
+                    </View>
                     {/* <Image
                         style={{
                             marginLeft: heighttoDP(number = '10%'),
@@ -284,14 +296,14 @@ export default class HomePage extends Component {
                         source={require('../../assets/icons/evahome.png')} /> */}
                     <Text style={{
                         color: GLOBAL.eva_black,
-                        marginTop: heighttoDP(number = '0.5%'),
+                        marginTop: heighttoDP(number = '2%'),
                         fontWeight: 'bold',
                         fontSize: heighttoDP(number = '3%'),
                         marginLeft: widthtoDP(number = "5%"),
                         fontFamily: "MrsSheppards-Regular"
-                    }}>Hello Varun,</Text>
+                    }}>Hello Evi,</Text>
                     <Text style={{
-                        color: GLOBAL.eva_midpink,
+                        color: GLOBAL.eva_darkpink,
                         marginTop: heighttoDP(number = '1%'),
                         fontWeight: 'bold',
                         fontSize: heighttoDP(number = '2.5%'),
@@ -482,6 +494,7 @@ export default class HomePage extends Component {
                                             }}>
                                                 <Image
                                                     style={{
+                                                        backgroundColor: 'red',
                                                         height: heighttoDP(number = '13%'),
                                                         width: heighttoDP(number = '13%'),
                                                         borderRadius: heighttoDP(number = '2%'),

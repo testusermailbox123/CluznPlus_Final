@@ -134,7 +134,7 @@ export default class Categories extends Component {
                 console.log(response.data)
                 if (response.data.status == 'success') {
                     this.setState({
-                        bookAppointmentList: [...this.state.bookAppointmentList, ...response.data.data],
+                        bookAppointmentList: response.data.data,
                     });
                 } else if (response.data.status == 'fail' && (response.data.message == 'token blanked' || response.data.message == 'token mis matched')) {
                     this.redirectToLogin();
@@ -238,7 +238,7 @@ export default class Categories extends Component {
                                 color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                                 fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                                 marginLeft: widthtoDP(number = "5%")
-                            }}>Hello Varun,</Text>
+                            }}>Hello Evi,</Text>
                             <View style={{
                                 flexDirection: 'row',
                                 width: widthtoDP(number = '100%'),
@@ -365,7 +365,7 @@ export default class Categories extends Component {
                                 color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                                 fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                                 marginLeft: widthtoDP(number = "5%")
-                            }}>Hello Varun,</Text>
+                            }}>Hello Evi,</Text>
                             <View style={{
                                 flexDirection: 'row',
                                 width: widthtoDP(number = '100%'),
@@ -420,7 +420,7 @@ export default class Categories extends Component {
                                 <FlatList
                                     showsVerticalScrollIndicator={false}
                                     style={{
-                                        marginBottom: heighttoDP(number = '5%'),
+                                        marginBottom: heighttoDP(number = '10%'),
                                     }}
                                     data={this.state.videos}
                                     renderItem={({ item }) =>
@@ -428,12 +428,11 @@ export default class Categories extends Component {
                                         <View style={{
                                             height: heighttoDP(number = '25%'),
                                             width: widthtoDP(number = '90%'),
-                                            marginVertical: heighttoDP(number = '3%'),
+                                            marginVertical: heighttoDP(number = '7%'),
                                             alignSelf: 'center', justifyContent: 'center',
-                                            // backgroundColor:'red'
                                         }}
                                         >
-                                            <View>
+                                            <View style={{ height: heighttoDP(number = '10%') }}>
                                                 <Text style={{
                                                     color: GLOBAL.eva_blue, fontWeight: 'bold',
                                                     fontSize: heighttoDP(number = '1.5%')
@@ -483,7 +482,7 @@ export default class Categories extends Component {
                             color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                             fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                             marginLeft: widthtoDP(number = "5%")
-                        }}>Hello Varun,</Text>
+                        }}>Hello Evi,</Text>
                         <View style={{
                             flexDirection: 'row',
                             width: widthtoDP(number = '100%'),
@@ -541,7 +540,7 @@ export default class Categories extends Component {
                             <FlatList
                                 showsVerticalScrollIndicator={false}
                                 style={{
-                                    marginBottom: heighttoDP(number = '5%'),
+                                    marginBottom: heighttoDP(number = '10%'),
                                 }}
                                 data={this.state.BlogList}
                                 renderItem={({ item }) =>
@@ -563,7 +562,8 @@ export default class Categories extends Component {
                                             <Text style={{
                                                 color: GLOBAL.eva_blue, fontWeight: 'bold',
                                                 fontSize: heighttoDP(number = '2.0%'),
-                                                marginBottom: heighttoDP(number = '3.5%')
+                                                marginBottom: heighttoDP(number = '3.5%'),
+                                                marginTop: heighttoDP(number = '5%'),
                                             }}
                                             >{item.title.rendered}</Text>
                                             <TouchableOpacity
@@ -616,7 +616,7 @@ export default class Categories extends Component {
                             color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                             fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                             marginLeft: widthtoDP(number = "5%")
-                        }}>Hello Varun,</Text>
+                        }}>Hello Evi,</Text>
                         <View style={{
                             flexDirection: 'row',
                             width: widthtoDP(number = '100%'),
@@ -703,8 +703,8 @@ export default class Categories extends Component {
                                                 }} />
                                             <View style={{
                                                 marginLeft: heighttoDP(number = '2%'),
-                                                width: heighttoDP(number = '27%'),
-
+                                                width: heighttoDP(number = '23%'),
+                                                // backgroundColor:'red'
                                             }}>
                                                 <Text style={{
                                                     fontWeight: 'bold',
@@ -729,12 +729,17 @@ export default class Categories extends Component {
                                                         {item.description}
                                                     </Text>
                                                 </View>
-
-                                                <Text style={{
-                                                    marginLeft: heighttoDP(number = '3%'),
-                                                    fontWeight: 'bold', fontSize: heighttoDP(number = '2%'),
-                                                }}>Book Appointment</Text>
-
+                                                <View style={{
+                                                    alignItems: 'center',alignSelf:'center',justifyContent:'center',
+                                                    backgroundColor: GLOBAL.eva_darkpink,
+                                                    height: heighttoDP(number = '4%'),
+                                                    width: widthtoDP(number = '45%'),
+                                                    borderRadius: heighttoDP(number = '5%'),
+                                                }}>
+                                                    <Text style={{
+                                                        fontWeight: 'bold', fontSize: heighttoDP(number = '2%'),
+                                                    }}>Book Appointment</Text>
+                                                </View>
                                             </View>
                                         </View>
                                     </TouchableOpacity>

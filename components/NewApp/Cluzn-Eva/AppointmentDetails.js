@@ -261,8 +261,8 @@ export default class AppointmentDetails extends Component {
                     backgroundColor='#FEE1DC'
                     translucent={true}>
                 </StatusBar>
-                <ScrollView 
-                behavior="padding"
+                <ScrollView
+                    behavior="padding"
                     // behavior={Platform.OS === "ios" ? "padding" : "height"}
                     style={{
                         flex: 1,
@@ -274,7 +274,7 @@ export default class AppointmentDetails extends Component {
                         color: GLOBAL.eva_black, marginTop: heighttoDP(number = '5%'),
                         fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                         marginLeft: widthtoDP(number = "5%")
-                    }}>Hello Varun,</Text>
+                    }}>Hello Evi,</Text>
                     <Text style={{
                         color: GLOBAL.eva_black,
                         marginTop: heighttoDP(number = '2%'),
@@ -364,16 +364,26 @@ export default class AppointmentDetails extends Component {
                                 borderColor: GLOBAL.eva_midpink
                             }} />
                         <TouchableOpacity
+                            style={{
+                                height: heighttoDP(number = '3.8%'),
+                                width: heighttoDP(number = '3.8%'),
+                                marginTop: -heighttoDP(number = '4.8%'),
+                                marginLeft: widthtoDP(number = "65%"),
+                                // borderWidth: heighttoDP(number = '0.25%'),
+                            }}
                             onPress={() => {
-
-
+                                // console.log('is focused')
+                                this.setState({
+                                    opendate: true,
+                                    opentime: false
+                                })
                             }}
                         >
                             <Image style={{
                                 height: heighttoDP(number = '3.5%'),
                                 width: heighttoDP(number = '3.5%'),
-                                marginTop: -heighttoDP(number = '4.8%'),
-                                marginLeft: widthtoDP(number = "65%")
+                                // marginTop: -heighttoDP(number = '4.8%'),
+                                // marginLeft: widthtoDP(number = "65%")
                             }}
                                 source={require('../../assets/icons/calender.png')} />
                         </TouchableOpacity>

@@ -53,14 +53,15 @@ export default class WebinarDetails extends Component {
                 </StatusBar>
                 <View>
                     <View style={{
-
-                        height: heighttoDP(number = '55%'),
+                        marginTop:heighttoDP(number = '3%'),
+                        height: heighttoDP(number = '57%'),
                         alignSelf: 'center', justifyContent: 'center',
                         width: widthtoDP(number = '97%'),
-
+                        // backgroundColor:'red'
                     }}>
                         <Image
                             style={{
+                                marginTop:heighttoDP(number = '4%'),
                                 height: heighttoDP(number = '55%'),
                                 width: widthtoDP(number = '97%'),
                             }}
@@ -84,7 +85,7 @@ export default class WebinarDetails extends Component {
                         <Text
                             numberOfLines={6}
                             style={{
-                                height: heighttoDP(number = '20%'),
+                                height: heighttoDP(number = '18%'),
                                 width: widthtoDP(number = '90%'),
                                 marginTop: heighttoDP(number = '2%'),
                                 fontSize: heighttoDP(number = '2%')

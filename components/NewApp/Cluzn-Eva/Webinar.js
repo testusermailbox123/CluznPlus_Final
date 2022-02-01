@@ -133,7 +133,7 @@ export default class Webinar extends Component {
                             marginTop: heighttoDP(number = '3%'),
                             fontWeight: 'bold', fontSize: heighttoDP(number = '3%'),
                             marginLeft: widthtoDP(number = "5%")
-                        }}>Hello Varun,</Text>
+                        }}>Hello Evi,</Text>
                         <Text style={{
                             alignSelf: 'center',
                             marginTop: heighttoDP(number = '2%'),

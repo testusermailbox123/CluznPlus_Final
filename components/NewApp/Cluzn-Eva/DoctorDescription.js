@@ -127,7 +127,8 @@ export default class DoctorDescription extends Component {
                 <ScrollView style={{ backgroundColor: GLOBAL.eva_lightpink }}>
                     <View style={{
                         height: heighttoDP(number = '50%'),
-
+                        marginTop: heighttoDP(number = '4%'),
+                        // backgroundColor: 'red'
                     }}>
                         <Image
                             style={{
