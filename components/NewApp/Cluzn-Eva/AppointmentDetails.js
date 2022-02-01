@@ -560,7 +560,7 @@ export default class AppointmentDetails extends Component {
                                 this.setState({ EMail })
                             }
                             // onFocus={this._scrollToInput.bind(this)}
-                            maxLength={20}
+                            // maxLength={20}
                             style={{
                                 paddingLeft: widthtoDP(number = '4%'),
                                 fontSize: heighttoDP(number = '2.7%'),

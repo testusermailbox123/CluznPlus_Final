@@ -721,21 +721,20 @@ export default class Categories extends Component {
 
                                                 }}>{item.specialization}</Text>
                                                 <View style={{
+                                                    // backgroundColor: 'red',
                                                     height: heighttoDP(number = '16%'),
-
+                                                    width: widthtoDP(number = '40%')
                                                 }}>
                                                     <Text numberOfLines={4}>
                                                         {item.description}
                                                     </Text>
                                                 </View>
-                                                {/* <TouchableOpacity style={{borderwidth:heighttoDP(number = '1%'),
-                                                height:heighttoDP(number = '2%'),width:heighttoDP(number = '5%'),
-                                            }}> */}
-                                                    <Text style={{
-                                                        marginLeft: heighttoDP(number = '3%'),
-                                                        fontWeight: 'bold', fontSize: heighttoDP(number = '2%'),
-                                                    }}>Book Appointment</Text>
-                                                {/* </TouchableOpacity> */}
+
+                                                <Text style={{
+                                                    marginLeft: heighttoDP(number = '3%'),
+                                                    fontWeight: 'bold', fontSize: heighttoDP(number = '2%'),
+                                                }}>Book Appointment</Text>
+
                                             </View>
                                         </View>
                                     </TouchableOpacity>

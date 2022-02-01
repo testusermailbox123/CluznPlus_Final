@@ -152,7 +152,7 @@ export default class Webinar extends Component {
                         <FlatList
                             style={{
                                 height: heighttoDP(number = '1%'),
-                                // marginBottom: heighttoDP(number = '3%'),
+                                marginBottom: -heighttoDP(number = '6%'),
                             }}
                             data={this.state.workshoplist}
 

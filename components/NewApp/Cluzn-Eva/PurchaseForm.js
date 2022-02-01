@@ -144,7 +144,8 @@ export default class PurchaseForm extends Component {
                 image: 'https://i.imgur.com/3g7nmJC.png',
                 currency: 'INR',
                 amount: this.state.amount * 100,
-                key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
+                key: 'rzp_live_Y163BMpztraADc',
+                // key: 'rzp_test_F2J5RlYk54xkfe',//'rzp_live_Y163BMpztraADc',
                 name: this.state.First_Name + " " + this.state.Last_Name,
                 prefill: {
                     email: this.state.EMail,

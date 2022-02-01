@@ -491,7 +491,7 @@ export default class HomePage extends Component {
                                                     source={require('../../assets/icons/1.png')} />
                                                 <View style={{
                                                     // backgroundColor: 'red',
-                                                    width: heighttoDP(number = '18%'),
+                                                    width: heighttoDP(number = '14%'),
                                                     marginTop: -heighttoDP(number = '2%'),
                                                     height: heighttoDP(number = '11%'),
 

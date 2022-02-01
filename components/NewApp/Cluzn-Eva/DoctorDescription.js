@@ -25,7 +25,7 @@ export default class DoctorDescription extends Component {
         super(props)
 
         this.state = {
-            doctor_image:'',
+            doctor_image: '',
             docfname: '',
             doclname: '',
             docfullimage: '',
@@ -34,7 +34,7 @@ export default class DoctorDescription extends Component {
             docvideo: '',
             docimage: '',
             isloading: true,
-            docid:'',amount:''
+            docid: '', amount: ''
         }
     }
 
@@ -48,7 +48,7 @@ export default class DoctorDescription extends Component {
 
         this.props.navigation.navigate('AppointmentDetails', {
             docid: this.state.docid,
-            amount:this.state.amount,
+            amount: this.state.amount,
         });
     };
 
@@ -78,7 +78,7 @@ export default class DoctorDescription extends Component {
 
     UNSAFE_componentWillMount() {
         const { docfname, doclname, docfullimage, docspecialization, docdescription,
-            docvideo, docimage,docid,amount ,doctor_image} = this.props.route.params;
+            docvideo, docimage, docid, amount, doctor_image } = this.props.route.params;
         this.setState({
             docfname: docfname,
             doclname: doclname,
@@ -87,13 +87,13 @@ export default class DoctorDescription extends Component {
             docdescription: docdescription,
             docvideo: docvideo,
             docimage: docimage,
-            docid:docid,
-            amount:amount,
-            doctor_image:doctor_image
+            docid: docid,
+            amount: amount,
+            doctor_image: doctor_image
         })
-        console.log('this.state.doctor_image - '+this.state.doctor_image)
-        
-        
+        console.log('this.state.doctor_image - ' + this.state.doctor_image)
+
+
         this._stopAutoPlay();
         // console.log('after _stopAutoPlay')
         this._startAutoPlay();
@@ -131,7 +131,7 @@ export default class DoctorDescription extends Component {
                     }}>
                         <Image
                             style={{
-                                backgroundColor: 'red',
+                                // backgroundColor: 'red',
                                 height: heighttoDP(number = '50%'),
                             }}
                             source={{
@@ -164,8 +164,8 @@ export default class DoctorDescription extends Component {
                                 marginTop: heighttoDP(number = '3%')
                             }}>
                             <Text style={{
-                                color: 'black', 
-                                alignSelf: 'center',fontWeight: 'bold',
+                                color: 'black',
+                                alignSelf: 'center', fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '2%')
                             }}>Book Appointment</Text>
                         </TouchableOpacity>
@@ -175,21 +175,23 @@ export default class DoctorDescription extends Component {
                         }}>About Doctor</Text>
                         <Text style={{
                             marginTop: heighttoDP(number = '3%'),
-                            width: widthtoDP(number = '90%'),
+                            width: widthtoDP(number = '85%'),
                             height: heighttoDP(number = '20%'),
                         }}>{this.state.docdescription}</Text>
+
                         <Text
-                            numberOfLines={5}
+                            // numberOfLines={5}
                             style={{
-                                fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
+                                fontWeight: 'bold',
                                 fontSize: heighttoDP(number = '2.5%')
                             }}>Video</Text>
+
                         <View style={{
                             alignItems: 'center',
                             justifyContent: 'center',
                             height: heighttoDP(number = '20%'),
                             width: widthtoDP(number = '90%'),
-                            // marginTop:heighttoDP(number = '2%'),
+                            marginTop: heighttoDP(number = '2%'),
                         }}>
                             <TouchableOpacity
                                 onPress={() => this._onPressVideo()}
@@ -210,7 +212,7 @@ export default class DoctorDescription extends Component {
                             </TouchableOpacity>
                         </View>
                         <Text style={{
-                            fontWeight: 'bold', marginTop: heighttoDP(number = '%'),
+                            fontWeight: 'bold', marginTop: heighttoDP(number = '8%'),
                             fontSize: heighttoDP(number = '2.5%')
                         }}>Image</Text>
                         <View style={{
@@ -218,7 +220,7 @@ export default class DoctorDescription extends Component {
                             width: widthtoDP(number = '90%'),
                             height: heighttoDP(number = '25%'),
                             marginBottom: heighttoDP(number = '3%'),
-                            marginTop: heighttoDP(number = '2%'),
+                            marginTop: heighttoDP(number = '1%'),
                         }}>
                             <FlatList
                                 style={{
