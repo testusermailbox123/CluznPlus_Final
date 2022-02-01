@@ -525,31 +525,30 @@ export default class HospitalSearch extends React.Component {
                             }}
                         >
                             <Text style={{
-                                alignSelf: 'center', fontSize: heighttoDP(number = '2%'),
+                                alignSelf: 'center',
+                                fontSize: heighttoDP(number = '2%'),
                                 marginTop: heighttoDP(number = '1%')
-                            }}>Click here</Text>
+                            }}>Click here to</Text>
                             <Text style={{
-                                alignSelf: 'center', fontSize: heighttoDP(number = '2.5%'),
-                                marginTop: heighttoDP(number = '1%')
+                                alignSelf: 'center',
+                                fontSize: heighttoDP(number = '2.5%'),
+                                // marginTop: heighttoDP(number = '1%')
                             }}>Join</Text>
                             <Image
                                 style={{
-                                    // backgroundColor: 'red',
                                     width: widthtoDP(number = '85%'),
-                                    height: heighttoDP(number = '10%'),
+                                    height: heighttoDP(number = '12%'),
                                     alignSelf: 'center',
-                                    // borderRadius: heighttoDP(number = '2%'),
-                                    // marginLeft: heighttoDP(number = '2%'),
-                                    marginTop: heighttoDP(number = '2%')
+                                    marginTop: -heighttoDP(number = '1%')
                                 }}
                                 source={require('../assets/icons/evahome.png')} />
-                            {/* <Text
+                            <Text
                                 style={{
-                                    alignSelf: 'center', justifyContent: 'center',
-                                    // fontSize: heighttoDP(number = '2%'),
-                                    // fontWeight: 'bold', color: '#EB592A'
+                                    alignSelf: 'center',
+                                    marginTop: -heighttoDP(number = '0.5%'),
+                                    color: GLOBAL.eva_darkpink, fontWeight: 'bold'
                                 }}
-                            >To enter Click here</Text> */}
+                            > The world of woman's health</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ height: h(21) }}>
