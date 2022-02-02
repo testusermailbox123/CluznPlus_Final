@@ -293,6 +293,7 @@ export default class Categories extends Component {
                                     showsVerticalScrollIndicator={false}
                                     style={{
                                         marginBottom: heighttoDP(number = '10%'),
+                                        marginTop: -heighttoDP(number = '5%'),
                                     }}
                                     data={this.state.videos}
                                     renderItem={({ item }) =>
@@ -541,6 +542,7 @@ export default class Categories extends Component {
                                 showsVerticalScrollIndicator={false}
                                 style={{
                                     marginBottom: heighttoDP(number = '10%'),
+                                    marginTop: -heighttoDP(number = '5%'),
                                 }}
                                 data={this.state.BlogList}
                                 renderItem={({ item }) =>
@@ -673,6 +675,7 @@ export default class Categories extends Component {
                                 showsVerticalScrollIndicator={false}
                                 style={{
                                     marginBottom: heighttoDP(number = '5%'),
+                                    marginTop: -heighttoDP(number = '5%'),
                                 }}
                                 data={this.state.bookAppointmentList}
                                 renderItem={({ item }) =>

@@ -155,21 +155,24 @@ export default class DoctorDescription extends Component {
                             fontSize: heighttoDP(number = '2%')
                         }}
                         >{this.state.docspecialization}</Text>
-                        <TouchableOpacity
-                            onPress={() => this._onPress()}
-                            style={{
-                                backgroundColor: GLOBAL.eva_midpink,
-                                width: widthtoDP(number = '90%'), alignSelf: 'center',
-                                borderRadius: heighttoDP(number = '40%')
-                                , justifyContent: 'center', height: heighttoDP(number = '6%'),
-                                marginTop: heighttoDP(number = '3%')
-                            }}>
-                            <Text style={{
-                                color: 'black',
-                                alignSelf: 'center', fontWeight: 'bold',
-                                fontSize: heighttoDP(number = '2%')
-                            }}>Book Appointment</Text>
-                        </TouchableOpacity>
+                        <View  style={{width:widthtoDP(number='90%')}}>
+                            <TouchableOpacity
+                                onPress={() => this._onPress()}
+                                style={{
+                                    backgroundColor: GLOBAL.eva_darkpink,
+                                    width: widthtoDP(number = '90%'), alignSelf: 'center',
+                                    borderRadius: heighttoDP(number = '40%')
+                                    , justifyContent: 'center', height: heighttoDP(number = '6%'),
+                                    marginTop: heighttoDP(number = '3%')
+                                }}>
+                                <Text style={{
+                                    color: 'black',
+                                    alignSelf: 'center',
+                                    fontWeight: 'bold',
+                                    fontSize: heighttoDP(number = '2%')
+                                }}>Book Appointment</Text>
+                            </TouchableOpacity>
+                        </View>
                         <Text style={{
                             fontWeight: 'bold', marginTop: heighttoDP(number = '3%'),
                             fontSize: heighttoDP(number = '2.5%')
