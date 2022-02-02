@@ -516,15 +516,15 @@ export default class HospitalSearch extends React.Component {
                                 this.props.navigation.navigate('HomePage')
                             }}
                             style={{
-                                marginVertical: heighttoDP(number = '1%'),
-                                backgroundColor: GLOBAL.eva_midpink,
+                                // marginVertical: heighttoDP(number = '1%'),
+                                backgroundColor: GLOBAL.primaryBackGroundColorforBlue,
                                 // borderRadius: heighttoDP(number = '2%'),
                                 alignSelf: 'center',
                                 width: widthtoDP(number = '100%'),
-                                height: heighttoDP(number = '20%')
+                                height: heighttoDP(number = '20.7%')
                             }}
                         >
-                            <Text style={{
+                            {/* <Text style={{
                                 alignSelf: 'center',
                                 fontSize: heighttoDP(number = '2%'),
                                 marginTop: heighttoDP(number = '1%')
@@ -533,22 +533,24 @@ export default class HospitalSearch extends React.Component {
                                 alignSelf: 'center',
                                 fontSize: heighttoDP(number = '2.5%'),
                                 // marginTop: heighttoDP(number = '1%')
-                            }}>Join</Text>
+                            }}>Join</Text> */}
                             <Image
                                 style={{
-                                    width: widthtoDP(number = '85%'),
-                                    height: heighttoDP(number = '12%'),
+                                    marginTop: heighttoDP(number = '0.25%'),
+                                    backgroundColor: GLOBAL.eva_midpink,
+                                    // borderRadius: heighttoDP(number = '2%'),
                                     alignSelf: 'center',
-                                    marginTop: -heighttoDP(number = '1%')
+                                    width: widthtoDP(number = '100%'),
+                                    height: heighttoDP(number = '20%')
                                 }}
-                                source={require('../assets/icons/evahome.png')} />
-                            <Text
+                                source={require('../assets/icons/Adv1.jpg')} />
+                            {/* <Text
                                 style={{
                                     alignSelf: 'center',
                                     marginTop: -heighttoDP(number = '0.5%'),
                                     color: GLOBAL.eva_darkpink, fontWeight: 'bold'
                                 }}
-                            > The world of woman's health</Text>
+                            > The world of woman's health</Text> */}
                         </TouchableOpacity>
                     </View>
                     <View style={{ height: h(21) }}>

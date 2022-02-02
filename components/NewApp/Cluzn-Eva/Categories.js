@@ -722,7 +722,7 @@ export default class Categories extends Component {
                                                 }}>{item.specialization}</Text>
                                                 <View style={{
                                                     // backgroundColor: 'red',
-                                                    height: heighttoDP(number = '16%'),
+                                                    height: heighttoDP(number = '14.5%'),
                                                     width: widthtoDP(number = '40%')
                                                 }}>
                                                     <Text numberOfLines={4}>
@@ -730,15 +730,23 @@ export default class Categories extends Component {
                                                     </Text>
                                                 </View>
                                                 <View style={{
-                                                    alignItems: 'center',alignSelf:'center',justifyContent:'center',
-                                                    backgroundColor: GLOBAL.eva_darkpink,
+                                                    // backgroundColor: 'red',
                                                     height: heighttoDP(number = '4%'),
-                                                    width: widthtoDP(number = '45%'),
-                                                    borderRadius: heighttoDP(number = '5%'),
+                                                    width: widthtoDP(number = '40%'),
                                                 }}>
-                                                    <Text style={{
-                                                        fontWeight: 'bold', fontSize: heighttoDP(number = '2%'),
-                                                    }}>Book Appointment</Text>
+                                                    <View style={{
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        backgroundColor: GLOBAL.eva_darkpink,
+                                                        height: heighttoDP(number = '4%'),
+                                                        width: widthtoDP(number = '40%'),
+                                                        borderRadius: heighttoDP(number = '5%'),
+                                                    }}>
+                                                        <Text style={{
+                                                            fontWeight: 'bold',
+                                                            fontSize: heighttoDP(number = '2%'),
+                                                        }}>Book Appointment</Text>
+                                                    </View>
                                                 </View>
                                             </View>
                                         </View>
